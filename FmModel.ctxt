@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=FmModel
+comment1.params=nome\ numero\ velocidade\ resistencia\ destreza\ impulsao\ jogoAereo\ remate\ passe\ elasticiadde\ reflexos
+comment1.target=void\ criaRedes(java.lang.String,\ int,\ int,\ int,\ int,\ int,\ int,\ int,\ int,\ int,\ int)
+numComments=2
