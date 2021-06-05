@@ -65,4 +65,19 @@ public class Medio extends Jogador {
     public Jogador clone() {
         return new Medio(this);
     }
+
+    public static Medio parse(String input){
+        String[] campos = input.split(",");
+        return new Medio(campos[0],
+                Integer.parseInt(campos[1]),
+                Integer.parseInt(campos[2]),
+                Integer.parseInt(campos[3]),
+                Integer.parseInt(campos[4]),
+                Integer.parseInt(campos[5]),
+                Integer.parseInt(campos[6]),
+                Integer.parseInt(campos[7]),
+                Integer.parseInt(campos[8]),
+                Integer.parseInt(campos[9]),
+                50);
+    }
 }

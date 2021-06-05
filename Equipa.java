@@ -58,4 +58,26 @@ public class Equipa
         Equipa aux = new Equipa (this);
         return aux;
     }
+
+    public Equipa(String nomeE){
+        this.NomeDaEquipa = nomeE;
+        this.Treinador = "";
+        this.Plantel = new ArrayList<Jogador>();
+    }
+    public static Equipa parse(String input){
+        String[] campos = input.split(",");
+        return new Equipa(campos[0]);
+    }
+
+    public void insereJogador (Jogador j){
+        this.Plantel.add(j);
+    }
+
+    public String toString(){
+        String r =  "Equipa:" + this.NomeDaEquipa+ "\n";
+        for (Jogador j : this.Plantel){
+            r += j.toString();
+        }
+        return r;
+    }
 }

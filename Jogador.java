@@ -42,7 +42,7 @@ public abstract class Jogador
 
     public Jogador (Jogador j){
         this.nome = j.getNome();
-        this.numero = j.getNumero();
+        this.numero = j.getNumeroJogador();
         this.velocidade = j.getVelocidade();
         this.resistencia = j.getResistencia();
         this.destreza = j.getDestreza();
@@ -59,7 +59,7 @@ public abstract class Jogador
         return this.nome;
     }
 
-    public int getNumero() {
+    public int getNumeroJogador() {
         return this.numero;
     }
 
@@ -141,7 +141,7 @@ public abstract class Jogador
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Jogador jogador = (Jogador) o;
-        return this.numero == jogador.getNumero()  && this.nome.equals(jogador.getNome());
+        return this.numero == jogador.getNumeroJogador()  && this.nome.equals(jogador.getNome());
     }
 
     public String toString() {

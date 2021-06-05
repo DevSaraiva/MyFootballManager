@@ -75,4 +75,18 @@ public class Avancado extends Jogador
    public Jogador clone() {
       return new Avancado(this);
    }
+
+   public static Avancado parse(String input){
+      String[] campos = input.split(",");
+      return new Avancado(campos[0],
+              Integer.parseInt(campos[1]),
+              Integer.parseInt(campos[2]),
+              Integer.parseInt(campos[3]),
+              Integer.parseInt(campos[4]),
+              Integer.parseInt(campos[5]),
+              Integer.parseInt(campos[6]),
+              Integer.parseInt(campos[7]),
+              Integer.parseInt(campos[8]),
+              50,50,50);
+   }
 }
