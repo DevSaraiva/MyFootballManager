@@ -10,7 +10,7 @@ import java.util.Map;
 public class Parser {
 
     public static void parse() throws LinhaIncorretaException {
-        List<String> linhas = lerFicheiro("/Files/logs.txt");
+        List<String> linhas = lerFicheiro("Files/logs.txt");
         Map<String, Equipa> equipas = new HashMap<>(); //nome, equipa
         Map<Integer, Jogador> jogadores = new HashMap<>(); //numero, jogador
         List<Jogo> jogos = new ArrayList<>();
@@ -66,7 +66,7 @@ public class Parser {
 
         //debug
         for (Equipa e: equipas.values()){
-            System.out.println(e.toString());
+            System.out.println("ola");
         }
         for (Jogo jog: jogos){
             System.out.println(jog.toString());
