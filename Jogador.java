@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class Jogador
+public abstract class Jogador implements Serializable
 {
     private String nome;
     private int numero;

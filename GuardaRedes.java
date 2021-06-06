@@ -1,12 +1,7 @@
+import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * Write a description of class guardaRedes here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
-public class GuardaRedes extends Jogador
+public class GuardaRedes extends Jogador implements Serializable
 {
     private int elasticidade;
     private int reflexos;

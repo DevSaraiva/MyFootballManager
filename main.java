@@ -1,14 +1,19 @@
+import java.io.EOFException;
+import java.io.IOException;
 
 public class main {
     public static void main(String[] args) {
 
-
-        try {
-            Parser.parse();
-        } catch (LinhaIncorretaException e) {
-            e.printStackTrace();
-        }
-
-
+        FmModel model = new FmModel();
+        FmController controller = new FmController(model);
+        FmView view = new FmView(controller);
+        view.run();
     }
+
+
+
+
+
+
+
 }

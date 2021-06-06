@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Avancado extends Jogador
+public class Avancado extends Jogador implements Serializable
 {
    private int finalizacao;
    private int drible;

@@ -1,12 +1,8 @@
+import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * Write a description of class medios here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
-public class Medio extends Jogador {
+
+public class Medio extends Jogador implements Serializable {
  
     private int recuperaçaoDeBola;
     private int criatividade;

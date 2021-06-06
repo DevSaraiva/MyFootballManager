@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Defesa extends Jogador{
+public class Defesa extends Jogador implements Serializable {
 
     private int desarme;
     private int marcaçao;

@@ -1,33 +1,45 @@
+import java.util.List;
 
-/**
- * Write a description of class FmView here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
 public class FmView
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    FmController controller;
 
-    /**
-     * Constructor for objects of class FmView
-     */
-    public FmView()
-    {
-        // initialise instance variables
-        x = 0;
+    public FmView(FmController controller){
+
+            this.controller = controller;
     }
 
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+    public void menu(){
+
+
+
     }
+
+    public void printOpcoes(List<String> ops){
+
+        int i = 1;
+        for(String s: ops){
+
+            System.out.println(i + ": " + s);
+            i++;
+
+        }
+
+
+    }
+
+    public void run(){
+
+        this.controller.loadDataController(0);
+        List<String> opcs = controller.getJogadores();
+        printOpcoes(opcs);
+
+    }
+
+
+
+
+
+
+
 }

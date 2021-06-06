@@ -1,3 +1,6 @@
+import jdk.jshell.execution.LoaderDelegate;
+
+import java.security.PublicKey;
 import java.util.List;
 import java.util.Map;
 import java.io.FileInputStream;
@@ -7,82 +10,112 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-public class FmModel {
+public class FmModel implements  Serializable {
 
     private Map<String,Jogador>  jogadores; //Par (nome,jogador)
     private Map<String,Equipa> equipas; // Par(nome, equipa)
     private List<Jogo> jogos; //Lista de jogos
 
-    public FmModel() throws java.lang.ClassNotFoundException {
-        
-        try
-        {
-            FileInputStream fis = new FileInputStream("/Files/Jogadores");
+
+    public  FmModel(){
+
+        this.jogadores = new HashMap<>();
+        this.equipas = new HashMap<>();
+        this.jogos = new ArrayList<>();
+
+    }
+
+    public void loadJogadores() throws IOException, ClassNotFoundException {
+
+            File toRead = new File("Files/Jogadores/jogadores.txt");
+            FileInputStream fis = new FileInputStream(toRead);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            this.jogadores = (Map<String,Jogador>) ois.readObject();
+
+            this.jogadores = (HashMap<String,Jogador>) ois.readObject();
+
+
             ois.close();
-        }
-        catch (java.io.IOException ioe)
-        {
-            this.jogadores = new HashMap<>();
-        }
-        
-        
-        try
-        {
-            FileInputStream fis2 = new FileInputStream("/Files/Equipas");
-            ObjectInputStream ois2 = new ObjectInputStream(fis2);
-            this.equipas = (Map<String,Equipa>) ois2.readObject();
-            ois2.close();
-        
-        }
-        catch (java.io.IOException ioe)
-        {
-            this.equipas = new HashMap<>();
-        }
-        
-        
-             try
-        {
-            FileInputStream fis3 = new FileInputStream("/Files/Jogos");
-            ObjectInputStream ois3 = new ObjectInputStream(fis3);
-            this.jogos = (List<Jogo>) ois3.readObject();
-            ois3.close();
-        }
-        catch (java.io.IOException ioe)
-        {
-            this.jogos = new ArrayList();
-        }
+            fis.close();
+
+    }
+
+    public void loadEquipas() throws IOException, ClassNotFoundException{
+
+        File toRead = new File("Files/Equipas/equipas.txt");
+        FileInputStream fis = new FileInputStream(toRead);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+
+        this.equipas = (HashMap<String,Equipa>) ois.readObject();
+
+
+        ois.close();
+        fis.close();
+    }
+
+    public void loadJogos() throws IOException, ClassNotFoundException{
+
+        File toRead = new File("Files/Jogos/jogos.txt");
+        FileInputStream fis = new FileInputStream(toRead);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+
+        this.jogos = (ArrayList<Jogo>) ois.readObject();
+
+
+        ois.close();
+        fis.close();
+    }
+
+
+    public void loadData() throws IOException, ClassNotFoundException {
+
+        loadJogadores();
+        loadEquipas();
     }
     
     public void saveJogadores() throws java.io.IOException {
-        
-        FileOutputStream fos = new FileOutputStream("/Files/Jogadores");
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(this.jogadores);
-        oos.flush();
-        oos.close();
+
+
+            File file=new File("Files/Jogadores/jogadores.txt");
+            FileOutputStream fos=new FileOutputStream(file);
+            ObjectOutputStream oos=new ObjectOutputStream(fos);
+            oos.writeObject(this.jogadores);
+            oos.flush();
+            oos.close();
+            fos.close();
+
         
     }
     
     public void saveEquipas() throws java.io.IOException {
-        
-        FileOutputStream fos = new FileOutputStream("/Files/Equipas");
+
+        File file=new File("Files/Equipas/equipas.txt");
+        FileOutputStream fos = new FileOutputStream(file);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(this.equipas);
         oos.flush();
         oos.close();
+        fos.close();
         
     }
     
     public void saveJogos() throws java.io.IOException {
-        
-        FileOutputStream fos = new FileOutputStream("/Files/Jogos");
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+        File file=new File("Files/Jogos/jogos.txt");
+        FileOutputStream fos=new FileOutputStream(file);
+        ObjectOutputStream oos=new ObjectOutputStream(fos);
         oos.writeObject(this.jogos);
         oos.flush();
         oos.close();
+        fos.close();
         
+    }
+
+    public  void saveData() throws java.io.IOException{
+
+        saveJogos();
+        saveEquipas();
+        saveJogadores();
+
     }
     
 
@@ -133,11 +166,29 @@ public class FmModel {
         this.jogadores.put(nome, jog);                 
                             
     }
-    
-    
 
 
+    public void setEquipas(Map<String, Equipa> equipas) {
+        this.equipas = equipas;
+    }
 
+    public void setJogadores(Map<String, Jogador> jogadores) {
+        this.jogadores = jogadores;
+    }
 
+    public void setJogos(List<Jogo> jogos) {
+        this.jogos = jogos;
+    }
 
+    public List<Jogo> getJogos() {
+        return jogos;
+    }
+
+    public Map<String, Equipa> getEquipas() {
+        return equipas;
+    }
+
+    public Map<String, Jogador> getJogadores() {
+        return jogadores;
+    }
 }

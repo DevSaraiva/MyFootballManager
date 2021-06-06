@@ -1,10 +1,11 @@
 #BlueJ class context
 comment0.target=GuardaRedes
-comment0.text=\n\ Write\ a\ description\ of\ class\ guardaRedes\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=
 comment1.target=GuardaRedes()
 comment10.params=
 comment10.target=Jogador\ clone()
+comment11.params=input
+comment11.target=GuardaRedes\ parse(java.lang.String)
 comment2.params=nome\ numero\ velocidade\ resistencia\ destreza\ impulsao\ jogoAereo\ remate\ passe\ elasticidade\ reflexos
 comment2.target=GuardaRedes(java.lang.String,\ int,\ int,\ int,\ int,\ int,\ int,\ int,\ int,\ int,\ int)
 comment3.params=gr
@@ -21,4 +22,4 @@ comment8.params=o
 comment8.target=boolean\ equals(java.lang.Object)
 comment9.params=
 comment9.target=java.lang.String\ toString()
-numComments=11
+numComments=12

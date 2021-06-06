@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
-public class Equipa
+public class Equipa implements Serializable
 {
     private String NomeDaEquipa;
     private String Treinador;
@@ -15,7 +16,7 @@ public class Equipa
     public Equipa(String NomeDaEquipa, String Treinador, List<Jogador> Plantel){
         this.NomeDaEquipa = NomeDaEquipa;
         this.Treinador = Treinador;
-        this.Plantel = Plantel; // duvida aqui
+        this.Plantel = Plantel;
     }
 
     public Equipa (Equipa e){
@@ -49,7 +50,7 @@ public class Equipa
         this.Treinador = treinador;
     }
 
-    public void setPlantel(List<Jogador> plantel) { // duvida
+    public void setPlantel(List<Jogador> plantel) {
         this.Plantel = plantel;
     }
 

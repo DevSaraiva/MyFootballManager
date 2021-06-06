@@ -1,5 +1,5 @@
 #BlueJ class context
 comment0.target=main
-comment1.params=argc\ argvs
-comment1.target=void\ main(int,\ java.lang.String[])
+comment1.params=args
+comment1.target=void\ main(java.lang.String[])
 numComments=2
