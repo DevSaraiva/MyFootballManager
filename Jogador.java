@@ -15,7 +15,8 @@ public abstract class Jogador implements Serializable
     private int remate;
     private int passe;
     private int Habilidade;
-    private List<String> equipas;
+    private List<String>equipas;
+
 
     public Jogador(){
         this.nome = "";
