@@ -21,6 +21,7 @@ public class Avancado extends Jogador implements Serializable
       this.finalizacao = finalizacao;
       this.drible = drible;
       this.piorPe = piorPe;
+      super.setHabilidade(this.calculaHabilidadeJogador());
    }
 
    public Avancado (Avancado a){
@@ -89,5 +90,16 @@ public class Avancado extends Jogador implements Serializable
               Integer.parseInt(campos[7]),
               Integer.parseInt(campos[8]),
               50,50,50);
+   }
+
+   public int calculaHabilidadeJogador() {
+      return (int) (0.15 * this.finalizacao + 0.10 * this.drible + 0.10 * this.piorPe +
+                    0.10 * super.getVelocidade() +
+                    0.10 * super.getResistencia() +
+                    0.05 * super.getDestreza() +
+                    0.10 * super.getImpulsao() +
+                    0.10 * super.getJogoAereo() +
+                    0.15 * super.getRemate() +
+                    0.05 * super.getPasse());
    }
 }

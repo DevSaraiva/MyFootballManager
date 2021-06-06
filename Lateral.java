@@ -25,6 +25,7 @@ public class Lateral extends Defesa
               desarme,marcaçao,agressividade);
         this.capacidadeCruzamento = capacidadeCruzamento;
         this.drible = drible;
+        super.setHabilidade(this.calculaHabilidadeJogador());
     }
 
     public Lateral (Lateral l){
@@ -66,6 +67,17 @@ public class Lateral extends Defesa
     }
     public Jogador clone() {
         return new Defesa(this);
+    }
+
+    public int calculaHabilidadeJogador() {
+        return (int) (0.20 * this.capacidadeCruzamento + 0.10 * this.drible +
+                0.15 * super.getVelocidade() +
+                0.15 * super.getResistencia() +
+                0.05 * super.getDestreza() +
+                0.05 * super.getImpulsao() +
+                0.05 * super.getJogoAereo() +
+                0.10 * super.getRemate() +
+                0.15 * super.getPasse());
     }
 }
 

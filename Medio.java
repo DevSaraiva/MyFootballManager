@@ -18,6 +18,7 @@ public class Medio extends Jogador implements Serializable {
         super(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo, remate, passe);
         this.recuperaçaoDeBola  = recuperaçaoDeBola;
         this.criatividade = criatividade;
+        super.setHabilidade(this.calculaHabilidadeJogador());
     }
 
     public Medio (Medio m){
@@ -75,5 +76,16 @@ public class Medio extends Jogador implements Serializable {
                 Integer.parseInt(campos[8]),
                 Integer.parseInt(campos[9]),
                 50);
+    }
+
+    public int calculaHabilidadeJogador() {
+        return (int) (0.15 * this.criatividade + 0.15 * this.recuperaçaoDeBola +
+                0.15 * super.getVelocidade() +
+                0.15 * super.getResistencia() +
+                0.05 * super.getDestreza() +
+                0.05 * super.getImpulsao() +
+                0.05 * super.getJogoAereo() +
+                0.10 * super.getRemate() +
+                0.15 * super.getPasse());
     }
 }

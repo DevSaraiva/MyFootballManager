@@ -1,4 +1,6 @@
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Jogador implements Serializable
@@ -13,6 +15,7 @@ public abstract class Jogador implements Serializable
     private int remate;
     private int passe;
     private int Habilidade;
+    private List<String> equipas;
 
     public Jogador(){
         this.nome = "";
@@ -25,10 +28,11 @@ public abstract class Jogador implements Serializable
         this.remate = 0;
         this.passe =0;
         this.Habilidade = 0;
+        this.equipas = new ArrayList<>();
     }
 
     public Jogador (String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
-                    int remate, int passe){
+                    int remate, int passe, String equipas){
         this.nome = nome;
         this.numero = numero;
         this.velocidade = velocidade;
@@ -39,6 +43,7 @@ public abstract class Jogador implements Serializable
         this.remate = remate;
         this.passe = passe;
         this.Habilidade = 0;
+        this.equipas = equipas;
     }
 
     public Jogador (Jogador j){
@@ -52,6 +57,7 @@ public abstract class Jogador implements Serializable
         this.remate = j.getRemate();
         this.passe = j.getPasse();
         this.Habilidade = j.getHabilidade();
+        this.equipas = j.getEquipas();
 
     }
 
@@ -96,6 +102,9 @@ public abstract class Jogador implements Serializable
         return this.Habilidade;
     }
 
+    public List<String> getEquipas() {
+        return this.equipas;
+    }
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -133,10 +142,13 @@ public abstract class Jogador implements Serializable
         this.passe = passe;
     }
 
-    public void setHabilidadeAtacante(int habilidade) {
+    public void setHabilidade(int habilidade) {
         this.Habilidade = habilidade;
     }
 
+    public void setEquipas(List<String> equipas) {
+        this.equipas = equipas;
+    }
 
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -157,6 +169,7 @@ public abstract class Jogador implements Serializable
                 ", remate=" + this.remate +
                 ", passe=" + this.passe +
                 ", Habilidade=" + this.Habilidade +
+                ", Equipas=" + this.equipas +
                 '}';
     }
 
