@@ -13,6 +13,7 @@ public abstract class Jogador implements Serializable
     private int remate;
     private int passe;
     private int Habilidade;
+    private List<String>clubes;
 
     public Jogador(){
         this.nome = "";
@@ -25,10 +26,11 @@ public abstract class Jogador implements Serializable
         this.remate = 0;
         this.passe =0;
         this.Habilidade = 0;
+        this.clubes = new ArrayList<>();
     }
 
     public Jogador (String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
-                    int remate, int passe){
+                    int remate, int passe, String clubes){
         this.nome = nome;
         this.numero = numero;
         this.velocidade = velocidade;
@@ -39,6 +41,7 @@ public abstract class Jogador implements Serializable
         this.remate = remate;
         this.passe = passe;
         this.Habilidade = 0;
+        this.clubes = clubes;
     }
 
     public Jogador (Jogador j){
@@ -52,6 +55,7 @@ public abstract class Jogador implements Serializable
         this.remate = j.getRemate();
         this.passe = j.getPasse();
         this.Habilidade = j.getHabilidade();
+        this.clubes = j.getClubes();
 
     }
 
@@ -96,6 +100,9 @@ public abstract class Jogador implements Serializable
         return this.Habilidade;
     }
 
+    public List<String> getClubes() {
+        return this.clubes;
+    }
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -137,6 +144,9 @@ public abstract class Jogador implements Serializable
         this.Habilidade = habilidade;
     }
 
+    public void setClubes(List<String> clubes) {
+        this.clubes = clubes;
+    }
 
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -157,6 +167,7 @@ public abstract class Jogador implements Serializable
                 ", remate=" + this.remate +
                 ", passe=" + this.passe +
                 ", Habilidade=" + this.Habilidade +
+                ", Clubes=" + this.clubes +
                 '}';
     }
 
