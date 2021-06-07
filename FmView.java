@@ -43,7 +43,7 @@ public class FmView {
         List<String> jogadores = this.controller.getJogadores();
         printOpcoes(jogadores);
         selection = this.ins.nextInt();
-        String s = this.controller.getJogador(jogadores.get(selection));
+        String s = this.controller.getJogador(jogadores.get(selection - 1));
         System.out.println(s);
 
     }
@@ -54,7 +54,7 @@ public class FmView {
         List<String> equipas = this.controller.getEquipas();
         printOpcoes(equipas);
         selection = this.ins.nextInt();
-        String s = this.controller.getEquipa(equipas.get(selection));
+        String s = this.controller.getEquipa(equipas.get(selection - 1));
         System.out.println(s);
 
     }
@@ -67,6 +67,10 @@ public class FmView {
         selection = this.ins.nextInt();
         String s = this.controller.getJogo(selection);
         System.out.println(s);
+    }
+
+    public void criarJogador(){
+
     }
 
     public void run(){
@@ -93,6 +97,11 @@ public class FmView {
 
                 case 3:
                     consultarJogosExistentes();
+                    break;
+
+                case 4:
+                    
+                    break;
             }
 
 

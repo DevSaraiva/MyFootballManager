@@ -92,6 +92,7 @@ public class FmController
 
     }
 
+
     // Devolve nome dos jogos
 
     public List<String> getJogos(){
@@ -107,6 +108,14 @@ public class FmController
         return jogos;
     }
 
+    //Devolve Nomes GuardaRedes
+
+    public List<String> getGuardaRedes(){
+
+        return this.model.getGuardaRedes().stream().map(g -> g.getNome()).collect(Collectors.toList());
+
+
+    }
 
 
 }

@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.*;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class FmModel implements  Serializable {
 
@@ -207,5 +208,16 @@ public class FmModel implements  Serializable {
 
     public Map<String, Jogador> getJogadores() {
         return jogadores;
+    }
+
+    public List<Jogador> getGuardaRedes(){
+
+        return this.getJogadores().values().stream().
+                filter(v -> v instanceof GuardaRedes).
+                map(v -> (Jogador) v).   // v ´é antes do cast do tipo Veiculo
+                collect(Collectors.toList());
+
+
+
     }
 }
