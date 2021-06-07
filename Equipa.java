@@ -96,6 +96,15 @@ public class Equipa implements Serializable
         }
         return sb.toString();
     }
+
+    public boolean containsNum (int num){
+        boolean r = false;
+        for (Jogador j : this.Plantel){
+            if (j.getNumeroJogador() == num)
+                r = true;
+        }
+        return r;
+    }
 }
 
 
