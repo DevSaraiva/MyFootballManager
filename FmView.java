@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -80,6 +81,7 @@ public class FmView {
         return  atr;
     }
 
+    // Função que suporta a funcionaldidade de criar um jogador
     public void criarJogador(){
         System.out.println("Insira o tipo de jogador que pretende criar");
         System.out.println("1 - Guarda - Redes");
@@ -88,7 +90,11 @@ public class FmView {
         System.out.println("4 - Medio");
         System.out.println("5 - Avançado");
         int sel = this.ins.nextInt();
+        this.ins.nextLine();
 
+
+        List<String> equipas = new ArrayList<>();
+        String equipa = "";
         String nome = "";
         int numero = 0;
         int velocidade = 0;
@@ -100,9 +106,28 @@ public class FmView {
         int passe = 0;
         int elasticidade = 0;
         int reflexos = 0;
+        int desarme = 0;
+        int marcacao = 0;
+        int agressividade = 0;
+        int capacidadeCruzamento = 0;
+        int drible = 0;
+        int recuperacaoDeBola = 0;
+        int criatividade = 0;
+        int finalizacao = 0;
+        int piorPe = 0;
+
+        System.out.println("Insira a equipa do jogador ou F para nao atribuir equipa");
+        equipa = this.ins.nextLine();
+        while(!this.controller.existeEquipa(equipa) && equipa.compareTo("F") != 0 && equipa.compareTo("f") != 0){
+            System.out.println("Equipa inválida");
+            equipa = this.ins.nextLine();
+
+        }
+        equipas = new ArrayList<>();
+        if(equipa.compareTo("F") != 0 && equipa.compareTo("F") != 0) equipas.add(equipa);
 
         System.out.println("Insira o nome do jogador");
-        nome = this.ins.next();
+        nome = this.ins.nextLine();
         System.out.println("Insira o numero do jogador (0-99)");
         numero = leAtributo("Numero");
         System.out.println("Insira o velocidade do jogador (0-99)");
@@ -120,24 +145,52 @@ public class FmView {
         System.out.println("Insira o valor do passe (0-99)");
         passe = leAtributo("Passe");
 
+
         switch(sel){
             case 1:
+                System.out.println("Insira o valor da elasticidade do jogador (0-99)");
+                elasticidade = leAtributo("Elasticidade");
+                System.out.println("Insira o valor dos reflexos do jogador (0-99)");
+                reflexos = leAtributo("Reflexos");
 
+                this.controller.criaRedes(nome,numero,velocidade,resistencia,destreza,impulsao,jogoAereo,remate,passe,equipas,elasticidade,reflexos);
                 break;
 
             case 2:
+                System.out.println("Insira o valor do desarme do jogador (0-99)");
+                desarme = leAtributo("Desarme");
+                System.out.println("Insira o valor da marcacao do jogador (0-99)");
+                marcacao = leAtributo("Marcacao");
 
+                this.controller.criaDefesa(nome,numero,velocidade,resistencia,destreza,impulsao,jogoAereo,remate,passe,equipas,desarme,marcacao,agressividade);
                 break;
 
             case 3 :
+                System.out.println("Insira o valor da capacidade de cruzamento do jogador (0-99)");
+                capacidadeCruzamento = leAtributo("Capacidade de Cruzamento");
+                System.out.println("Insira o valor da marcacao do jogador (0-99)");
+                drible = leAtributo("Drible");
 
+                this.controller.criaLateral(nome,numero,velocidade,resistencia,destreza,impulsao,jogoAereo,remate,passe,equipas,capacidadeCruzamento,drible);
                 break;
 
             case 4:
+                System.out.println("Insira o valor da recuperação de bola (0-99)");
+                recuperacaoDeBola = leAtributo("Recuperacão De Bola");
+                System.out.println("Insira o valor da marcacão do jogador (0-99)");
+                criatividade = leAtributo("Criatividade");
 
+                this.controller.criaMedio(nome,numero,velocidade,resistencia,destreza,impulsao,jogoAereo,remate,passe,equipas,recuperacaoDeBola,criatividade);
                 break;
 
             case 5:
+
+                System.out.println("Insira o valor da Finalização (0-99)");
+                finalizacao = leAtributo("Finalização");
+                System.out.println("Insire o valor do drible");
+                drible = leAtributo("Drible");
+                System.out.println("Insira o valor da marcacão do jogador (0-99)");
+                piorPe = leAtributo("Pior pé");
 
                 break;
 

@@ -44,10 +44,10 @@ public class Jogo implements Serializable {
         this.substitucoesFora = new HashMap<>(sf);
     }
 
-    /*public Jogo (int tempo,Equipa equipaVisitada,Equipa equipaVisitante,boolean pausa,int golosCasa,int golosFora){
+    public Jogo (int tempo,String equipaVisitada,String equipaVisitante,boolean pausa,int golosCasa,int golosFora){
         this.tempo = tempo;
-        this.equipaVisitada = equipaVisitada.clone();
-        this.equipaVisitante = equipaVisitante.clone();
+        this.equipaVisitada = equipaVisitada;
+        this.equipaVisitante = equipaVisitante;
         this.pausa = pausa;
         this.golosCasa = golosCasa;
         this.golosFora = golosFora;
@@ -60,7 +60,7 @@ public class Jogo implements Serializable {
         this.pausa = j.getPausa();
         this.golosCasa = j.getGolosCasa();
         this.golosFora = j.getGolosFora();
-    }*/
+    }
 
     // gets e sets
 

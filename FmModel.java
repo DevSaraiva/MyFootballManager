@@ -121,11 +121,16 @@ public class FmModel implements  Serializable {
     }
     
 
+    //Função que cria um Guarde - Redes  e adiciona ao sistema
+
     public void criaRedes(String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo, int remate,
                           int passe,List<String> equipas, int elasticiadde, int reflexos){
 
         Jogador jog = new GuardaRedes(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo, remate, passe,equipas,  elasticiadde, reflexos);
         this.jogadores.put(nome, jog);
+        if(equipas.size() > 0){
+            this.equipas.get(equipas.get(equipas.size() - 1)).getPlantel().add(jog);
+        }
     }
 
     
@@ -135,16 +140,22 @@ public class FmModel implements  Serializable {
         Jogador jog = new Defesa(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo,
                     remate, passe, equipas, desarme, marcaçao, agressividade);
         this.jogadores.put(nome, jog);
+        if(equipas.size() > 0){
+            this.equipas.get(equipas.get(equipas.size() - 1)).getPlantel().add(jog);
+        }
     }
     
     public void criaLateral(String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
-                         int remate, int passe, List<String> equipas, int desarme,int marcaçao,int agressividade, int capacidadeCruzamento, int drible){
+                         int remate, int passe, List<String> equipas, int capacidadeCruzamento, int drible){
                              
                             
         Jogador jog = new Lateral(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo,
-                         remate, passe, equipas, desarme, marcaçao, agressividade, capacidadeCruzamento, drible);
-        this.jogadores.put(nome, jog);                 
-                            
+                         remate, passe, equipas, capacidadeCruzamento, drible);
+        this.jogadores.put(nome, jog);
+        if(equipas.size() > 0){
+          this.equipas.get(equipas.get(equipas.size() - 1)).getPlantel().add(jog);
+        }
+
     }
     
     public void criaMedio(String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
@@ -153,7 +164,10 @@ public class FmModel implements  Serializable {
                             
         Jogador jog = new Medio(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo,
                    remate, passe, equipas, recuperaçaoDeBola, criatividade);
-        this.jogadores.put(nome, jog);                 
+        this.jogadores.put(nome, jog);
+        if(equipas.size() > 0){
+           this.equipas.get(equipas.get(equipas.size() - 1)).getPlantel().add(jog);
+        }
                             
     }
     
@@ -165,7 +179,10 @@ public class FmModel implements  Serializable {
         Jogador jog = new Avancado(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo,
                      remate, passe, equipas, finalizacao, drible,
                      piorPe);
-        this.jogadores.put(nome, jog);                 
+        this.jogadores.put(nome, jog);
+        if(equipas.size() > 0){
+           this.equipas.get(equipas.get(equipas.size() - 1)).getPlantel().add(jog);
+        }
                             
     }
 
@@ -240,6 +257,12 @@ public class FmModel implements  Serializable {
                 collect(Collectors.toList());
 
 
+
+    }
+
+    public  boolean existeEquipa(String nome){
+        System.out.println(nome);
+        return this.equipas.containsKey(nome);
 
     }
 }

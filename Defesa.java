@@ -68,11 +68,14 @@ public class Defesa extends Jogador implements Serializable {
     }
 
     public String toString() {
-        return "Defesas{" +
-                "desarme=" + this.desarme +
-                ", marcaçao=" + this.marcaçao +
-                ", agressividade=" + this.agressividade +
-                "} " + super.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Defesa");
+        sb.append("\n");sb.append(super.toString());
+        sb.append("\n\tDesarme="); sb.append(this.desarme);
+        sb.append("\n\tMarcação="); sb.append(this.marcaçao);
+        sb.append("\n\tAgressividade=");sb.append(this.agressividade);
+        sb.append("\n");
+        return sb.toString();
     }
 
     public Jogador clone() {

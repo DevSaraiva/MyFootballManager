@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,11 +60,15 @@ public class Lateral extends Jogador
     }
 
     public String toString() {
-        return "Laterais{" +
-                "capacidadeCruzamento=" + this.capacidadeCruzamento +
-                ", drible=" + this.drible +
-                "} " + super.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Lateral");
+        sb.append("\n");sb.append(super.toString());
+        sb.append("\n\tCapacidade Cruzamento="); sb.append(this.capacidadeCruzamento);
+        sb.append("\n\tDrible="); sb.append(this.drible);
+        sb.append("\n");
+        return sb.toString();
     }
+
     public Jogador clone() {
         return new Lateral(this);
     }
@@ -77,6 +82,21 @@ public class Lateral extends Jogador
                 0.05 * super.getJogoAereo() +
                 0.10 * super.getRemate() +
                 0.15 * super.getPasse());
+    }
+
+    public static Lateral parse(String input){
+        String[] campos = input.split(",");
+        return new Lateral(campos[0],
+                Integer.parseInt(campos[1]),
+                Integer.parseInt(campos[2]),
+                Integer.parseInt(campos[3]),
+                Integer.parseInt(campos[4]),
+                Integer.parseInt(campos[5]),
+                Integer.parseInt(campos[6]),
+                Integer.parseInt(campos[7]),
+                Integer.parseInt(campos[8]),
+                new ArrayList<>(),
+                Integer.parseInt(campos[9]),50);
     }
 }
 

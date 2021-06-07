@@ -56,10 +56,12 @@ public class GuardaRedes extends Jogador implements Serializable
     }
 
     public String toString() {
-        return "GuardaRedes{" +
-                "elasticidade=" + this.elasticidade +
-                ", reflexos=" + this.reflexos +
-                "} " + super.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("GuardaRedes");
+        sb.append("\n");sb.append(super.toString());
+        sb.append("\n\tElasticidade="); sb.append(this.elasticidade);
+        sb.append("\n\tReflexos="); sb.append(this.reflexos);
+        return sb.toString();
     }
 
     public Jogador clone() {

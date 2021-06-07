@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Jogador implements Serializable
+public abstract class Jogador implements Serializable,Comparable<Jogador>
 {
     private String nome;
     private int numero;
@@ -163,21 +163,47 @@ public abstract class Jogador implements Serializable
     }
 
     public String toString() {
-        return "Jogador{" +
-                "nome='" + this.nome + '\'' +
-                ", numero=" + this.numero +
-                ", velocidade=" + this.velocidade +
-                ", resistencia=" + this.resistencia +
-                ", destreza=" + this.destreza +
-                ", impulsao=" + this.impulsao +
-                ", jogoAereo=" + this.jogoAereo +
-                ", remate=" + this.remate +
-                ", passe=" + this.passe +
-                ", Habilidade=" + this.Habilidade +
-                ", Equipas=" + this.equipas +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("\tNome: "); sb.append(this.nome);
+        sb.append("\n\tNúmero:"); sb.append(this.numero);
+        sb.append("\n\tVelocidade="); sb.append(this.velocidade);
+        sb.append("\n\tResistência="); sb.append(this.resistencia);
+        sb.append("\n\tDestreza="); sb.append(this.destreza);
+        sb.append("\n\tImpulsao="); sb.append(this.impulsao);
+        sb.append("\n\tJogo Aéreo="); sb.append(this.jogoAereo);
+        sb.append("\n\tRemate="); sb.append(this.remate);
+        sb.append("\n\tPasse="); sb.append(this.passe);
+        sb.append("\n\tHabilidade="); sb.append(this.Habilidade);
+        sb.append("\n\tEquipas="); sb.append(this.equipas);
+        return sb.toString();
     }
 
     public abstract Jogador clone();
+
+    public int compareTo(Jogador j) {
+        if(this instanceof GuardaRedes && j instanceof GuardaRedes ||
+                this instanceof Defesa && j instanceof Defesa||
+                this instanceof Medio && j instanceof Medio ||
+                this instanceof Avancado && j instanceof Avancado ||
+                this instanceof Lateral && j instanceof Lateral)
+            return (this.Habilidade - j.Habilidade);
+        else{
+            int a = 0 , b = 0;
+            if (this instanceof GuardaRedes) a = 1;
+            if (this instanceof Defesa) a = 2;
+            if (this instanceof Medio) a = 3;
+            if (this instanceof Avancado) a = 4;
+            if (this instanceof Lateral) a = 5;
+            if (j instanceof GuardaRedes) b = 1;
+            if (j instanceof Defesa) b = 2;
+            if (j instanceof Medio) b = 3;
+            if (j instanceof Avancado) b = 4;
+            if (j instanceof Lateral) b = 5;
+            return a-b;
+        }
+
+    }
+
+
 
 }

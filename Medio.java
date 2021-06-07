@@ -55,10 +55,13 @@ public class Medio extends Jogador implements Serializable {
     }
 
     public String toString() {
-        return "Medios{" +
-                "recuperaçaoDeBola=" + this.recuperaçaoDeBola +
-                ", criatividade=" + this.criatividade +
-                "} " + super.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Médio");
+        sb.append("\n");sb.append(super.toString());
+        sb.append("\n\tRecuperação de Bola="); sb.append(this.recuperaçaoDeBola);
+        sb.append("\n\tCriatividade="); sb.append(this.criatividade);
+        sb.append("\n");
+        return sb.toString();
     }
 
     public Jogador clone() {

@@ -122,40 +122,23 @@ public class FmController
     }
 
     public void criaLateral(String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
-                            int remate, int passe, List<String> equipas, int desarme,int marcaçao,int agressividade, int capacidadeCruzamento, int drible){
+                            int remate, int passe, List<String> equipas,int capacidadeCruzamento, int drible){
 
-
-
+        this.model.criaLateral(nome,numero,velocidade,resistencia,destreza,impulsao,jogoAereo,remate,passe,equipas,capacidadeCruzamento,drible);
 
     }
 
     public void criaMedio(String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
                           int remate, int passe, List<String> equipas, int recuperaçaoDeBola, int criatividade){
-
-
-
-
+            this.model.criaMedio(nome,numero,velocidade,resistencia,destreza,impulsao,jogoAereo,remate,passe,equipas,recuperaçaoDeBola,criatividade);
     }
 
     public void criaAvancado(String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
                              int remate, int passe, List<String> equipas, int finalizacao, int drible,
                              int piorPe){
 
-
-
-
+            this.model.criaAvancado(nome,numero,velocidade,resistencia,destreza,impulsao,jogoAereo,remate,passe,equipas,finalizacao,drible,piorPe);
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     //Devolve Nomes GuardaRedes
@@ -167,5 +150,8 @@ public class FmController
 
     }
 
+    public  boolean existeEquipa(String nome){
+        return this.model.existeEquipa(nome);
+    }
 
 }
