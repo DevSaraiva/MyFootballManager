@@ -7,7 +7,7 @@ import java.util.Objects;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Lateral extends Defesa
+public class Lateral extends Jogador
 {
     private int capacidadeCruzamento;
     private int drible;
@@ -19,11 +19,9 @@ public class Lateral extends Defesa
     }
 
     public Lateral (String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
-                    int remate, int passe, List<String> equipas, int desarme, int marcaçao,
-                    int agressividade, int capacidadeCruzamento, int drible){
+                    int remate, int passe, List<String> equipas, int capacidadeCruzamento, int drible){
 
-        super(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo, remate, passe, equipas,
-              desarme,marcaçao,agressividade);
+        super(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo, remate, passe, equipas);
         this.capacidadeCruzamento = capacidadeCruzamento;
         this.drible = drible;
         super.setHabilidade(this.calculaHabilidadeJogador());
@@ -67,7 +65,7 @@ public class Lateral extends Defesa
                 "} " + super.toString();
     }
     public Jogador clone() {
-        return new Defesa(this);
+        return new Lateral(this);
     }
 
     public int calculaHabilidadeJogador() {

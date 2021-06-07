@@ -148,11 +148,11 @@ public class FmModel implements  Serializable {
     }
     
     public void criaMedio(String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
-                   int remate, int passe, List<String> clubes, int recuperaçaoDeBola, int criatividade){
+                   int remate, int passe, List<String> equipas, int recuperaçaoDeBola, int criatividade){
                              
                             
         Jogador jog = new Medio(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo,
-                   remate, passe,clubes, recuperaçaoDeBola, criatividade);
+                   remate, passe, equipas, recuperaçaoDeBola, criatividade);
         this.jogadores.put(nome, jog);                 
                             
     }

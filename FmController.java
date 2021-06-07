@@ -108,6 +108,56 @@ public class FmController
         return jogos;
     }
 
+    public void criaRedes(String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo, int remate,
+                          int passe,List<String> equipas, int elasticiadde, int reflexos){
+
+            this.model.criaRedes(nome,numero,velocidade,resistencia,destreza,impulsao,jogoAereo,remate,passe,equipas,elasticiadde,reflexos);
+    }
+
+
+    public void criaDefesa(String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
+                           int remate, int passe, List<String> equipas, int desarme,int marcaçao,int agressividade){
+
+        this.model.criaDefesa(nome,numero,velocidade,resistencia,destreza,impulsao,jogoAereo,remate,passe,equipas,desarme,marcaçao,agressividade);
+    }
+
+    public void criaLateral(String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
+                            int remate, int passe, List<String> equipas, int desarme,int marcaçao,int agressividade, int capacidadeCruzamento, int drible){
+
+
+
+
+    }
+
+    public void criaMedio(String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
+                          int remate, int passe, List<String> equipas, int recuperaçaoDeBola, int criatividade){
+
+
+
+
+    }
+
+    public void criaAvancado(String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
+                             int remate, int passe, List<String> equipas, int finalizacao, int drible,
+                             int piorPe){
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     //Devolve Nomes GuardaRedes
 
     public List<String> getGuardaRedes(){
