@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -18,10 +19,10 @@ public class Lateral extends Defesa
     }
 
     public Lateral (String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
-                     int remate, int passe, int desarme,int marcaçao,
-                     int agressividade, int capacidadeCruzamento, int drible){
+                    int remate, int passe, List<String> equipas, int desarme, int marcaçao,
+                    int agressividade, int capacidadeCruzamento, int drible){
 
-        super(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo, remate, passe,
+        super(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo, remate, passe, equipas,
               desarme,marcaçao,agressividade);
         this.capacidadeCruzamento = capacidadeCruzamento;
         this.drible = drible;

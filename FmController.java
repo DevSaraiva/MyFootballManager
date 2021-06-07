@@ -14,29 +14,42 @@ public class FmController
 
     //Função que de acordo com o input do utilizador decide a forma como faz o load
 
-    public void loadDataController(int i){ // if i  == 0 load custom files else load given text file
+    public void loadDataController(int i) { // if i  == 1 load custom files else load given text file
 
-            if( i == 0) {
-                try {
-                    this.model.loadData();
+        if (i == 2) {
 
-                } catch (IOException e) {
+            try {
+                Parser.parse(model);
 
-                    e.printStackTrace();
-
-                } catch (ClassNotFoundException e) {
-
-                    e.printStackTrace();
-                }
-            }else{
-
-                try {
-                    Parser.parse(model);
-
-                } catch (LinhaIncorretaException e) {
-                    e.printStackTrace();
-                }
+            } catch (LinhaIncorretaException e) {
+                e.printStackTrace();
             }
+        } else {
+
+            try {
+                this.model.loadData();
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
+
+            } catch (ClassNotFoundException e) {
+
+                e.printStackTrace();
+            }
+
+
+        }
+    }
+    public String getJogador(String s){
+
+        return this.model.getJogadores().get(s).toString();
+
+    }
+
+    public String getEquipa(String s){
+
+        return this.model.getEquipas().get(s).toString();
 
     }
 
@@ -67,7 +80,4 @@ public class FmController
         return  nomesEquipas;
 
     }
-
-
-
 }

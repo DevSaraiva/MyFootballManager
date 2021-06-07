@@ -1,4 +1,6 @@
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Defesa extends Jogador implements Serializable {
@@ -15,9 +17,9 @@ public class Defesa extends Jogador implements Serializable {
     }
 
     public Defesa (String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
-                    int remate, int passe,int desarme,int marcaçao,int agressividade){
+                   int remate, int passe, List<String> equipas, int desarme, int marcaçao, int agressividade){
 
-        super(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo, remate, passe);
+        super(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo, remate, passe, equipas);
         this.desarme = desarme;
         this.marcaçao = marcaçao;
         this.agressividade = agressividade;
@@ -77,6 +79,7 @@ public class Defesa extends Jogador implements Serializable {
     }
 
     public static Defesa parse(String input){
+        List<String> equipas = new ArrayList<>();
         String[] campos = input.split(",");
         return new Defesa(campos[0], Integer.parseInt(campos[1]),
                 Integer.parseInt(campos[2]),
@@ -86,6 +89,6 @@ public class Defesa extends Jogador implements Serializable {
                 Integer.parseInt(campos[6]),
                 Integer.parseInt(campos[7]),
                 Integer.parseInt(campos[8]),
-                50,50,50);
+                equipas,50,50,50);
     }
 }

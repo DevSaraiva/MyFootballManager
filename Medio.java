@@ -1,4 +1,6 @@
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -14,8 +16,8 @@ public class Medio extends Jogador implements Serializable {
     }
 
     public Medio (String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
-                   int remate, int passe, int recuperaçaoDeBola, int criatividade){
-        super(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo, remate, passe);
+                  int remate, int passe, List<String>  equipas, int recuperaçaoDeBola, int criatividade){
+        super(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo, remate, passe, equipas);
         this.recuperaçaoDeBola  = recuperaçaoDeBola;
         this.criatividade = criatividade;
     }
@@ -64,6 +66,7 @@ public class Medio extends Jogador implements Serializable {
 
     public static Medio parse(String input){
         String[] campos = input.split(",");
+        List<String> clubes = new ArrayList<>();
         return new Medio(campos[0],
                 Integer.parseInt(campos[1]),
                 Integer.parseInt(campos[2]),
@@ -73,6 +76,7 @@ public class Medio extends Jogador implements Serializable {
                 Integer.parseInt(campos[6]),
                 Integer.parseInt(campos[7]),
                 Integer.parseInt(campos[8]),
+                clubes,
                 Integer.parseInt(campos[9]),
                 50);
     }

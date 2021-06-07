@@ -1,4 +1,6 @@
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Avancado extends Jogador implements Serializable
@@ -15,9 +17,9 @@ public class Avancado extends Jogador implements Serializable
    }
 
    public Avancado (String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
-                     int remate, int passe, int finalizacao, int drible,
-                     int piorPe){
-      super(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo, remate, passe);
+                    int remate, int passe, List<String> equipas, int finalizacao, int drible,
+                    int piorPe){
+      super(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo, remate, passe,equipas);
       this.finalizacao = finalizacao;
       this.drible = drible;
       this.piorPe = piorPe;
@@ -79,6 +81,7 @@ public class Avancado extends Jogador implements Serializable
 
    public static Avancado parse(String input){
       String[] campos = input.split(",");
+      List<String> equipas = new ArrayList<>();
       return new Avancado(campos[0],
               Integer.parseInt(campos[1]),
               Integer.parseInt(campos[2]),
@@ -88,6 +91,6 @@ public class Avancado extends Jogador implements Serializable
               Integer.parseInt(campos[6]),
               Integer.parseInt(campos[7]),
               Integer.parseInt(campos[8]),
-              50,50,50);
+              equipas,50,50,50);
    }
 }

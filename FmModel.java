@@ -120,48 +120,48 @@ public class FmModel implements  Serializable {
     
 
     public void criaRedes(String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo, int remate,
-                          int passe, int elasticiadde, int reflexos){
+                          int passe,List<String> equipas, int elasticiadde, int reflexos){
 
-        Jogador jog = new GuardaRedes(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo, remate, passe,  elasticiadde, reflexos);
+        Jogador jog = new GuardaRedes(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo, remate, passe,equipas,  elasticiadde, reflexos);
         this.jogadores.put(nome, jog);
     }
 
     
     public void criaDefesa(String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
-                    int remate, int passe,int desarme,int marcaçao,int agressividade){
+                    int remate, int passe, List<String> equipas, int desarme,int marcaçao,int agressividade){
 
         Jogador jog = new Defesa(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo,
-                    remate, passe, desarme, marcaçao, agressividade);
+                    remate, passe, equipas, desarme, marcaçao, agressividade);
         this.jogadores.put(nome, jog);
     }
     
     public void criaLateral(String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
-                         int remate, int passe, int desarme,int marcaçao,int agressividade, int capacidadeCruzamento, int drible){
+                         int remate, int passe, List<String> equipas, int desarme,int marcaçao,int agressividade, int capacidadeCruzamento, int drible){
                              
                             
         Jogador jog = new Lateral(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo,
-                         remate, passe, desarme, marcaçao, agressividade, capacidadeCruzamento, drible);
+                         remate, passe, equipas, desarme, marcaçao, agressividade, capacidadeCruzamento, drible);
         this.jogadores.put(nome, jog);                 
                             
     }
     
     public void criaMedio(String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
-                   int remate, int passe, int recuperaçaoDeBola, int criatividade){
+                   int remate, int passe, List<String> clubes, int recuperaçaoDeBola, int criatividade){
                              
                             
         Jogador jog = new Medio(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo,
-                   remate, passe, recuperaçaoDeBola, criatividade);
+                   remate, passe,clubes, recuperaçaoDeBola, criatividade);
         this.jogadores.put(nome, jog);                 
                             
     }
     
     public void criaAvancado(String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
-                     int remate, int passe, int finalizacao, int drible,
+                     int remate, int passe, List<String> equipas, int finalizacao, int drible,
                      int piorPe){
                              
                             
         Jogador jog = new Avancado(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo,
-                     remate, passe, finalizacao, drible,
+                     remate, passe, equipas, finalizacao, drible,
                      piorPe);
         this.jogadores.put(nome, jog);                 
                             

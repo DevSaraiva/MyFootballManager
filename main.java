@@ -8,12 +8,7 @@ public class main {
         FmController controller = new FmController(model);
         FmView view = new FmView(controller);
         view.run();
+
+
     }
-
-
-
-
-
-
-
 }

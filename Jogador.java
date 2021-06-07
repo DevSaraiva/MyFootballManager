@@ -1,4 +1,6 @@
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Jogador implements Serializable
@@ -12,6 +14,7 @@ public abstract class Jogador implements Serializable
     private int jogoAereo;
     private int remate;
     private int passe;
+    private List<String> equipas;
     private int Habilidade;
 
     public Jogador(){
@@ -25,10 +28,11 @@ public abstract class Jogador implements Serializable
         this.remate = 0;
         this.passe =0;
         this.Habilidade = 0;
+        this.equipas = new ArrayList<>();
     }
 
     public Jogador (String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
-                    int remate, int passe){
+                    int remate, int passe, List<String> equipas){
         this.nome = nome;
         this.numero = numero;
         this.velocidade = velocidade;
@@ -38,7 +42,9 @@ public abstract class Jogador implements Serializable
         this.jogoAereo = jogoAereo;
         this.remate = remate;
         this.passe = passe;
+        this.equipas = equipas;
         this.Habilidade = 0;
+
     }
 
     public Jogador (Jogador j){
@@ -52,6 +58,7 @@ public abstract class Jogador implements Serializable
         this.remate = j.getRemate();
         this.passe = j.getPasse();
         this.Habilidade = j.getHabilidade();
+        this.equipas = j.getEquipas();
 
     }
 
@@ -96,6 +103,9 @@ public abstract class Jogador implements Serializable
         return this.Habilidade;
     }
 
+    public List<String> getEquipas() {
+        return this.equipas;
+    }
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -137,6 +147,9 @@ public abstract class Jogador implements Serializable
         this.Habilidade = habilidade;
     }
 
+    public void setEquipas(List<String> equipas) {
+        this.equipas = equipas;
+    }
 
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -157,10 +170,10 @@ public abstract class Jogador implements Serializable
                 ", remate=" + this.remate +
                 ", passe=" + this.passe +
                 ", Habilidade=" + this.Habilidade +
+                ", Equipas=" + this.equipas +
                 '}';
     }
 
     public abstract Jogador clone();
 
 }
-
