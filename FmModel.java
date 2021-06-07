@@ -182,8 +182,30 @@ public class FmModel implements  Serializable {
                 j.setEquipas(historico);
             }
         }
+    }
 
+    public class JogadorInexistenteEquipaException extends Exception {
+        public JogadorInexistenteEquipaException(){
+            super();
+        }
 
+        public JogadorInexistenteEquipaException(String s){
+            super(s);
+        }
+    }
+
+    public void mudaJogador(Equipa o, Equipa d, String nome) throws JogadorInexistenteEquipaException {
+
+        Jogador jogadorARemover = null;
+        for (Jogador j : o.getPlantel()) {
+            if (j.getNome().equals(nome))
+                jogadorARemover = j;
+        }
+        if (jogadorARemover == null) throw new JogadorInexistenteEquipaException();
+        else {
+            o.removeJogador(jogadorARemover);
+            d.insereJogador(jogadorARemover);
+        }
     }
 
     public void setEquipas(Map<String, Equipa> equipas) {

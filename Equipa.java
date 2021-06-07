@@ -74,6 +74,10 @@ public class Equipa implements Serializable
         this.Plantel.add(j);
     }
 
+    public void removeJogador (Jogador j) {
+        this.Plantel.remove(j);
+    }
+
     public String toString(){
         String r =  "Equipa:" + this.NomeDaEquipa+ "\n";
         for (Jogador j : this.Plantel){
