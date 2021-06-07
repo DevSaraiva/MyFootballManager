@@ -17,6 +17,8 @@ public abstract class Jogador implements Serializable
     private List<String> equipas;
     private int Habilidade;
 
+
+
     public Jogador(){
         this.nome = "";
         this.numero = 0;
@@ -33,6 +35,7 @@ public abstract class Jogador implements Serializable
 
     public Jogador (String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
                     int remate, int passe, List<String> equipas){
+
         this.nome = nome;
         this.numero = numero;
         this.velocidade = velocidade;
@@ -44,6 +47,7 @@ public abstract class Jogador implements Serializable
         this.passe = passe;
         this.equipas = equipas;
         this.Habilidade = 0;
+        this.equipas = equipas;
 
     }
 
@@ -143,7 +147,7 @@ public abstract class Jogador implements Serializable
         this.passe = passe;
     }
 
-    public void setHabilidadeAtacante(int habilidade) {
+    public void setHabilidade(int habilidade) {
         this.Habilidade = habilidade;
     }
 

@@ -23,6 +23,7 @@ public class Defesa extends Jogador implements Serializable {
         this.desarme = desarme;
         this.marcaçao = marcaçao;
         this.agressividade = agressividade;
+        super.setHabilidade(this.calculaHabilidadeJogador());
     }
 
     public Defesa (Defesa d){
@@ -90,5 +91,16 @@ public class Defesa extends Jogador implements Serializable {
                 Integer.parseInt(campos[7]),
                 Integer.parseInt(campos[8]),
                 equipas,50,50,50);
+    }
+
+    public int calculaHabilidadeJogador() {
+        return (int) (0.15 * this.desarme + 0.10 * this.agressividade + 0.15 * this.marcaçao +
+                        0.10 * super.getVelocidade() +
+                        0.10 * super.getResistencia() +
+                        0.05 * super.getDestreza() +
+                        0.10 * super.getImpulsao() +
+                        0.10 * super.getJogoAereo() +
+                        0.05 * super.getRemate() +
+                        0.10 * super.getPasse());
     }
 }

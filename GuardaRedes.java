@@ -12,6 +12,7 @@ public class GuardaRedes extends Jogador implements Serializable
         super();
         this.elasticidade = 0;
         this.reflexos = 0;
+        super.setHabilidade(this.calculaHabilidadeJogador());
     }
 
     public GuardaRedes (String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
@@ -20,6 +21,7 @@ public class GuardaRedes extends Jogador implements Serializable
         super(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo, remate, passe,equipas);
         this.elasticidade = elasticidade;
         this.reflexos = reflexos;
+        super.setHabilidade(this.calculaHabilidadeJogador());
     }
 
     public GuardaRedes (GuardaRedes gr){
@@ -80,8 +82,15 @@ public class GuardaRedes extends Jogador implements Serializable
                 50);
     }
 
-
-
-
+    public int calculaHabilidadeJogador() {
+        return (int) (0.15 * this.elasticidade + 0.2 * this.reflexos +
+                        0.10 * super.getVelocidade() +
+                        0.05 * super.getResistencia() +
+                        0.10 * super.getDestreza() +
+                        0.10 * super.getImpulsao() +
+                        0.10 * super.getJogoAereo() +
+                        0.05 * super.getRemate() +
+                        0.15 * super.getPasse());
+    }
 
 }

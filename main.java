@@ -9,6 +9,5 @@ public class main {
         FmView view = new FmView(controller);
         view.run();
 
-
     }
 }
