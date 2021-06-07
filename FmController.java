@@ -20,6 +20,7 @@ public class FmController
 
             try {
                 Parser.parse(model);
+                model.atualizaHistóricoEquipas();
 
             } catch (LinhaIncorretaException e) {
                 e.printStackTrace();

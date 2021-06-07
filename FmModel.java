@@ -167,6 +167,22 @@ public class FmModel implements  Serializable {
                             
     }
 
+    //Após a leitura dos logs em texto é necessário colocar no histórico de cada jogador a equipa onde se encontra no momento
+    //este metodo serve exatamente para isso
+
+    public void atualizaHistóricoEquipas(){
+        Map<String,Equipa> equipas = this.getEquipas();
+        for(Equipa e: equipas.values()){
+            String nome = e.getNomeDaEquipa();
+            for(Jogador j: e.getPlantel()){
+                List<String> historico = j.getEquipas();
+                historico.add(nome);
+                j.setEquipas(historico);
+            }
+        }
+
+
+    }
 
     public void setEquipas(Map<String, Equipa> equipas) {
         this.equipas = equipas;
