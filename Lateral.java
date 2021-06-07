@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -7,7 +8,7 @@ import java.util.Objects;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Lateral extends Defesa
+public class Lateral extends Jogador
 {
     private int capacidadeCruzamento;
     private int drible;
@@ -19,11 +20,9 @@ public class Lateral extends Defesa
     }
 
     public Lateral (String nome, int numero, int velocidade, int resistencia, int destreza, int impulsao, int jogoAereo,
-                    int remate, int passe, List<String> equipas, int desarme, int marcaçao,
-                    int agressividade, int capacidadeCruzamento, int drible){
+                    int remate, int passe, List<String> equipas, int capacidadeCruzamento, int drible){
 
-        super(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo, remate, passe, equipas,
-              desarme,marcaçao,agressividade);
+        super(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo, remate, passe, equipas);
         this.capacidadeCruzamento = capacidadeCruzamento;
         this.drible = drible;
         super.setHabilidade(this.calculaHabilidadeJogador());
@@ -61,13 +60,17 @@ public class Lateral extends Defesa
     }
 
     public String toString() {
-        return "Laterais{" +
-                "capacidadeCruzamento=" + this.capacidadeCruzamento +
-                ", drible=" + this.drible +
-                "} " + super.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Lateral");
+        sb.append("\n");sb.append(super.toString());
+        sb.append("\n\tCapacidade Cruzamento="); sb.append(this.capacidadeCruzamento);
+        sb.append("\n\tDrible="); sb.append(this.drible);
+        sb.append("\n");
+        return sb.toString();
     }
+
     public Jogador clone() {
-        return new Defesa(this);
+        return new Lateral(this);
     }
 
     public int calculaHabilidadeJogador() {
@@ -79,6 +82,21 @@ public class Lateral extends Defesa
                 0.05 * super.getJogoAereo() +
                 0.10 * super.getRemate() +
                 0.15 * super.getPasse());
+    }
+
+    public static Lateral parse(String input){
+        String[] campos = input.split(",");
+        return new Lateral(campos[0],
+                Integer.parseInt(campos[1]),
+                Integer.parseInt(campos[2]),
+                Integer.parseInt(campos[3]),
+                Integer.parseInt(campos[4]),
+                Integer.parseInt(campos[5]),
+                Integer.parseInt(campos[6]),
+                Integer.parseInt(campos[7]),
+                Integer.parseInt(campos[8]),
+                new ArrayList<>(),
+                Integer.parseInt(campos[9]),50);
     }
 }
 

@@ -141,7 +141,7 @@ public class FmModel implements  Serializable {
                              
                             
         Jogador jog = new Lateral(nome, numero, velocidade, resistencia, destreza, impulsao, jogoAereo,
-                         remate, passe, equipas, desarme, marcaçao, agressividade, capacidadeCruzamento, drible);
+                         remate, passe, equipas, capacidadeCruzamento, drible);
         this.jogadores.put(nome, jog);                 
                             
     }

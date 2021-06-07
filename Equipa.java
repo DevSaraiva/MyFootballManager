@@ -1,6 +1,8 @@
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 public class Equipa implements Serializable
 {
     private String NomeDaEquipa;
@@ -79,10 +81,23 @@ public class Equipa implements Serializable
     }
 
     public String toString(){
-        String r =  "Equipa:" + this.NomeDaEquipa+ "\n";
-        for (Jogador j : this.Plantel){
-            r += j.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Equipa: ");sb.append(this.NomeDaEquipa);
+        List<Jogador> sorted = this.Plantel.stream().sorted().collect(Collectors.toList());
+        for (Jogador j : sorted){
+            sb.append("\n\t");
+            if (j instanceof GuardaRedes) sb.append("GR->");
+            if (j instanceof Defesa) sb.append("D ->");
+            if (j instanceof Lateral) sb.append("L ->");
+            if (j instanceof Medio) sb.append("M ->");
+            if (j instanceof Avancado) sb.append("A ->");
+            sb.append(j.getHabilidade());sb.append(" ");
+            sb.append(j.getNome());
         }
-        return r;
+        return sb.toString();
     }
 }
+
+
+
+

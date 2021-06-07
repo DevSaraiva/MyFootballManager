@@ -67,11 +67,14 @@ public class Avancado extends Jogador implements Serializable
    }
 
    public String toString() {
-      return "Avancados{" +
-              "finalizacao=" + this.finalizacao +
-              ", drible=" + this.drible +
-              ", piorPe=" + this.piorPe +
-              "} " + super.toString();
+      StringBuilder sb = new StringBuilder();
+      sb.append("Avançados");
+      sb.append("\n");sb.append(super.toString());
+      sb.append("\n\tFinaliização="); sb.append(this.finalizacao);
+      sb.append("\n\tDrible="); sb.append(this.drible);
+      sb.append("\n\tPior Pé=");sb.append(this.piorPe);
+      sb.append("\n");
+      return sb.toString();
    }
 
 
