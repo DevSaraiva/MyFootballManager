@@ -42,16 +42,26 @@ public class FmController
 
         }
     }
+    //Devolve o jogador selecionado
+
     public String getJogador(String s){
 
         return this.model.getJogadores().get(s).toString();
 
     }
 
+    //Devolve a equipa selecionada
     public String getEquipa(String s){
 
         return this.model.getEquipas().get(s).toString();
 
+    }
+
+    //Devolve o jogo selecionado
+
+    public String getJogo(int selection){
+
+        return this.model.getJogos().get(selection).toString();
     }
 
     // Devolve os nomes dos jogadores para serem apresentados na view
@@ -68,7 +78,7 @@ public class FmController
         return  nomesJogadores;
     }
 
-    // Devolve os nomes das equipas para serem apresentadas na view
+    // Devolve as nomes das equipas para serem apresentadas na view
 
     public List<String> getEquipas(){
 
@@ -81,4 +91,22 @@ public class FmController
         return  nomesEquipas;
 
     }
+
+    // Devolve nome dos jogos
+
+    public List<String> getJogos(){
+
+        List<String> jogos = new ArrayList<>();
+
+        for(Jogo j: this.model.getJogos()){
+            String vs = j.getEquipaVisitada() + " vs  " + j.getEquipaVisitante() + "| Data:  " + j.getData().toString();
+            jogos.add(vs);
+
+        }
+
+        return jogos;
+    }
+
+
+
 }

@@ -70,6 +70,7 @@ public class FmModel implements  Serializable {
 
         loadJogadores();
         loadEquipas();
+        loadJogos();
     }
     
     public void saveJogadores() throws java.io.IOException {

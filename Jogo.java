@@ -88,21 +88,25 @@ public class Jogo implements Serializable {
         return this.golosFora;
     }
 
-    /*public void setTempo(int tempo) {
+    public LocalDate getData(){
+       return  this.data;
+    }
+
+    public void setTempo(int tempo) {
         this.tempo = tempo;
     }
 
-    public void setEquipaVisitada(Equipa equipaVisitada) {
+    public void setEquipaVisitada(String equipaVisitada) {
         this.equipaVisitada = equipaVisitada;
     }
 
-    public void setEquipaVisitante(Equipa equipaVisitante) {
+    public void setEquipaVisitante(String equipaVisitante) {
         this.equipaVisitante = equipaVisitante;
     }
 
     public void setPausa(boolean pausa) {
         this.pausa = pausa;
-    }*/
+    }
 
     public void setGolosCasa(int golosCasa) {
         this.golosCasa = golosCasa;
@@ -112,7 +116,7 @@ public class Jogo implements Serializable {
         this.golosFora = golosFora;
     }
 
-    /*public boolean equals(Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Jogo jogo = (Jogo) o;
@@ -129,13 +133,8 @@ public class Jogo implements Serializable {
                 ", golosCasa=" + this.golosCasa +
                 ", golosFora=" + this.golosFora +
                 '}';
-    }*/
-    
-    public String toString() {
-        return  "Jogo:" + this.equipaVisitada + " - " + this.equipaVisitante;
-                //+ " -> " + substituicoesCasa.toString()
-                //+ " -> " + substitucoesFora.toString();
     }
+
     
     public static Jogo parse(String input){
         String[] campos = input.split(",");

@@ -59,6 +59,16 @@ public class FmView {
 
     }
 
+
+    public void consultarJogosExistentes(){
+        int selection = -1;
+        List<String> jogos = this.controller.getJogos();
+        printOpcoes(jogos);
+        selection = this.ins.nextInt();
+        String s = this.controller.getJogo(selection);
+        System.out.println(s);
+    }
+
     public void run(){
 
         List<String> opcs;
@@ -81,6 +91,8 @@ public class FmView {
                     consultarEquipasExistentes();
                     break;
 
+                case 3:
+                    consultarJogosExistentes();
             }
 
 
