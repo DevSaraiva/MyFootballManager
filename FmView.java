@@ -64,6 +64,8 @@ public class FmView {
     }
 
 
+    //Consulta os jogos existestes
+
     public void consultarJogosExistentes(){
         int selection = -1;
         List<String> jogos = this.controller.getJogos();
@@ -352,9 +354,6 @@ public class FmView {
         } catch (FmModel.JogadorInexistenteEquipaException e) {
             System.out.println("O jogador não existe\n");
         }
-
-
-
 
 
 

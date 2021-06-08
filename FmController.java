@@ -85,7 +85,7 @@ public class FmController
         List<String> jogos = new ArrayList<>();
 
         for(Jogo j: this.model.getJogos()){
-            String vs = j.getEquipaVisitada() + " vs  " + j.getEquipaVisitante() + "| Data:  " + j.getData().toString();
+            String vs = j.getEquipaVisitada().getNomeDaEquipa() + " vs  " + j.getEquipaVisitante().getNomeDaEquipa() + " Data: " + j.getData().toString();
             jogos.add(vs);
 
         }
