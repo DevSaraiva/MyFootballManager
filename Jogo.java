@@ -254,10 +254,8 @@ public class Jogo implements Serializable {
             }
         }
 
-        System.out.println();
-
-        if(medio == 4) return "442";
-        else return "433";
+        if(medio == 4) return "4-4-2";
+        else return "4-3-3";
     }
 
     public static Jogo parse(String input,Map<String, Equipa> equipas) throws EquipaNaoExisteException{
