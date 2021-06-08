@@ -163,9 +163,25 @@ public abstract class Jogador implements Serializable,Comparable<Jogador>
     }
 
     public String toString() {
+        int size = this.equipas.size();
         StringBuilder sb = new StringBuilder();
         sb.append("\tNome: "); sb.append(this.nome);
+        //sb.append("Equipas: ");sb.append(this.equipas);
+        sb.append("\n\tEquipa Atual: ");
+        if (size == 0)
+            sb.append("Sem equipa");
+        else
+            sb.append(this.equipas.get(size-1));
+        if (size > 1) {
+            sb.append("\n\tEquipa Anteriores:");
+            int i = 0;
+            while (i < size - 1) {
+                sb.append(this.equipas.get(i));
+                i++;
+            }
+        }
         sb.append("\n\tNúmero:"); sb.append(this.numero);
+        sb.append("\n\tHabilidade="); sb.append(this.Habilidade);
         sb.append("\n\tVelocidade="); sb.append(this.velocidade);
         sb.append("\n\tResistência="); sb.append(this.resistencia);
         sb.append("\n\tDestreza="); sb.append(this.destreza);
@@ -173,8 +189,8 @@ public abstract class Jogador implements Serializable,Comparable<Jogador>
         sb.append("\n\tJogo Aéreo="); sb.append(this.jogoAereo);
         sb.append("\n\tRemate="); sb.append(this.remate);
         sb.append("\n\tPasse="); sb.append(this.passe);
-        sb.append("\n\tHabilidade="); sb.append(this.Habilidade);
-        sb.append("\n\tEquipas="); sb.append(this.equipas);
+
+
         return sb.toString();
     }
 
@@ -204,6 +220,12 @@ public abstract class Jogador implements Serializable,Comparable<Jogador>
 
     }
 
+    public void insereNovoClube (String d){
+        this.equipas.add(d);
+    }
 
+    public String getEquipaAtual (){
+        return this.equipas.get(this.equipas.size()-1);
+    }
 
 }

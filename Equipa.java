@@ -105,6 +105,7 @@ public class Equipa implements Serializable
         }
         return r;
     }
+
 }
 
 

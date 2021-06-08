@@ -154,4 +154,8 @@ public class FmController
         return this.model.existeEquipa(nome);
     }
 
+    public void transfereEquipa (String equipaDestino, String nome) throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteEquipaException {
+        this.model.transfereEquipa(equipaDestino,nome);
+    }
+
 }

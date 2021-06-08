@@ -22,6 +22,7 @@ public class FmView {
         System.out.println(("6 - Criar jogo"));
         System.out.println("7 - Correr Jogo");
         System.out.println("8 - Simular Jogo");
+        System.out.println("9 - Fazer Traansferência de Jogador");
         int sel = this.ins.nextInt();
 
         return sel;
@@ -68,6 +69,26 @@ public class FmView {
         selection = this.ins.nextInt();
         String s = this.controller.getJogo(selection);
         System.out.println(s);
+    }
+
+    public void fazerTransferencia() throws FmModel.JogadorInexistenteEquipaException, Jogo.EquipaNaoExisteException{
+        this.ins.nextLine();
+        System.out.println("Insira o nome do Jogador que pretende transferir");
+        String nomeJogador = this.ins.nextLine();
+        //System.out.println("Insira a equipa Origem");
+        //String equipaOrigem = this.ins.nextLine();
+        System.out.println("Insira a equipa Destino");
+        String equipaDestino = this.ins.nextLine();
+
+
+        //System.out.println(equipaOrigem+equipaDestino+nomeJogador);
+        try {
+            this.controller.transfereEquipa(equipaDestino,nomeJogador);
+        } catch (FmModel.JogadorInexistenteEquipaException e) {
+            e.printStackTrace();
+        } catch (Jogo.EquipaNaoExisteException e){
+            e.printStackTrace();
+        }
     }
 
     //Função que lê e verifica validade de atributo
@@ -197,7 +218,7 @@ public class FmView {
         }
     }
 
-    public void run(){
+    public void run() throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteEquipaException {
 
         List<String> opcs;
         int selection = -1;
@@ -225,6 +246,13 @@ public class FmView {
 
                 case 4:
                     criarJogador();
+                    break;
+
+                case 9:
+                    fazerTransferencia();
+                    break;
+
+                default :
                     break;
             }
 

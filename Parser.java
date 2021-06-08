@@ -73,7 +73,6 @@ public class Parser {
         m.setJogadores(jogadores);
 
 
-
     }
 
     public static List<String> lerFicheiro(String nomeFich) {
