@@ -199,6 +199,8 @@ public class FmModel implements  Serializable {
                 j.setEquipas(historico);
             }
         }
+
+        this.setEquipas(equipas);
     }
 
     public class JogadorInexistenteEquipaException extends Exception {
@@ -238,24 +240,64 @@ public class FmModel implements  Serializable {
     }
 
     public List<Jogo> getJogos() {
-        return jogos;
+        return this.jogos.stream().map(j -> j.clone()).collect(Collectors.toList());
     }
 
     public Map<String, Equipa> getEquipas() {
-        return equipas;
+        return this.equipas.entrySet().stream().collect(Collectors.toMap(e->e.getKey(),e->e.getValue().clone()));
     }
 
     public Map<String, Jogador> getJogadores() {
-        return jogadores;
+        return this.jogadores.entrySet().stream().collect(Collectors.toMap(e->e.getKey(),e->e.getValue().clone()));
     }
 
     public List<Jogador> getGuardaRedes(){
 
         return this.getJogadores().values().stream().
                 filter(v -> v instanceof GuardaRedes).
-                map(v -> (Jogador) v).   // v ´é antes do cast do tipo Veiculo
+                map(v -> (Jogador) v.clone()).
                 collect(Collectors.toList());
 
+
+
+    }
+    public List<Jogador> getDefesas(){
+
+        return this.getJogadores().values().stream().
+                filter(v -> v instanceof Defesa).
+                map(v -> (Jogador) v.clone()).
+                collect(Collectors.toList());
+
+
+
+    }
+
+    public List<Jogador> getLaterais(){
+
+        return this.getJogadores().values().stream().
+                filter(v -> v instanceof Lateral).
+                map(v -> (Jogador) v.clone()).
+                collect(Collectors.toList());
+
+
+    }
+
+    public List<Jogador> getMedios(){
+
+        return this.getJogadores().values().stream().
+                filter(v -> v instanceof Medio).
+                map(v -> (Jogador) v.clone()).
+                collect(Collectors.toList());
+
+
+    }
+
+    public List<Jogador> getAvancados(){
+
+        return this.getJogadores().values().stream().
+                filter(v -> v instanceof Avancado).
+                map(v -> (Jogador) v.clone()).   // v ´é antes do cast do tipo Veiculo
+                collect(Collectors.toList());
 
 
     }

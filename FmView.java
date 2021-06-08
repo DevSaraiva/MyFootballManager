@@ -75,7 +75,7 @@ public class FmView {
     public int leAtributo(String atributo){
         int atr = this.ins.nextInt();
         while(atr > 99 || atr < 1){
-            System.out.println(atributo+ "Inválido");
+            System.out.println(atributo+ " Inválido");
             atr = this.ins.nextInt();
         }
         return  atr;
@@ -194,7 +194,19 @@ public class FmView {
 
                 break;
 
+            default:
+                System.out.println("Seleção inválida");
+                break;
         }
+    }
+
+    //Função que suporta a funcionalidade de criar uma equipa
+
+    public void criarEquipa(){
+
+
+
+        
     }
 
     public void run(){
@@ -226,9 +238,15 @@ public class FmView {
                 case 4:
                     criarJogador();
                     break;
-            }
 
+                case 5:
+                    criarEquipa();
+                    break;
 
+            default:
+                System.out.println("Seleção inválida");
+                break;
+        }
 
         }
 

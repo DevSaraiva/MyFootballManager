@@ -174,6 +174,9 @@ public class Jogo implements Serializable {
                 '}';
     }
 
+    public Jogo clone(){
+        return new Jogo(this);
+    }
 
     public static class EquipaNaoExisteException extends Exception {
         public EquipaNaoExisteException(){
