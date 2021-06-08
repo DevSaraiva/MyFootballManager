@@ -1,3 +1,5 @@
+import java.awt.font.TextHitInfo;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +16,7 @@ public class FmView {
 
     public int menu(){
 
-        System.out.println("1 - Consultar jogadores existentes");
+        System.out.println("\n1 - Consultar jogadores existentes");
         System.out.println("2 - Consultar equipas existentes");
         System.out.println("3 - Consultar jogos");
         System.out.println(("4 - Criar Jogador"));
@@ -62,6 +64,8 @@ public class FmView {
     }
 
 
+    //Consulta os jogos existestes
+
     public void consultarJogosExistentes(){
         int selection = -1;
         List<String> jogos = this.controller.getJogos();
@@ -75,13 +79,10 @@ public class FmView {
         //this.ins.nextLine();
         System.out.println("Insira o nome do Jogador que pretende transferir");
         String nomeJogador = this.ins.nextLine();
-        //System.out.println("Insira a equipa Origem");
-        //String equipaOrigem = this.ins.nextLine();
         System.out.println("Insira a equipa Destino");
         String equipaDestino = this.ins.nextLine();
 
 
-        //System.out.println(equipaOrigem+equipaDestino+nomeJogador);
         try {
             this.controller.transfereEquipa(equipaDestino,nomeJogador);
         } catch (FmModel.JogadorInexistenteEquipaException e) {
@@ -104,7 +105,7 @@ public class FmView {
 
     // Função que suporta a funcionaldidade de criar um jogador
     public void criarJogador(){
-        System.out.println("Insira o tipo de jogador que pretende criar");
+        System.out.println("\nInsira o tipo de jogador que pretende criar");
         System.out.println("1 - Guarda - Redes");
         System.out.println("2 - Defesa");
         System.out.println("3 - Lateral");
@@ -112,7 +113,6 @@ public class FmView {
         System.out.println("5 - Avançado");
         int sel = leNumero(1,5,"Posição");
         //this.ins.nextLine();
-
 
         List<String> equipas = new ArrayList<>();
         String equipa = "";
@@ -182,7 +182,8 @@ public class FmView {
                 desarme = leNumero(1,99,"Desarme");
                 System.out.println("Insira o valor da marcacao do jogador (0-99)");
                 marcacao = leNumero(1,99,"Marcacao");
-
+                System.out.println("Insira o valor da agressividade do jogador (0-99)");
+                agressividade = leNumero(1,99,"Agressividade");
                 this.controller.criaDefesa(nome,numero,velocidade,resistencia,destreza,impulsao,jogoAereo,remate,passe,equipas,desarme,marcacao,agressividade);
                 break;
 
@@ -221,6 +222,7 @@ public class FmView {
         }
     }
 
+
     public class ComandoInvalidoException extends Exception {
         public ComandoInvalidoException(){
             super();
@@ -258,15 +260,157 @@ public class FmView {
     }
 
 
+    //Função que verifica se seleção de jogdores é válida
+
+    public boolean verificaSelecaoJogadores(String selection, int quantidade){
+
+        String[] nums = selection.split(",");
+        if(nums.length < quantidade) return false;
+        for(String s : nums){
+            int iguais = 0;
+            for(String s2 : nums){
+                if(s.compareTo(s2) == 0) iguais++;
+            }
+            if(iguais > 1 ) return  false;
+        }
+        return true;
+    }
+
+
+
+
+    //Função que suporta a funcionalidade de criar uma equipa
+
+    public void criarEquipa(){
+        this.ins.nextLine();
+        //Cria equipa sem jogadores
+        List<String> opcs;
+        String selection = "";
+        System.out.println("Insira o nome da equipa:");
+        String nomeEquipa = this.ins.nextLine();
+        while (this.controller.existeEquipa(nomeEquipa)){
+            System.out.println("Equipa já existe");
+            nomeEquipa = this.ins.nextLine();
+        }
+        System.out.println("Insira o nome do treinador");
+        String treinador = this.ins.nextLine();
+        List<Jogador> plantel = new ArrayList<>();
+        this.controller.criaEquipa(nomeEquipa,treinador,plantel);
+
+        //Lê o plantel
+        System.out.println("\nSelecione o Plantel\n");
+
+        //Guarda-Redes
+
+        System.out.println("\nSelecione no minimo 2 Guarda-Redes  x,y\n");
+        opcs = this.controller.getGuardaRedes();
+        printOpcoes(opcs);
+        selection =  ins.nextLine();
+        while(!verificaSelecaoJogadores(selection,2)){
+            System.out.println("Seleção inválida");
+            selection =  ins.nextLine();
+        }
+        try {
+            this.controller.adicionaJogadores(selection,nomeEquipa,"Guarda-Redes");
+        } catch (Jogo.EquipaNaoExisteException e) {
+            System.out.println("A equipa não existe\n");
+        } catch (FmModel.JogadorInexistenteEquipaException e) {
+            System.out.println("O jogador não existe\n");
+        }
+
+        //Defesas
+
+        System.out.println("\nSelecione no minimo 3 Defesas  x,y\n");
+        opcs = this.controller.getDefesas();
+        printOpcoes(opcs);
+        selection =  ins.nextLine();
+        while(!verificaSelecaoJogadores(selection,3)){
+            System.out.println("Seleção inválida");
+            selection =  ins.nextLine();
+        }
+        try {
+            this.controller.adicionaJogadores(selection,nomeEquipa,"Defesa");
+        } catch (Jogo.EquipaNaoExisteException e) {
+            System.out.println("A equipa não existe\n");
+        } catch (FmModel.JogadorInexistenteEquipaException e) {
+            System.out.println("O jogador não existe\n");
+        }
+
+        //Laterais
+
+        System.out.println("\nSelecione no minimo 3 Laterais  x,y\n");
+        opcs = this.controller.getLaterais();
+        printOpcoes(opcs);
+        selection =  ins.nextLine();
+        while(!verificaSelecaoJogadores(selection,3)){
+            System.out.println("Seleção inválida");
+            selection =  ins.nextLine();
+        }
+        try {
+            this.controller.adicionaJogadores(selection,nomeEquipa,"Lateral");
+        } catch (Jogo.EquipaNaoExisteException e) {
+            System.out.println("A equipa não existe\n");
+        } catch (FmModel.JogadorInexistenteEquipaException e) {
+            System.out.println("O jogador não existe\n");
+        }
+
+        //Medios
+
+        System.out.println("\nSelecione no minimo 5 Medios  x,y\n");
+        opcs = this.controller.getMedios();
+        printOpcoes(opcs);
+        selection =  ins.nextLine();
+        while(!verificaSelecaoJogadores(selection,5)){
+            System.out.println("Seleção inválida");
+            selection =  ins.nextLine();
+        }
+        try {
+            this.controller.adicionaJogadores(selection,nomeEquipa,"Medio");
+        } catch (Jogo.EquipaNaoExisteException e) {
+            System.out.println("A equipa não existe\n");
+        } catch (FmModel.JogadorInexistenteEquipaException e) {
+            System.out.println("O jogador não existe\n");
+        }
+
+        //Avancados
+
+        System.out.println("\nSelecione no minimo 4 Avançados  x,y\n");
+        opcs = this.controller.getAvancados();
+        printOpcoes(opcs);
+        selection =  ins.nextLine();
+        while(!verificaSelecaoJogadores(selection,4)){
+            System.out.println("Seleção inválida");
+            selection =  ins.nextLine();
+        }
+        try {
+            this.controller.adicionaJogadores(selection,nomeEquipa,"Avancado");
+        } catch (Jogo.EquipaNaoExisteException e) {
+            System.out.println("A equipa não existe\n");
+        } catch (FmModel.JogadorInexistenteEquipaException e) {
+            System.out.println("O jogador não existe\n");
+        }
+
+
+
+    }
+
     public void run(){
         List<String> opcs;
         int selection = -1;
         System.out.println("Insira 1 para carregar os seus dados");
         System.out.println("Insira 2 para carregar os dados predefinidos");
 
-
         selection = leNumero(1,2,"Comando");
-        this.controller.loadDataController(selection);
+        try {
+            this.controller.loadDataController(selection);
+        } catch (LinhaIncorretaException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
         while(true){
 
@@ -286,6 +430,10 @@ public class FmView {
 
                 case 4:
                     criarJogador();
+                    break;
+
+                case 5:
+                    criarEquipa();
                     break;
 
                 case 9:

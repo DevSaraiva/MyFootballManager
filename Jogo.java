@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Jogo implements Serializable {
     private int tempo;
@@ -50,23 +51,19 @@ public class Jogo implements Serializable {
     }
 
 
-    public Jogo (int tempo,Equipa equipaVisitada,Equipa equipaVisitante,boolean pausa,int golosCasa,int golosFora){
-
-        this.tempo = tempo;
-        this.equipaVisitada = equipaVisitada;
-        this.equipaVisitante = equipaVisitante;
-        this.pausa = pausa;
-        this.golosCasa = golosCasa;
-        this.golosFora = golosFora;
-    }
 
     public Jogo (Jogo j){
         this.tempo = j.getTempo();
+        this.pausa = j.getPausa();
         this.equipaVisitada = j.getEquipaVisitada();
         this.equipaVisitante = j.getEquipaVisitante();
-        this.pausa = j.getPausa();
         this.golosCasa = j.getGolosCasa();
-        this.golosFora = j.getGolosFora();
+        this.golosFora = j.golosFora;
+        this.data = j.getData();
+        this.jogadoresCasa = j.getJogadoresCasa();
+        this.jogadoresFora = j.getJogadoresFora();
+        this.substituicoesCasa = j.getSubstituicoesCasa();
+        this.substituicoesFora = j.getSubstitucoesFora();
     }
 
     // gets e sets
@@ -100,11 +97,11 @@ public class Jogo implements Serializable {
     }
 
     public List<Integer> getJogadoresCasa() {
-        return this.jogadoresCasa;
+        return this.jogadoresCasa.stream().collect(Collectors.toList());
     }
 
     public List<Integer> getJogadoresFora() {
-        return this.jogadoresFora;
+        return this.jogadoresFora.stream().collect(Collectors.toList());
     }
 
     public Map<Integer, Integer> getSubstitucoesFora() {
@@ -215,9 +212,11 @@ public class Jogo implements Serializable {
             subsF.put(Integer.parseInt(sub[0]), Integer.parseInt(sub[1]));
         }
         if (equipas.containsKey(campos[0]) && equipas.containsKey(campos[1])){
+
+            LocalDate d =  LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]));
+
             return new Jogo(equipas.get(campos[0]), equipas.get(campos[1]), Integer.parseInt(campos[2]), Integer.parseInt(campos[3]),
-                    LocalDate.of(2000, 8, 8),
-                    jc, subsC, jf, subsF);
+                    d,jc, subsC, jf, subsF);
         }
         else throw new EquipaNaoExisteException();
 
