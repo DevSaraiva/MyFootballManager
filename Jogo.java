@@ -1,3 +1,4 @@
+import java.io.LineNumberInputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -160,20 +161,56 @@ public class Jogo implements Serializable {
                 this.pausa == jogo.getPausa() && this.golosCasa == jogo.getGolosCasa() && this.golosFora == jogo.getGolosFora();
     }
 
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Data: ");sb.append(this.data.toString());
-        sb.append(" condiçoes metereológicas: ");sb.append(this.tempo);
+    private int tamMaiorString(List<Jogador> l){
+        int largestString = l.get(0).getNome().length();
+        for(int i = 0; i < l.size(); i++)
+        {
+            if(l.get(i).getNome().length() > largestString)
+            {
+                largestString = l.get(i).getNome().length();
+            }
+        }
+        return largestString;
+    }
 
+    public String toString() {
+        List<Jogador> JogsCasa = this.equipaVisitada.get11Jogs(this.jogadoresCasa);
+        List<Jogador> JogsFora = this.equipaVisitante.get11Jogs(this.jogadoresFora);
+        int mC = tamMaiorString(JogsCasa);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Data: "); sb.append(this.data.toString()); sb.append(" tempo: "); sb.append(this.tempo);sb.append("\n");
+        sb.append(this.getEquipaVisitada().getNomeDaEquipa());
+        for(int k = this.getEquipaVisitada().getNomeDaEquipa().length(); k < (mC + 7); k++)
+            sb.append(" ");
+        sb.append(this.golosCasa);
+        sb.append(" vs ");sb.append(this.golosFora);sb.append(" ");sb.append(this.getEquipaVisitante().getNomeDaEquipa());sb.append("\n");
+        sb.append("11 inicial:");
+        for(int k = 11 ; k < (mC + 14); k++)
+            sb.append(" ");
+        sb.append("11 iinicial:  \n");
+        Jogador jC;Jogador jF;
+        for (int i = 0; i<11; i++){
+            jC = JogsCasa.get(i);
+            jF = JogsFora.get(i);
+            if (jC instanceof GuardaRedes) sb.append("GR->");
+            if (jC instanceof Defesa) sb.append("D ->");
+            if (jC instanceof Lateral) sb.append("L ->");
+            if (jC instanceof Medio) sb.append("M ->");
+            if (jC instanceof Avancado) sb.append("A ->");
+            sb.append(jC.getHabilidade());sb.append(" ");sb.append(jC.getNome());
+            for (int j = jC.getNome().length(); j < mC;j++) sb.append(" ");
+            sb.append("\t\t");
+            if (jF instanceof GuardaRedes) sb.append("GR->");
+            if (jF instanceof Defesa) sb.append("D ->");
+            if (jF instanceof Lateral) sb.append("L ->");
+            if (jF instanceof Medio) sb.append("M ->");
+            if (jF instanceof Avancado) sb.append("A ->");
+            sb.append(jF.getHabilidade());sb.append(" ");sb.append(jF.getNome());
+            sb.append("\n");
+
+        }
         return sb.toString();
-        /*" " +
-                "tempo=" + this.tempo +
-                ", equipaVisitada=" + this.equipaVisitada.toString() +
-                ", equipaVisitante=" + this.equipaVisitante.toString() +
-                ", pausa=" + this.pausa +
-                ", golosCasa=" + this.golosCasa +
-                ", golosFora=" + this.golosFora +
-                '}';*/
     }
 
     public Jogo clone(){
