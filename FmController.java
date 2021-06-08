@@ -155,14 +155,13 @@ public class FmController
 
     public void adicionaJogador(String selection, String NomeDaEquipa, String posicao){
 
-        List <int> sels = new ArrayList<>();
-        sels = selection.split(",");
+        String[] sels = selection.split(",");
         List<Jogador> jogs = new ArrayList<>();
-        if(posicao.compareTo("Guarda-Redes")) jogs = this.model.getGuardaRedes();
-        if(posicao.compareTo("Defesa")) jogs = this.model.getDefesas();
-        if(posicao.compareTo("Lateral")) jogs = this.model.getLaterais();
-        if(posicao.compareTo("Medio")) jogs = this.model.getMedios();
-        if(posicao.compareTo("Avancado")) jogs = this.model.getAvancados();
+        if(posicao.compareTo("Guarda-Redes") == 0) jogs = this.model.getGuardaRedes();
+        if(posicao.compareTo("Defesa") == 0) jogs = this.model.getDefesas();
+        if(posicao.compareTo("Lateral") == 0) jogs = this.model.getLaterais();
+        if(posicao.compareTo("Medio") == 0) jogs = this.model.getMedios();
+        if(posicao.compareTo("Avancado") == 0) jogs = this.model.getAvancados();
 
 
     }
@@ -174,6 +173,10 @@ public class FmController
 
     public  boolean existeEquipa(String nome){
         return this.model.existeEquipa(nome);
+    }
+
+    public void transfereEquipa (String equipaDestino, String nome) throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteEquipaException {
+        this.model.transfereEquipa(equipaDestino,nome);
     }
 
 }

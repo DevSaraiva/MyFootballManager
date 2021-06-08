@@ -23,6 +23,8 @@ public class FmView {
         System.out.println(("6 - Criar jogo"));
         System.out.println("7 - Correr Jogo");
         System.out.println("8 - Simular Jogo\n");
+        System.out.println("8 - Simular Jogo");
+        System.out.println("9 - Fazer Traansferência de Jogador");
         int sel = this.ins.nextInt();
 
         return sel;
@@ -69,6 +71,26 @@ public class FmView {
         selection = this.ins.nextInt();
         String s = this.controller.getJogo(selection);
         System.out.println(s);
+    }
+
+    public void fazerTransferencia() {
+        this.ins.nextLine();
+        System.out.println("Insira o nome do Jogador que pretende transferir");
+        String nomeJogador = this.ins.nextLine();
+        //System.out.println("Insira a equipa Origem");
+        //String equipaOrigem = this.ins.nextLine();
+        System.out.println("Insira a equipa Destino");
+        String equipaDestino = this.ins.nextLine();
+
+
+        //System.out.println(equipaOrigem+equipaDestino+nomeJogador);
+        try {
+            this.controller.transfereEquipa(equipaDestino,nomeJogador);
+        } catch (FmModel.JogadorInexistenteEquipaException e) {
+            e.printStackTrace();
+        } catch (Jogo.EquipaNaoExisteException e){
+            e.printStackTrace();
+        }
     }
 
     //Função que lê e verifica validade de atributo
@@ -203,12 +225,13 @@ public class FmView {
         }
     }
 
+
     //Função que suporta a funcionalidade de criar uma equipa
 
     public void criarEquipa(){
 
         List<String> opcs;
-        String selection = -1;
+        String selection = "";
         System.out.println("Insira o nome da equipa:");
         String nomeEquipa = this.ins.next();
         System.out.println("Insira o nome do treinador");
@@ -225,6 +248,7 @@ public class FmView {
     }
 
     public void run(){
+
 
         List<String> opcs;
         int selection = -1;
@@ -262,14 +286,14 @@ public class FmView {
                     criarJogador();
                     break;
 
-                case 5:
-                    criarEquipa();
+                case 9:
+                    fazerTransferencia();
                     break;
 
-            default:
-                System.out.println("Seleção inválida");
-                break;
-        }
+                default:
+                    System.out.println("Seleção inválida");
+                    break;
+            }
 
         }
 

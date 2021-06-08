@@ -218,18 +218,36 @@ public class FmModel implements  Serializable {
         }
     }
 
-    public void mudaJogador(Equipa o, Equipa d, String nome) throws JogadorInexistenteEquipaException {
+    public void transfereEquipa(String d, String nome) throws JogadorInexistenteEquipaException , Jogo.EquipaNaoExisteException {
 
-        Jogador jogadorARemover = null;
-        for (Jogador j : o.getPlantel()) {
+
+        if (this.jogadores.containsKey(nome)){
+            //Jogador j = this.jogadores.get(nome);
+            if (this.equipas.containsKey(d)){
+                Jogador j = this.jogadores.get(nome);
+                if (j.getEquipas().size() > 0) {
+                    Equipa equipa_atual = this.equipas.get(j.getEquipaAtual());
+                    equipa_atual.removeJogador(j);
+                }
+                this.equipas.get(d).insereJogador(j);
+                j.insereNovoClube(d);
+            }
+            else throw new Jogo.EquipaNaoExisteException();
+        }
+        else throw new JogadorInexistenteEquipaException();
+
+        /*Jogador jogadorARemover = null;
+        for (Jogador j : this.equipas.get(o).getPlantel()) {
             if (j.getNome().equals(nome))
                 jogadorARemover = j;
         }
         if (jogadorARemover == null) throw new JogadorInexistenteEquipaException();
         else {
-            o.removeJogador(jogadorARemover);
-            d.insereJogador(jogadorARemover);
-        }
+            this.equipas.get(o).removeJogador(jogadorARemover);
+            this.equipas.get(d).insereJogador(jogadorARemover);
+            this.jogadores.get(nome).insereNovoClube(d);
+
+        }*/
     }
 
     public void setEquipas(Map<String, Equipa> equipas) {
