@@ -96,7 +96,7 @@ public class FmView {
     public int leAtributo(String atributo){
         int atr = this.ins.nextInt();
         while(atr > 99 || atr < 1){
-            System.out.println(atributo+ "Inválido");
+            System.out.println(atributo+ " Inválido");
             atr = this.ins.nextInt();
         }
         return  atr;
@@ -215,11 +215,13 @@ public class FmView {
 
                 break;
 
+            default:
+                System.out.println("Seleção inválida");
+                break;
         }
     }
 
     public void run() throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteEquipaException {
-
         List<String> opcs;
         int selection = -1;
         System.out.println("Insira 1 para carregar os seus dados");
@@ -252,11 +254,10 @@ public class FmView {
                     fazerTransferencia();
                     break;
 
-                default :
+                default:
+                    System.out.println("Seleção inválida");
                     break;
             }
-
-
 
         }
 
