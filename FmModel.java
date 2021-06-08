@@ -236,18 +236,6 @@ public class FmModel implements  Serializable {
         }
         else throw new JogadorInexistenteEquipaException();
 
-        /*Jogador jogadorARemover = null;
-        for (Jogador j : this.equipas.get(o).getPlantel()) {
-            if (j.getNome().equals(nome))
-                jogadorARemover = j;
-        }
-        if (jogadorARemover == null) throw new JogadorInexistenteEquipaException();
-        else {
-            this.equipas.get(o).removeJogador(jogadorARemover);
-            this.equipas.get(d).insereJogador(jogadorARemover);
-            this.jogadores.get(nome).insereNovoClube(d);
-
-        }*/
     }
 
     public void setEquipas(Map<String, Equipa> equipas) {

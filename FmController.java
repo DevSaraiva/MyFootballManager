@@ -140,20 +140,42 @@ public class FmController
 
     //Devolve Nomes dos Defesas
 
+    public List<String> getDefesas(){
 
-    //
-
-
-    //
+        return this.model.getDefesas().stream().map(g -> g.getNome()).collect(Collectors.toList());
 
 
-    //
+    }
+
+    //Devolve Nomes dos Laterais
+
+    public List<String> getLaterais(){
+
+        return this.model.getLaterais().stream().map(g -> g.getNome()).collect(Collectors.toList());
 
 
-    //
+    }
 
 
-    public void adicionaJogador(String selection, String NomeDaEquipa, String posicao){
+    //Devolve nome dos medios
+    public List<String> getMedios(){
+
+        return this.model.getMedios().stream().map(g -> g.getNome()).collect(Collectors.toList());
+
+
+    }
+
+
+    //Devolve nome dos Avançados
+    public List<String> getAvancados(){
+
+        return this.model.getAvancados().stream().map(g -> g.getNome()).collect(Collectors.toList());
+
+
+    }
+
+
+    public void adicionaJogadores(String selection, String NomeDaEquipa, String posicao) throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteEquipaException {
 
         String[] sels = selection.split(",");
         List<Jogador> jogs = new ArrayList<>();
@@ -164,9 +186,17 @@ public class FmController
         if(posicao.compareTo("Avancado") == 0) jogs = this.model.getAvancados();
 
 
+
+        for(String s : sels){
+            int index =  Integer.parseInt(s);
+            System.out.println(s);
+            Jogador add = jogs.get(index - 1);
+            System.out.println(add.getNome());
+            transfereEquipa(NomeDaEquipa,add.getNome());
+        }
+
+
     }
-
-
 
 
     //Verifica se uma equipa se encontra no sistema
