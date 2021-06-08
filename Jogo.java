@@ -15,6 +15,8 @@ public class Jogo implements Serializable {
     private boolean pausa;
     private int golosCasa;
     private int golosFora;
+    private String taticaCasa;
+    private String taticaFora;
     private List<Integer> jogadoresCasa;
     private List<Integer> jogadoresFora;
     Map<Integer, Integer> substituicoesCasa = new HashMap<>();
@@ -29,6 +31,8 @@ public class Jogo implements Serializable {
         this.pausa = true;
         this.golosCasa = 0;
         this.golosFora = 0;
+        this.taticaCasa = "";
+        this.taticaFora = "";
         this.jogadoresCasa = new ArrayList<>();
         this.jogadoresFora = new ArrayList<>();
         this.substituicoesCasa = new HashMap<>();
@@ -36,7 +40,7 @@ public class Jogo implements Serializable {
 
     }
     
-    public Jogo (Equipa ec, Equipa ef, int gc, int gf, LocalDate d,  List<Integer> jc, Map<Integer, Integer> sc,  List<Integer> jf, Map<Integer, Integer> sf){
+    public Jogo (Equipa ec, Equipa ef, int gc, int gf, LocalDate d,  List<Integer> jc, Map<Integer, Integer> sc,  List<Integer> jf, Map<Integer, Integer> sf, String taticaCasa, String taticaFora){
         this.tempo = 0;
         this.pausa = true;
         this.equipaVisitada = ec;
@@ -48,6 +52,8 @@ public class Jogo implements Serializable {
         this.jogadoresFora = new ArrayList<>(jf);
         this.substituicoesCasa = new HashMap<>(sc);
         this.substituicoesFora = new HashMap<>(sf);
+        this.taticaFora = taticaFora;
+        this.taticaCasa = taticaCasa;
     }
 
 
@@ -64,6 +70,8 @@ public class Jogo implements Serializable {
         this.jogadoresFora = j.getJogadoresFora();
         this.substituicoesCasa = j.getSubstituicoesCasa();
         this.substituicoesFora = j.getSubstitucoesFora();
+        this.taticaCasa = j.getTaticaCasa();
+        this.taticaFora = j.getTaticaFora();
     }
 
     // gets e sets
@@ -110,6 +118,14 @@ public class Jogo implements Serializable {
 
     public Map<Integer, Integer> getSubstituicoesCasa() {
         return this.substituicoesCasa;
+    }
+
+    public String getTaticaCasa(){
+        return this.taticaCasa;
+    }
+
+    public String getTaticaFora(){
+        return this.taticaCasa;
     }
 
     public void setJogadoresCasa(List<Integer> jogadoresCasa) {
@@ -164,16 +180,9 @@ public class Jogo implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("Data: ");sb.append(this.data.toString());
         sb.append(" condiçoes metereológicas: ");sb.append(this.tempo);
-
+        sb.append("casa: " + (this.taticaCasa) + "fora: " + (this.taticaFora));
         return sb.toString();
-        /*" " +
-                "tempo=" + this.tempo +
-                ", equipaVisitada=" + this.equipaVisitada.toString() +
-                ", equipaVisitante=" + this.equipaVisitante.toString() +
-                ", pausa=" + this.pausa +
-                ", golosCasa=" + this.golosCasa +
-                ", golosFora=" + this.golosFora +
-                '}';*/
+
     }
 
     public Jogo clone(){
@@ -188,6 +197,23 @@ public class Jogo implements Serializable {
         public EquipaNaoExisteException(String s){
             super(s);
         }
+    }
+
+    //Devolve a tatica usada por um um 11 de jogadores
+
+    public static String verificaTatica(List<Integer> nums, Equipa e){
+        int medio = 0;
+        List<Jogador> plantel = e.getPlantel();
+        for(int num : nums){
+            for(Jogador jog : plantel){
+                if(num == jog.getNumeroJogador() && jog instanceof Medio) medio++;
+            }
+        }
+
+        System.out.println();
+
+        if(medio == 4) return "442";
+        else return "433";
     }
 
     public static Jogo parse(String input,Map<String, Equipa> equipas) throws EquipaNaoExisteException{
@@ -216,7 +242,7 @@ public class Jogo implements Serializable {
             LocalDate d =  LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]));
 
             return new Jogo(equipas.get(campos[0]), equipas.get(campos[1]), Integer.parseInt(campos[2]), Integer.parseInt(campos[3]),
-                    d,jc, subsC, jf, subsF);
+                    d,jc, subsC, jf, subsF,verificaTatica(jc,equipas.get(campos[0])),verificaTatica(jf,equipas.get(campos[1])));
         }
         else throw new EquipaNaoExisteException();
 
