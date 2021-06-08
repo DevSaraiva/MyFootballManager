@@ -22,9 +22,8 @@ public class FmView {
         System.out.println(("5 - Criar equipa"));
         System.out.println(("6 - Criar jogo"));
         System.out.println("7 - Correr Jogo");
-        System.out.println("8 - Simular Jogo\n");
         System.out.println("8 - Simular Jogo");
-        System.out.println("9 - Fazer Traansferência de Jogador");
+        System.out.println("9 - Fazer Traansferência de Jogador\n");
         int sel = this.ins.nextInt();
 
         return sel;
@@ -77,13 +76,10 @@ public class FmView {
         this.ins.nextLine();
         System.out.println("Insira o nome do Jogador que pretende transferir");
         String nomeJogador = this.ins.nextLine();
-        //System.out.println("Insira a equipa Origem");
-        //String equipaOrigem = this.ins.nextLine();
         System.out.println("Insira a equipa Destino");
         String equipaDestino = this.ins.nextLine();
 
 
-        //System.out.println(equipaOrigem+equipaDestino+nomeJogador);
         try {
             this.controller.transfereEquipa(equipaDestino,nomeJogador);
         } catch (FmModel.JogadorInexistenteEquipaException e) {
