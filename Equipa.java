@@ -106,6 +106,26 @@ public class Equipa implements Serializable
         return r;
     }
 
+    // supondo que aa equipa tem obrigatoriamente este num
+    public Jogador get1Jogador (int num){
+        Jogador aux = null;
+        for (Jogador j : this.Plantel){
+            if (j.getNumeroJogador() == num)
+                aux = j.clone();
+        }
+        return aux;
+    }
+
+    public List<Jogador> get11Jogs (List<Integer> nums){
+        List<Jogador> aux = new ArrayList<>();
+        for (int j : nums){
+            aux.add(get1Jogador(j));
+        }
+        return aux;
+    }
+
+     // FIXME yah a insere equipa yah :
+
 }
 
 
