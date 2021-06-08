@@ -85,10 +85,10 @@ public class FmView {
 
         try {
             this.controller.transfereEquipa(equipaDestino,nomeJogador);
-        } catch (FmModel.JogadorInexistenteEquipaException e) {
-            e.printStackTrace();
+        } catch (FmModel.JogadorInexistenteException e) {
+            System.out.println("O Jogador '" + e.getMessage() + "' não existe.");
         } catch (Jogo.EquipaNaoExisteException e){
-            e.printStackTrace();
+            System.out.println("A Equipa '" + e.getMessage() + "' não existe.");
         }
     }
 
@@ -313,9 +313,9 @@ public class FmView {
         try {
             this.controller.adicionaJogadores(selection,nomeEquipa,"Guarda-Redes");
         } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa não existe\n");
-        } catch (FmModel.JogadorInexistenteEquipaException e) {
-            System.out.println("O jogador não existe\n");
+            System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
+        } catch (FmModel.JogadorInexistenteException e) {
+            System.out.println("O jogador '" + e.getMessage() +"' não existe\n");
         }
 
         //Defesas
@@ -331,9 +331,9 @@ public class FmView {
         try {
             this.controller.adicionaJogadores(selection,nomeEquipa,"Defesa");
         } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa não existe\n");
-        } catch (FmModel.JogadorInexistenteEquipaException e) {
-            System.out.println("O jogador não existe\n");
+            System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
+        } catch (FmModel.JogadorInexistenteException e) {
+            System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
         }
 
         //Laterais
@@ -349,9 +349,9 @@ public class FmView {
         try {
             this.controller.adicionaJogadores(selection,nomeEquipa,"Lateral");
         } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa não existe\n");
-        } catch (FmModel.JogadorInexistenteEquipaException e) {
-            System.out.println("O jogador não existe\n");
+            System.out.println("A equipa '" + e.getMessage() + "' não existe\n");
+        } catch (FmModel.JogadorInexistenteException e) {
+            System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
         }
 
         //Medios
@@ -367,9 +367,9 @@ public class FmView {
         try {
             this.controller.adicionaJogadores(selection,nomeEquipa,"Medio");
         } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa não existe\n");
-        } catch (FmModel.JogadorInexistenteEquipaException e) {
-            System.out.println("O jogador não existe\n");
+            System.out.println("A equipa '" + e.getMessage() + "' não existe\n");
+        } catch (FmModel.JogadorInexistenteException e) {
+            System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
         }
 
         //Avancados
@@ -385,9 +385,9 @@ public class FmView {
         try {
             this.controller.adicionaJogadores(selection,nomeEquipa,"Avancado");
         } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa não existe\n");
-        } catch (FmModel.JogadorInexistenteEquipaException e) {
-            System.out.println("O jogador não existe\n");
+            System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
+        } catch (FmModel.JogadorInexistenteException e) {
+            System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
         }
 
 
@@ -404,7 +404,7 @@ public class FmView {
         try {
             this.controller.loadDataController(selection);
         } catch (LinhaIncorretaException e) {
-            e.printStackTrace();
+            System.out.println("Linha Incorreta. Não tem nenhuma equipa para adicionar Jogador");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

@@ -175,7 +175,7 @@ public class FmController
     }
 
 
-    public void adicionaJogadores(String selection, String NomeDaEquipa, String posicao) throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteEquipaException {
+    public void adicionaJogadores(String selection, String NomeDaEquipa, String posicao) throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteException {
 
         String[] sels = selection.split(",");
         List<Jogador> jogs = new ArrayList<>();
@@ -205,7 +205,7 @@ public class FmController
         return this.model.existeEquipa(nome);
     }
 
-    public void transfereEquipa (String equipaDestino, String nome) throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteEquipaException {
+    public void transfereEquipa (String equipaDestino, String nome) throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteException {
         this.model.transfereEquipa(equipaDestino,nome);
     }
 

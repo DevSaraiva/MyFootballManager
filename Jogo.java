@@ -286,7 +286,7 @@ public class Jogo implements Serializable {
             return new Jogo(equipas.get(campos[0]), equipas.get(campos[1]), Integer.parseInt(campos[2]), Integer.parseInt(campos[3]),
                     d,jc, subsC, jf, subsF,verificaTatica(jc,equipas.get(campos[0])),verificaTatica(jf,equipas.get(campos[1])));
         }
-        else throw new EquipaNaoExisteException();
+        else throw new EquipaNaoExisteException(campos[0] + " ou " + campos[1]);
 
     }
 

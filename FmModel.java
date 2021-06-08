@@ -208,17 +208,17 @@ public class FmModel implements  Serializable {
         this.setEquipas(equipas);
     }
 
-    public class JogadorInexistenteEquipaException extends Exception {
-        public JogadorInexistenteEquipaException(){
+    public class JogadorInexistenteException extends Exception {
+        public JogadorInexistenteException(){
             super();
         }
 
-        public JogadorInexistenteEquipaException(String s){
+        public JogadorInexistenteException(String s){
             super(s);
         }
     }
 
-    public void transfereEquipa(String d, String nome) throws JogadorInexistenteEquipaException , Jogo.EquipaNaoExisteException {
+    public void transfereEquipa(String d, String nome) throws JogadorInexistenteException , Jogo.EquipaNaoExisteException {
 
 
         if (this.jogadores.containsKey(nome)){
@@ -240,7 +240,7 @@ public class FmModel implements  Serializable {
             }
             else throw new Jogo.EquipaNaoExisteException();
         }
-        else throw new JogadorInexistenteEquipaException();
+        else throw new JogadorInexistenteException(nome);
 
     }
 

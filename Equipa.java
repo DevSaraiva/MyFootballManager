@@ -73,6 +73,9 @@ public class Equipa implements Serializable
     }
 
     public void insereJogador (Jogador j){
+        int i;
+        for (i = j.getNumeroJogador(); containsNum(i); i++);
+        if (i != j.getNumeroJogador()) j.setNumero(i);
         this.Plantel.add(j);
     }
 

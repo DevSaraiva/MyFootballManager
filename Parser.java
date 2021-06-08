@@ -59,7 +59,7 @@ public class Parser {
                     try {
                         jo = Jogo.parse(linhaPartida[1],equipas);
                     } catch (Jogo.EquipaNaoExisteException equipaNaoExisteException) {
-                        equipaNaoExisteException.printStackTrace();
+                        System.out.println("A equipa '" + equipaNaoExisteException.getMessage() + "' não existe.");
                     }
                     jogos.add(jo);
                     break;
