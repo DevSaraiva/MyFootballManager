@@ -221,11 +221,17 @@ public class FmModel implements  Serializable {
             if (this.equipas.containsKey(d)){
                 Jogador j = this.jogadores.get(nome);
                 if (j.getEquipas().size() > 0) {
-                    Equipa equipa_atual = this.equipas.get(j.getEquipaAtual());
-                    equipa_atual.removeJogador(j);
+                    if (!j.getEquipaAtual().equals(d)){
+                        Equipa equipa_atual = this.equipas.get(j.getEquipaAtual());
+                        equipa_atual.removeJogador(j);
+                        this.equipas.get(d).insereJogador(j);
+                        j.insereNovoClube(d);
+                    }
                 }
-                this.equipas.get(d).insereJogador(j);
-                j.insereNovoClube(d);
+                else {
+                    this.equipas.get(d).insereJogador(j);
+                    j.insereNovoClube(d);
+                }
             }
             else throw new Jogo.EquipaNaoExisteException();
         }

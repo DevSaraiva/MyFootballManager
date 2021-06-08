@@ -23,7 +23,7 @@ public class FmView {
         System.out.println("7 - Correr Jogo");
         System.out.println("8 - Simular Jogo");
         System.out.println("9 - Fazer Traansferência de Jogador");
-        int sel = this.ins.nextInt();
+        int sel = leNumero(1,9,"Comando");
 
         return sel;
 
@@ -44,7 +44,7 @@ public class FmView {
         int selection = -1;
         List<String> jogadores = this.controller.getJogadores();
         printOpcoes(jogadores);
-        selection = this.ins.nextInt();
+        selection = leNumero(1,jogadores.size(),"");
         String s = this.controller.getJogador(jogadores.get(selection - 1));
         System.out.println(s);
 
@@ -55,7 +55,7 @@ public class FmView {
         int selection = -1;
         List<String> equipas = this.controller.getEquipas();
         printOpcoes(equipas);
-        selection = this.ins.nextInt();
+        selection = leNumero(1,equipas.size(),"");
         String s = this.controller.getEquipa(equipas.get(selection - 1));
         System.out.println(s);
 
@@ -66,13 +66,13 @@ public class FmView {
         int selection = -1;
         List<String> jogos = this.controller.getJogos();
         printOpcoes(jogos);
-        selection = this.ins.nextInt();
+        selection = leNumero(1,jogos.size(),"");
         String s = this.controller.getJogo(selection);
         System.out.println(s);
     }
 
-    public void fazerTransferencia() throws FmModel.JogadorInexistenteEquipaException, Jogo.EquipaNaoExisteException{
-        this.ins.nextLine();
+    public void fazerTransferencia() {
+        //this.ins.nextLine();
         System.out.println("Insira o nome do Jogador que pretende transferir");
         String nomeJogador = this.ins.nextLine();
         //System.out.println("Insira a equipa Origem");
@@ -110,8 +110,8 @@ public class FmView {
         System.out.println("3 - Lateral");
         System.out.println("4 - Medio");
         System.out.println("5 - Avançado");
-        int sel = this.ins.nextInt();
-        this.ins.nextLine();
+        int sel = leNumero(1,5,"Posição");
+        //this.ins.nextLine();
 
 
         List<String> equipas = new ArrayList<>();
@@ -150,56 +150,56 @@ public class FmView {
         System.out.println("Insira o nome do jogador");
         nome = this.ins.nextLine();
         System.out.println("Insira o numero do jogador (0-99)");
-        numero = leAtributo("Numero");
+        numero = leNumero(1,99,"Número");
         System.out.println("Insira o velocidade do jogador (0-99)");
-        velocidade = leAtributo("Velocidade");
+        velocidade = leNumero(1,99,"Velocidade");
         System.out.println("Insira o valor de resistencia (0-99)");
-        resistencia = leAtributo("Resistencia");
+        resistencia = leNumero(1,99,"Resistencia");
         System.out.println("Insira o valor da destreza (0-99)");
-        destreza = leAtributo("Destreza");
+        destreza = leNumero(1,99,"Destreza");
         System.out.println("Insira o valor da impulsao (0-99)");
-        impulsao = leAtributo("Impulsao");
+        impulsao = leNumero(1,99,"Impulsao");
         System.out.println("Insira o valor do jogo aereo (0-99)");
-        jogoAereo = leAtributo("Jogo Aereo");
+        jogoAereo = leNumero(1,99,"Jogo Aereo");
         System.out.println("Insira o valor do remate (0-99)");
-        remate = leAtributo("Remate");
+        remate = leNumero(1,99,"Remate");
         System.out.println("Insira o valor do passe (0-99)");
-        passe = leAtributo("Passe");
+        passe = leNumero(1,99,"Passe");
 
 
         switch(sel){
             case 1:
                 System.out.println("Insira o valor da elasticidade do jogador (0-99)");
-                elasticidade = leAtributo("Elasticidade");
+                elasticidade = leNumero(1,99,"Elasticidade");
                 System.out.println("Insira o valor dos reflexos do jogador (0-99)");
-                reflexos = leAtributo("Reflexos");
+                reflexos = leNumero(1,99,"Reflexos");
 
                 this.controller.criaRedes(nome,numero,velocidade,resistencia,destreza,impulsao,jogoAereo,remate,passe,equipas,elasticidade,reflexos);
                 break;
 
             case 2:
                 System.out.println("Insira o valor do desarme do jogador (0-99)");
-                desarme = leAtributo("Desarme");
+                desarme = leNumero(1,99,"Desarme");
                 System.out.println("Insira o valor da marcacao do jogador (0-99)");
-                marcacao = leAtributo("Marcacao");
+                marcacao = leNumero(1,99,"Marcacao");
 
                 this.controller.criaDefesa(nome,numero,velocidade,resistencia,destreza,impulsao,jogoAereo,remate,passe,equipas,desarme,marcacao,agressividade);
                 break;
 
             case 3 :
                 System.out.println("Insira o valor da capacidade de cruzamento do jogador (0-99)");
-                capacidadeCruzamento = leAtributo("Capacidade de Cruzamento");
+                capacidadeCruzamento = leNumero(1,99,"Capacidade de Cruzamento");
                 System.out.println("Insira o valor da marcacao do jogador (0-99)");
-                drible = leAtributo("Drible");
+                drible = leNumero(1,99,"Drible");
 
                 this.controller.criaLateral(nome,numero,velocidade,resistencia,destreza,impulsao,jogoAereo,remate,passe,equipas,capacidadeCruzamento,drible);
                 break;
 
             case 4:
                 System.out.println("Insira o valor da recuperação de bola (0-99)");
-                recuperacaoDeBola = leAtributo("Recuperacão De Bola");
+                recuperacaoDeBola = leNumero(1,99,"Recuperacão De Bola");
                 System.out.println("Insira o valor da marcacão do jogador (0-99)");
-                criatividade = leAtributo("Criatividade");
+                criatividade = leNumero(1,99,"Criatividade");
 
                 this.controller.criaMedio(nome,numero,velocidade,resistencia,destreza,impulsao,jogoAereo,remate,passe,equipas,recuperacaoDeBola,criatividade);
                 break;
@@ -207,11 +207,11 @@ public class FmView {
             case 5:
 
                 System.out.println("Insira o valor da Finalização (0-99)");
-                finalizacao = leAtributo("Finalização");
+                finalizacao = leNumero(1,99,"Finalização");
                 System.out.println("Insire o valor do drible");
-                drible = leAtributo("Drible");
-                System.out.println("Insira o valor da marcacão do jogador (0-99)");
-                piorPe = leAtributo("Pior pé");
+                drible = leNumero(1,99,"Drible");
+                System.out.println("Insira o valor do pior pé (0-99)");
+                piorPe = leNumero(1,99,"Pior pé");
 
                 break;
 
@@ -221,13 +221,51 @@ public class FmView {
         }
     }
 
-    public void run() throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteEquipaException {
+    public class ComandoInvalidoException extends Exception {
+        public ComandoInvalidoException(){
+            super();
+        }
+
+        public ComandoInvalidoException(String s){
+            super(s);
+        }
+    }
+
+    public int validaComando (String s) throws ComandoInvalidoException{
+        for (char c : s.toCharArray()){
+            if (c >= '0' && c <= '9');
+            else throw new ComandoInvalidoException(s);
+        }
+        return Integer.parseInt(s);
+    }
+
+    public int leNumero (int limInf,int limSup,String tipo) {
+        int res = 0;
+        while (res == 0) {
+            String comando = this.ins.nextLine();
+            try {
+                res = validaComando(comando);
+                if (res >= limInf && res <= limSup) ;
+                else {
+                    System.out.println("Este número '"+ res + "' não está dentro dos parametros. Por favor insira um número entre "+limInf + " e " + limSup);
+                    res = 0;
+                }
+            } catch (ComandoInvalidoException e) {
+                System.out.println(tipo +" '" + e.getMessage() + "' é inválido! Tente novamente.");
+            }
+        }
+        return res;
+    }
+
+
+    public void run(){
         List<String> opcs;
         int selection = -1;
         System.out.println("Insira 1 para carregar os seus dados");
         System.out.println("Insira 2 para carregar os dados predefinidos");
 
-        selection = this.ins.nextInt();
+
+        selection = leNumero(1,2,"Comando");
         this.controller.loadDataController(selection);
 
         while(true){
@@ -258,21 +296,8 @@ public class FmView {
                     System.out.println("Seleção inválida");
                     break;
             }
-
         }
-
-
-
-
-
-
-
     }
-
-
-
-
-
 
 
 }

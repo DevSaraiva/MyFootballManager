@@ -164,14 +164,19 @@ public class Jogo implements Serializable {
     }
 
     public String toString() {
-        return "Jogo{" +
+        StringBuilder sb = new StringBuilder();
+        sb.append("Data: ");sb.append(this.data.toString());
+        sb.append(" condiçoes metereológicas: ");sb.append(this.tempo);
+
+        return sb.toString();
+        /*" " +
                 "tempo=" + this.tempo +
                 ", equipaVisitada=" + this.equipaVisitada.toString() +
                 ", equipaVisitante=" + this.equipaVisitante.toString() +
                 ", pausa=" + this.pausa +
                 ", golosCasa=" + this.golosCasa +
                 ", golosFora=" + this.golosFora +
-                '}';
+                '}';*/
     }
 
     public Jogo clone(){
@@ -211,7 +216,7 @@ public class Jogo implements Serializable {
         }
         if (equipas.containsKey(campos[0]) && equipas.containsKey(campos[1])){
             return new Jogo(equipas.get(campos[0]), equipas.get(campos[1]), Integer.parseInt(campos[2]), Integer.parseInt(campos[3]),
-                    LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2])),
+                    LocalDate.of(2000, 8, 8),
                     jc, subsC, jf, subsF);
         }
         else throw new EquipaNaoExisteException();

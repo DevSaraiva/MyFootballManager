@@ -173,9 +173,10 @@ public abstract class Jogador implements Serializable,Comparable<Jogador>
         else
             sb.append(this.equipas.get(size-1));
         if (size > 1) {
-            sb.append("\n\tEquipa Anteriores:");
+            sb.append("\n\tEquipa Anteriores: ");
             int i = 0;
             while (i < size - 1) {
+                if (i > 0) sb.append(" , ");
                 sb.append(this.equipas.get(i));
                 i++;
             }
