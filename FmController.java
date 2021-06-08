@@ -14,31 +14,16 @@ public class FmController
 
     //Função que de acordo com o input do utilizador decide a forma como faz o load
 
-    public void loadDataController(int i) { // if i  == 1 load custom files else load given text file
+    public void loadDataController(int i) throws LinhaIncorretaException, IOException ,ClassNotFoundException{ // if i  == 1 load custom files else load given text file
 
         if (i == 2) {
 
-            try {
                 Parser.parse(model);
                 model.atualizaHistóricoEquipas();
 
-            } catch (LinhaIncorretaException e) {
-                e.printStackTrace();
-            }
         } else {
 
-            try {
                 this.model.loadData();
-
-            } catch (IOException e) {
-
-                e.printStackTrace();
-
-            } catch (ClassNotFoundException e) {
-
-                e.printStackTrace();
-            }
-
 
         }
     }
@@ -140,6 +125,9 @@ public class FmController
             this.model.criaAvancado(nome,numero,velocidade,resistencia,destreza,impulsao,jogoAereo,remate,passe,equipas,finalizacao,drible,piorPe);
     }
 
+    public void criaEquipa(String NomeDaEquipa, String Treinador, List<Jogador> Plantel){
+        this.model.criaEquipa(NomeDaEquipa,Treinador,Plantel);
+    }
 
     //Devolve Nomes GuardaRedes
 
@@ -149,6 +137,40 @@ public class FmController
 
 
     }
+
+    //Devolve Nomes dos Defesas
+
+
+    //
+
+
+    //
+
+
+    //
+
+
+    //
+
+
+    public void adicionaJogador(String selection, String NomeDaEquipa, String posicao){
+
+        List <int> sels = new ArrayList<>();
+        sels = selection.split(",");
+        List<Jogador> jogs = new ArrayList<>();
+        if(posicao.compareTo("Guarda-Redes")) jogs = this.model.getGuardaRedes();
+        if(posicao.compareTo("Defesa")) jogs = this.model.getDefesas();
+        if(posicao.compareTo("Lateral")) jogs = this.model.getLaterais();
+        if(posicao.compareTo("Medio")) jogs = this.model.getMedios();
+        if(posicao.compareTo("Avancado")) jogs = this.model.getAvancados();
+
+
+    }
+
+
+
+
+    //Verifica se uma equipa se encontra no sistema
 
     public  boolean existeEquipa(String nome){
         return this.model.existeEquipa(nome);

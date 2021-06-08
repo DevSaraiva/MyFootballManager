@@ -186,6 +186,11 @@ public class FmModel implements  Serializable {
                             
     }
 
+    public void criaEquipa(String NomeDaEquipa, String Treinador, List<Jogador> Plantel){
+        Equipa e = new Equipa(NomeDaEquipa, Treinador, Plantel);
+        this.equipas.put(NomeDaEquipa,e);
+    }
+
     //Após a leitura dos logs em texto é necessário colocar no histórico de cada jogador a equipa onde se encontra no momento
     //este metodo serve exatamente para isso
 
@@ -267,8 +272,6 @@ public class FmModel implements  Serializable {
                 filter(v -> v instanceof Defesa).
                 map(v -> (Jogador) v.clone()).
                 collect(Collectors.toList());
-
-
 
     }
 

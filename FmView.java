@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,14 +15,14 @@ public class FmView {
 
     public int menu(){
 
-        System.out.println("1 - Consultar jogadores existentes");
+        System.out.println("\n1 - Consultar jogadores existentes");
         System.out.println("2 - Consultar equipas existentes");
         System.out.println("3 - Consultar jogos");
         System.out.println(("4 - Criar Jogador"));
         System.out.println(("5 - Criar equipa"));
         System.out.println(("6 - Criar jogo"));
         System.out.println("7 - Correr Jogo");
-        System.out.println("8 - Simular Jogo");
+        System.out.println("8 - Simular Jogo\n");
         int sel = this.ins.nextInt();
 
         return sel;
@@ -83,12 +84,12 @@ public class FmView {
 
     // Função que suporta a funcionaldidade de criar um jogador
     public void criarJogador(){
-        System.out.println("Insira o tipo de jogador que pretende criar");
+        System.out.println("\nInsira o tipo de jogador que pretende criar");
         System.out.println("1 - Guarda - Redes");
         System.out.println("2 - Defesa");
         System.out.println("3 - Lateral");
         System.out.println("4 - Medio");
-        System.out.println("5 - Avançado");
+        System.out.println("5 - Avançado\n");
         int sel = this.ins.nextInt();
         this.ins.nextLine();
 
@@ -161,6 +162,8 @@ public class FmView {
                 desarme = leAtributo("Desarme");
                 System.out.println("Insira o valor da marcacao do jogador (0-99)");
                 marcacao = leAtributo("Marcacao");
+                System.out.println("Insira o valor da agressividade do jogador (0-99)");
+                agressividade = leAtributo("Elasticidade");
 
                 this.controller.criaDefesa(nome,numero,velocidade,resistencia,destreza,impulsao,jogoAereo,remate,passe,equipas,desarme,marcacao,agressividade);
                 break;
@@ -204,6 +207,18 @@ public class FmView {
 
     public void criarEquipa(){
 
+        List<String> opcs;
+        String selection = -1;
+        System.out.println("Insira o nome da equipa:");
+        String nomeEquipa = this.ins.next();
+        System.out.println("Insira o nome do treinador");
+        String treinador = this.ins.next();
+        System.out.println("Selecione o Plantel");
+        System.out.println("Selecione no minimo 2 Guarda-Redes  x,y");
+        opcs = this.controller.getGuardaRedes();
+        printOpcoes(opcs);
+        selection =  ins.nextLine();
+
 
 
         
@@ -217,7 +232,15 @@ public class FmView {
         System.out.println("Insira 2 para carregar os dados predefinidos");
 
         selection = this.ins.nextInt();
-        this.controller.loadDataController(selection);
+        try {
+            this.controller.loadDataController(selection);
+        } catch (LinhaIncorretaException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         while(true){
 

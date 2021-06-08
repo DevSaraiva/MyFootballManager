@@ -56,7 +56,7 @@ public class Equipa implements Serializable
         this.Plantel = plantel;
     }
 
-   //DEFINIR CLONE
+
     public Equipa clone (){
         Equipa aux = new Equipa (this);
         return aux;
