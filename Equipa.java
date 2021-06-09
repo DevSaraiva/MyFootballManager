@@ -1,6 +1,7 @@
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Equipa implements Serializable
@@ -127,7 +128,53 @@ public class Equipa implements Serializable
         return aux;
     }
 
-     // FIXME yah a insere equipa yah :
+    public double calculaHabilidadeEquipa(List<Integer> tits, Map<Integer,Integer> subs){
+        double somaT = 0;
+        for (int num : tits){
+            somaT += get1Jogador(num).getHabilidade();
+        }
+        int subsL = subs.size();
+        for (int numS : subs.values()){
+            somaT += get1Jogador(numS).getHabilidade();
+        }
+        return somaT/(11+subsL);
+    }
+
+    public int calculaHabilidadeAtacar(List<Integer> jogs){
+        double somaT = 0;
+        for (int num : jogs){
+            Jogador j = get1Jogador(num);
+            if (j instanceof GuardaRedes)
+                somaT += 0.50 * j.getHabilidade();
+            if (j instanceof Defesa)
+                somaT += 0.75 * j.getHabilidade();
+            if (j instanceof Lateral)
+                somaT += 1.00 * j.getHabilidade();
+            if (j instanceof Medio)
+                somaT += 1.00 * j.getHabilidade();
+            if (j instanceof Avancado)
+                somaT += 1.25 * j.getHabilidade();
+        }
+        return (int) somaT/11;
+    }
+
+    public int calculaHabilidadeDefender(List<Integer> jogs){
+        double somaT = 0;
+        for (int num : jogs){
+            Jogador j = get1Jogador(num);
+            if (j instanceof GuardaRedes)
+                somaT += 1.00 * j.getHabilidade();
+            if (j instanceof Defesa)
+                somaT += 1.25 * j.getHabilidade();
+            if (j instanceof Lateral)
+                somaT += 1.00 * j.getHabilidade();
+            if (j instanceof Medio)
+                somaT += 0.75 * j.getHabilidade();
+            if (j instanceof Avancado)
+                somaT += 0.5 * j.getHabilidade();
+        }
+        return (int) somaT/11;
+    }
 
 }
 
