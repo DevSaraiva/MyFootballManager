@@ -332,7 +332,7 @@ public class FmModel implements  Serializable {
 
 
     public Jogo criaAddJogo(Equipa ec, Equipa ef, LocalDate d, List<Integer> jc, Map<Integer, Integer> sc, List<Integer> jf, Map<Integer, Integer> sf, String taticaCasa, String taticaFora){
-        Jogo jogo = new Jogo(ec,ef,0,0,d,jc,sc,jf,sf,taticaCasa,taticaFora);
+        Jogo jogo = new Jogo(ec,ef,0,0,d,jc,sc,jf,sf,taticaCasa,taticaFora,0);
         this.jogos.add(jogo);
         return jogo;
     }
