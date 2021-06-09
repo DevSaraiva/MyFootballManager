@@ -49,7 +49,7 @@ public class FmController
 
     public String getJogo(int selection){
 
-        return this.model.getJogos().get(selection).toString();
+        return this.model.getJogos().get(selection-1).toString();
     }
 
     // Devolve os nomes dos jogadores para serem apresentados na view
