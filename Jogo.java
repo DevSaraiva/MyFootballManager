@@ -246,7 +246,6 @@ public class Jogo implements Serializable {
         int subsC = this.substituicoesCasa.size();
         int subsF = this.substituicoesFora.size();
         int i = 0;
-        //sb.append("Length ");sb.append(JogsCasa.size());sb.append(" ");sb.append(JogsFora.size());sb.append("\n");
         while ( subsC > 0){
             jC = JogsCasa.get(11+i);
             if (jC instanceof GuardaRedes) sb.append("GR->");
@@ -363,6 +362,7 @@ public class Jogo implements Serializable {
         }
     }
 
+
     public boolean validaSubstituicoesCasa (){
         boolean r = true;
         List<Integer> jogsEmCampo = this.jogadoresCasa;
@@ -421,10 +421,7 @@ public class Jogo implements Serializable {
                 r = r & validaSubstituicaoFora((int) e.getKey(),(int) e.getValue(),jogsEmCampo);
                 if (r)
                     jogsEmCampo.set(jogsEmCampo.indexOf(e.getKey()),(int) e.getValue());
-                    /*for ( int j : jogsEmCampo){
-                        if (j == (int) e.getKey())
-                            j = (int) e.getValue();
-                    }*/
+
             }
             return r;
         }else return false;

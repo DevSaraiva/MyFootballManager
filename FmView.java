@@ -1,8 +1,10 @@
 import java.awt.font.TextHitInfo;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FmView {
     FmController controller;
@@ -24,7 +26,7 @@ public class FmView {
         System.out.println(("6 - Criar jogo"));
         System.out.println("7 - Correr Jogo");
         System.out.println("8 - Simular Jogo");
-        System.out.println("9 - Fazer Traansferência de Jogador");
+        System.out.println("9 - Fazer Transferência de Jogador");
         int sel = leNumero(1,9,"Comando");
 
         return sel;
@@ -223,36 +225,18 @@ public class FmView {
     }
 
 
-    public class ComandoInvalidoException extends Exception {
-        public ComandoInvalidoException(){
-            super();
-        }
-
-        public ComandoInvalidoException(String s){
-            super(s);
-        }
-    }
-
-    public int validaComando (String s) throws ComandoInvalidoException{
-        for (char c : s.toCharArray()){
-            if (c >= '0' && c <= '9');
-            else throw new ComandoInvalidoException(s);
-        }
-        return Integer.parseInt(s);
-    }
-
     public int leNumero (int limInf,int limSup,String tipo) {
         int res = 0;
         while (res == 0) {
             String comando = this.ins.nextLine();
             try {
-                res = validaComando(comando);
+                res = this.controller.validaComando(comando);
                 if (res >= limInf && res <= limSup) ;
                 else {
                     System.out.println("Este número '"+ res + "' não está dentro dos parametros. Por favor insira um número entre "+limInf + " e " + limSup);
                     res = 0;
                 }
-            } catch (ComandoInvalidoException e) {
+            } catch (FmController.ComandoInvalidoException e) {
                 System.out.println(tipo +" '" + e.getMessage() + "' é inválido! Tente novamente.");
             }
         }
@@ -260,29 +244,11 @@ public class FmView {
     }
 
 
-    //Função que verifica se seleção de jogdores é válida
-
-    public boolean verificaSelecaoJogadores(String selection, int quantidade){
-
-        String[] nums = selection.split(",");
-        if(nums.length < quantidade) return false;
-        for(String s : nums){
-            int iguais = 0;
-            for(String s2 : nums){
-                if(s.compareTo(s2) == 0) iguais++;
-            }
-            if(iguais > 1 ) return  false;
-        }
-        return true;
-    }
-
-
-
-
     //Função que suporta a funcionalidade de criar uma equipa
 
     public void criarEquipa(){
         this.ins.nextLine();
+        int tam = 0;
         //Cria equipa sem jogadores
         List<String> opcs;
         String selection = "";
@@ -305,8 +271,9 @@ public class FmView {
         System.out.println("\nSelecione no minimo 2 Guarda-Redes  x,y\n");
         opcs = this.controller.getGuardaRedes();
         printOpcoes(opcs);
+        tam = opcs.size();
         selection =  ins.nextLine();
-        while(!verificaSelecaoJogadores(selection,2)){
+        while(!this.controller.verificaSelecaoJogadores(selection,2,tam)){
             System.out.println("Seleção inválida");
             selection =  ins.nextLine();
         }
@@ -323,8 +290,9 @@ public class FmView {
         System.out.println("\nSelecione no minimo 3 Defesas  x,y\n");
         opcs = this.controller.getDefesas();
         printOpcoes(opcs);
+        tam = opcs.size();
         selection =  ins.nextLine();
-        while(!verificaSelecaoJogadores(selection,3)){
+        while(!this.controller.verificaSelecaoJogadores(selection,3,tam)){
             System.out.println("Seleção inválida");
             selection =  ins.nextLine();
         }
@@ -341,8 +309,9 @@ public class FmView {
         System.out.println("\nSelecione no minimo 3 Laterais  x,y\n");
         opcs = this.controller.getLaterais();
         printOpcoes(opcs);
+        tam = opcs.size();
         selection =  ins.nextLine();
-        while(!verificaSelecaoJogadores(selection,3)){
+        while(!this.controller.verificaSelecaoJogadores(selection,3,tam)){
             System.out.println("Seleção inválida");
             selection =  ins.nextLine();
         }
@@ -359,8 +328,9 @@ public class FmView {
         System.out.println("\nSelecione no minimo 5 Medios  x,y\n");
         opcs = this.controller.getMedios();
         printOpcoes(opcs);
+        tam = opcs.size();
         selection =  ins.nextLine();
-        while(!verificaSelecaoJogadores(selection,5)){
+        while(!this.controller.verificaSelecaoJogadores(selection,5,tam)){
             System.out.println("Seleção inválida");
             selection =  ins.nextLine();
         }
@@ -377,8 +347,9 @@ public class FmView {
         System.out.println("\nSelecione no minimo 4 Avançados  x,y\n");
         opcs = this.controller.getAvancados();
         printOpcoes(opcs);
+        tam = opcs.size();
         selection =  ins.nextLine();
-        while(!verificaSelecaoJogadores(selection,4)){
+        while(!this.controller.verificaSelecaoJogadores(selection,4,tam)){
             System.out.println("Seleção inválida");
             selection =  ins.nextLine();
         }
@@ -394,21 +365,357 @@ public class FmView {
 
     }
 
-    public void run(){
+    //Função que tranforma um String com uma data em um LocalDate
+
+    public LocalDate parseDate(String data){
+        int stop = 0;
+        List<Integer> ints = new ArrayList<>();
+        String[] splited = data.split("-");
+        LocalDate res = LocalDate.now();
+            if(splited.length <3){
+                System.out.println("Insira uma data válida");
+                data = this.ins.nextLine();
+                res = parseDate(data);
+            }else{
+                for(String s: splited){
+                    try {
+                        ints.add(Integer.parseInt(s));
+                    } catch (Exception e){
+                        System.out.println("Insira uma data válida");
+                        data = this.ins.nextLine();
+                        res = parseDate(data);
+                    }
+                }
+
+                try {
+                    res = LocalDate.of(ints.get(0),ints.get(1),ints.get(2));
+                }catch (DateTimeException e){
+                    System.out.println("Data Inválida");
+                    parseDate(data);
+                }
+
+            }
+
+        return res;
+
+    }
+
+    //Função Auxiliar Cria11 Incial
+
+    public List<Integer> cria11InicialAux (String posEspecifica,  String posicao, List<String> opcs, List<Integer> titulares,int quantidade,String e) {
+        String  selection = "";
+        int size = 0;
+        System.out.println("Selecione " + Integer.toString(quantidade) + " " + posEspecifica + " x");
+        printOpcoes(opcs);
+        int tam = opcs.size();
+        selection = this.ins.nextLine();
+        size = titulares.size();
+        titulares = this.controller.adicionaTitulares(selection, titulares, e, posicao, quantidade,tam);
+
+        while (size == titulares.size()) {
+            System.out.println("Seleção de jogadores Inválida");
+            selection = this.ins.nextLine();
+            titulares = this.controller.adicionaTitulares(selection, titulares, e, posicao, quantidade,tam);
+        }
+
+        return titulares;
+    }
+
+    //Função que recebe e valida o 11 inicial
+
+    public List<Integer> cria11inicial(String tatica,String e) {
+        List<Integer> titulares = new ArrayList<>();
+        List<String> redes = this.controller.getRedesEquipa(e);
+        List<String> defesas = this.controller.getDefesasEquipa(e);
+        List<String> laterais = this.controller.getLateraisEquipa(e);
+        List<String> medios = this.controller.getMediosEquipa(e);
+        List<String> avancados = this.controller.getAvancadosEquipa(e);
+
+
+        if (tatica.compareTo("4-4-2") == 0) {
+
+            // Guarda Redes
+
+            try {
+                titulares = cria11InicialAux("Guarda-Redes","Guarda-Redes",redes,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Guarda-Redes","Guarda-Redes",redes,titulares,1,e);
+            }
+
+            //Lateral Esquerdo
+
+            try {
+                titulares = cria11InicialAux("Lateral Esquerdo","Laterais",laterais,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Lateral Esquerdo","Laterais",laterais,titulares,1,e);
+            }
+
+
+            //Defesas
+
+            try {
+                titulares = cria11InicialAux("Defesas Centrais","Defesas",defesas,titulares,2,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Defesas Centrais","Defesas",defesas,titulares,2,e);
+            }
+
+
+            // Lateral Direito
+
+            try {
+                titulares = cria11InicialAux("Lateral Direito","Laterais",laterais,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Lateral Direito","Laterais",laterais,titulares,1,e);
+            }
+
+
+            //Medios
+
+            try {
+                titulares = cria11InicialAux("Medios","Medios",medios,titulares,4,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Medios","Medios",medios,titulares,4,e);
+            }
+
+
+
+            //Avançados
+
+            try {
+                titulares = cria11InicialAux("Avançados","Avancados",avancados,titulares,2,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Avançados","Avancados",avancados,titulares,2,e);
+            }
+
+
+
+
+        } else {
+
+            // Guarda Redes
+
+            try {
+                titulares = cria11InicialAux("Guarda-Redes","Guarda-Redes",redes,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Guarda-Redes","Guarda-Redes",redes,titulares,1,e);
+            }
+
+
+            //Lateral Esquerdo
+
+            try {
+                titulares = cria11InicialAux("Lateral Esquerdo","Laterais",laterais,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Lateral Esquerdo","Laterais",laterais,titulares,1,e);
+            }
+
+
+
+            //Defesas
+
+            try {
+                titulares = cria11InicialAux("Defesas Centrais","Defesas",defesas,titulares,2,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Defesas Centrais","Defesas",defesas,titulares,2,e);
+            }
+
+
+            // Lateral Direito
+
+            try {
+                titulares = cria11InicialAux("Lateral Direito","Laterais",laterais,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Lateral Direito","Laterais",laterais,titulares,1,e);
+            }
+
+
+            // Medios
+            try {
+                titulares = cria11InicialAux("Medios Centro","Medios",medios,titulares,3,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Medios Centro","Medios",medios,titulares,3,e);
+            }
+
+            //Avancado Esquerdo
+
+            try {
+                titulares = cria11InicialAux("Avancado Esquerdo","Laterais",laterais,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Avancado Esquerdo","Laterais",laterais,titulares,1,e);
+            }
+
+
+            //Avancado
+
+            try {
+                titulares = cria11InicialAux("Avancado","Avancados",avancados,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Avancado","Avancados",avancados,titulares,1,e);
+            }
+
+            //Avancado Direito
+
+            try {
+                titulares = cria11InicialAux("Avancado Direito","Laterais",laterais,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Avancado Direito","Laterais",laterais,titulares,1,e);
+            }
+
+
+        }
+
+            return titulares;
+        }
+
+
+     //Função que lê e valida as substituições inseridas
+
+    public Map<Integer,Integer> leSubstituicoes(String equipa, List<Integer> titulares){
+        //Formato (S-E,S-E,S-E)
+        Map<Integer,Integer> subs = new HashMap<>();
+        String input;
+        input = this.ins.nextLine();
+        String[] splited = input.split(",");
+        if(splited.length < 3){
+        }else{
+            if(splited.length == 0) return new HashMap<>();
+            for(String s : splited){
+                String[] doisJogadores = s.split("-");
+                if(doisJogadores.length != 2){
+                    System.out.println("Formato da substiuição errado");
+                    return leSubstituicoes(equipa,titulares);
+                }else{
+                    try {
+                        subs.put(Integer.parseInt(doisJogadores[0]),Integer.parseInt(doisJogadores[1]));
+                    }
+                    catch (NumberFormatException e){
+
+                        System.out.println("As substituições devem ser formadas pelos números dos jogadores");
+                        return leSubstituicoes(equipa,titulares);
+                    }
+
+                    if(!this.controller.validaSubs(equipa, titulares, subs)) return leSubstituicoes(equipa,titulares);
+
+                }
+            }
+
+        }
+
+
+        return subs;
+    }
+
+
+
+
+    //Função que suporta a funcionalidade de criar um jogo
+
+    public void criarJogo(){
+        String equipa1 = "";
+        String equipa2 = "";
+        String taticaCasa = "";
+        String taticaFora = "";
+        String data = "";
+        LocalDate parsedData  = LocalDate.now();
+        List<Integer> casa11 = new ArrayList<>();
+        List<Integer> fora11 = new ArrayList<>();
+        int selection = -1;
+        Map<Integer,Integer>subsCasa = new HashMap<>();
+        Map<Integer,Integer> subsFora = new HashMap<>();
+        System.out.println("Insira a equipa da casa");
+        equipa1 = this.ins.nextLine();
+
+        while (!this.controller.existeEquipa(equipa1)){
+            System.out.println("Insira uma equipa válida");
+            equipa1 = this.ins.nextLine();
+        }
+        System.out.println("Insira a equipa visitante");
+        equipa2 = this.ins.nextLine();
+        while (!this.controller.existeEquipa(equipa2)){
+            System.out.println("Insira uma equipa válida");
+            equipa2 = this.ins.nextLine();
+        }
+
+        //11 inicial da equipa da casa
+
+        System.out.println("Insira a tática da equipa da casa 1 -> 4-4-2 ou 2 -> 4-3-3");
+        selection = leNumero(1,2,"Input");
+
+        if(selection == 1) taticaCasa = "4-4-2";
+        else taticaCasa = "4-3-3";
+
+        System.out.println("\nEscolha o 11 inicial\n");
+        casa11 = cria11inicial(taticaCasa,equipa1);
+
+        //11 inicial da equipa visitante
+
+        System.out.println("Insira a tática da equipa visitante 1 -> 4-4-2 ou 2 -> 4-3-3");
+        selection = leNumero(1,2,"Input");
+        if(selection == 1) taticaFora = "4-4-2";
+        else taticaFora = "4-3-3";
+
+        System.out.println("\nEscolha o 11 inicial\n");
+        fora11 = cria11inicial(taticaFora,equipa2);
+
+        // Data do encontro
+
+        System.out.println("\nInsira a data do encontro AA-MM-DD\n");
+        data = this.ins.nextLine();
+        parsedData = this.parseDate(data);
+        System.out.println(parsedData.toString());
+
+
+        System.out.println("\nDeseja SIMULAR ENCONTRO(1) ou apenas ver o RESULTADO(2) ?\n");
+        selection = leNumero(1,2,"seleção");
+
+        if(selection == 1){
+
+        }else{
+
+            System.out.println("\nInsira as 3 substituições da equipa da casa (S-E,S-E,S-E) \n");
+            subsCasa = leSubstituicoes(equipa1, casa11);
+
+            System.out.println("\nInsira as 3 substituições da equipa visitante (S-E,S-E,S-E) \n");
+            subsCasa = leSubstituicoes(equipa2, fora11);
+
+            String jogo = this.controller.criaCalculaResultadoJogo(equipa1,equipa2,parsedData,casa11,subsCasa,fora11,subsFora,taticaCasa,taticaFora);
+            System.out.println(jogo);
+            }
+
+
+    }
+
+    public void run() {
         List<String> opcs;
         int selection = -1;
         System.out.println("Insira 1 para carregar os seus dados");
         System.out.println("Insira 2 para carregar os dados predefinidos");
 
-        selection = leNumero(1,2,"Comando");
+        selection = leNumero(1, 2, "Comando");
         try {
             this.controller.loadDataController(selection);
         } catch (LinhaIncorretaException e) {
+
             System.out.println("Linha Incorreta. Não tem nenhuma equipa para adicionar Jogador");
+
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Erro ao abrir o ficheiro");
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Classe do Ficheiro não encontrada");
         }
 
 
@@ -434,6 +741,10 @@ public class FmView {
 
                 case 5:
                     criarEquipa();
+                    break;
+
+                case 6:
+                    criarJogo();
                     break;
 
                 case 9:

@@ -1,6 +1,7 @@
 import jdk.jshell.execution.LoaderDelegate;
 
 import java.security.PublicKey;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.io.FileInputStream;
@@ -71,7 +72,7 @@ public class FmModel implements  Serializable {
 
         loadJogadores();
         loadEquipas();
-        loadJogos();
+        this.jogos = new ArrayList<>();
     }
     
     public void saveJogadores() throws java.io.IOException {
@@ -318,8 +319,15 @@ public class FmModel implements  Serializable {
     }
 
     public  boolean existeEquipa(String nome){
-        System.out.println(nome);
         return this.equipas.containsKey(nome);
 
     }
+
+
+    public Jogo criaAddJogo(Equipa ec, Equipa ef, LocalDate d, List<Integer> jc, Map<Integer, Integer> sc, List<Integer> jf, Map<Integer, Integer> sf, String taticaCasa, String taticaFora){
+        Jogo jogo = new Jogo(ec,ef,0,0,d,jc,sc,jf,sf,taticaCasa,taticaFora,0);
+        this.jogos.add(jogo);
+        return jogo;
+    }
+
 }

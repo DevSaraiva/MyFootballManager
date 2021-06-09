@@ -1,7 +1,10 @@
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FmController
 {
@@ -46,7 +49,7 @@ public class FmController
 
     public String getJogo(int selection){
 
-        return this.model.getJogos().get(selection).toString();
+        return this.model.getJogos().get(selection-1).toString();
     }
 
     // Devolve os nomes dos jogadores para serem apresentados na view
@@ -144,7 +147,6 @@ public class FmController
 
         return this.model.getDefesas().stream().map(g -> g.getNome()).collect(Collectors.toList());
 
-
     }
 
     //Devolve Nomes dos Laterais
@@ -153,18 +155,14 @@ public class FmController
 
         return this.model.getLaterais().stream().map(g -> g.getNome()).collect(Collectors.toList());
 
-
     }
-
 
     //Devolve nome dos medios
     public List<String> getMedios(){
 
         return this.model.getMedios().stream().map(g -> g.getNome()).collect(Collectors.toList());
 
-
     }
-
 
     //Devolve nome dos Avançados
     public List<String> getAvancados(){
@@ -189,15 +187,12 @@ public class FmController
 
         for(String s : sels){
             int index =  Integer.parseInt(s);
-            System.out.println(s);
             Jogador add = jogs.get(index - 1);
-            System.out.println(add.getNome());
             transfereEquipa(NomeDaEquipa,add.getNome());
         }
 
 
     }
-
 
     //Verifica se uma equipa se encontra no sistema
 
@@ -207,6 +202,148 @@ public class FmController
 
     public void transfereEquipa (String equipaDestino, String nome) throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteException {
         this.model.transfereEquipa(equipaDestino,nome);
+    }
+
+
+    //Funções que devolvem os jogadores de determinada posição e equipa
+
+    public List<String> getRedesEquipa(String e){
+
+        return this.model.getEquipas().get(e).getGuardaRedes().stream().map(j->j.getNome()).collect(Collectors.toList());
+
+    }
+
+    public List<String> getDefesasEquipa(String e){
+
+        return this.model.getEquipas().get(e).getDefesas().stream().map(j->j.getNome()).collect(Collectors.toList());
+
+    }
+    public List<String> getLateraisEquipa(String e){
+
+        return this.model.getEquipas().get(e).getLaterais().stream().map(j->j.getNome()).collect(Collectors.toList());
+
+    }
+    public List<String> getMediosEquipa(String e){
+
+        return this.model.getEquipas().get(e).getMedios().stream().map(j->j.getNome()).collect(Collectors.toList());
+
+    }
+    public List<String> getAvancadosEquipa(String e){
+
+        return this.model.getEquipas().get(e).getAvancado().stream().map(j->j.getNome()).collect(Collectors.toList());
+
+    }
+
+    // Função e excepção que válida um comando
+    public class ComandoInvalidoException extends Exception {
+        public ComandoInvalidoException(){
+            super();
+        }
+
+        public ComandoInvalidoException(String s){
+            super(s);
+        }
+    }
+
+    public int validaComando (String s) throws ComandoInvalidoException{
+        for (char c : s.toCharArray()){
+            if (c >= '0' && c <= '9');
+            else throw new ComandoInvalidoException(s);
+        }
+        return Integer.parseInt(s);
+    }
+
+    //Função que verifica se seleção de jogdores é válida
+
+    public boolean verificaSelecaoJogadores(String selection, int quantidade, int tam){
+
+        String[] nums = selection.split(",");
+        if(nums.length < quantidade) return false;
+        for(String s : nums){
+            try {
+                validaComando(s);
+            } catch (ComandoInvalidoException e) {
+                return false;
+            }
+            int iguais = 0;
+            for(String s2 : nums){
+                if(s.compareTo(s2) == 0) iguais++;
+                if(Integer.parseInt(s2)>tam) return false;
+            }
+            if(iguais > 1 ) return  false;
+        }
+        return true;
+    }
+
+
+    //Função que adiciona a seleção a uma Lista de inteiros (titulares)
+
+
+    public List<Integer> adicionaTitulares(String selection, List<Integer> titulares, String equipa ,String posicao, int quantidade, int tam) {
+        List<Integer> save = titulares.stream().collect(Collectors.toList());
+        List<Jogador> jogadores = new ArrayList<>();
+        Equipa e = this.model.getEquipas().get(equipa);
+
+        if (posicao.compareTo("Guarda-Redes") == 0) jogadores = e.getGuardaRedes();
+        if (posicao.compareTo("Defesas") == 0) jogadores = e.getDefesas();
+        if (posicao.compareTo("Medios") == 0) jogadores = e.getMedios();
+        if (posicao.compareTo("Laterais") == 0) jogadores = e.getLaterais();
+        if (posicao.compareTo("Avancados") == 0) jogadores = e.getAvancado();
+
+
+        if(!verificaSelecaoJogadores(selection,quantidade,tam)) return save;
+
+        String[] splited = selection.split(",");
+        for(String s : splited){
+            int num = Integer.parseInt(s);
+            Jogador jogSelected =  jogadores.get(num - 1);
+            if(titulares.contains(jogSelected.getNumeroJogador())) return save;
+            else titulares.add(jogSelected.getNumeroJogador());
+        }
+
+        return titulares;
+    }
+
+    //Função que verifica se as substituições são validadas
+
+    public boolean validaSubs(String e, List<Integer> titulares, Map<Integer,Integer> subs){
+
+        Equipa equipa = this.model.getEquipas().get(e);
+        boolean r = true;
+        if (subs.size() < 3){
+
+            for(Map.Entry sub : subs.entrySet()) {
+
+                // jogador que vai sair tem que estar no 11
+                if (!titulares.contains(sub.getKey())) return false;
+                // jogador que vai entrar tem que pertencer a equipa
+                if (!equipa.getPlantel().contains(sub.getValue())) return false;
+                //jogador a entrar nao pode estar no 11
+                if(titulares.contains(sub.getValue())) return false;
+                // se o jogador que vai entrar ja tiver saido
+                if (subs.keySet().contains(sub.getValue())) return false;
+
+                // Validar se joga ou não na linha
+                if (equipa.get1Jogador((int)sub.getKey()) instanceof Lateral){
+                    if (!(equipa.get1Jogador((int)sub.getValue()) instanceof Lateral))
+                        return false;
+                }
+                else {
+                    if ((equipa.get1Jogador((int)sub.getKey()) instanceof Lateral)) return false;
+                }
+            }
+
+        } else r = false;
+        return r;
+    }
+
+    public String criaCalculaResultadoJogo(String ec, String ef, LocalDate d, List<Integer> jc, Map<Integer , Integer> sc, List<Integer> jf, Map<Integer, Integer> sf, String taticaCasa, String taticaFora){
+
+        Equipa equipaCasa = this.model.getEquipas().get(ec);
+        Equipa equipaFora = this.model.getEquipas().get(ef);
+        Jogo jogo = this.model.criaAddJogo(equipaCasa, equipaFora, d,  jc,  sc,  jf,sf,taticaCasa, taticaFora);
+        jogo.calcucaResultado();
+        return jogo.toString();
     }
 
 }
