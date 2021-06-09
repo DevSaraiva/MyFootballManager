@@ -15,20 +15,36 @@ public class FmController
     }
 
 
+    public void criaNovosDados() throws IOException {
+
+        this.model = new FmModel();
+
+
+    }
+
+    public void save(String pasta){
+        try {
+            this.model.saveData(pasta);
+        } catch (IOException e) {
+            System.out.println("Erro ao gravar o ficheiro");
+        }
+    }
+
     //Função que de acordo com o input do utilizador decide a forma como faz o load
 
-    public void loadDataController(int i) throws LinhaIncorretaException, IOException ,ClassNotFoundException{ // if i  == 1 load custom files else load given text file
+    public void loadDataController(int i, String nomePasta) throws LinhaIncorretaException, IOException ,ClassNotFoundException{ // if i  == 1 load custom files else load given text file
+
+
+        if(i == 1) this.model.loadData(nomePasta);
 
         if (i == 2) {
 
-                Parser.parse(model);
-                model.atualizaHistóricoEquipas();
-
-        } else {
-
-                this.model.loadData();
-
+            Parser.parse(model);
+            model.atualizaHistóricoEquipas();
         }
+
+        if(i == 3) criaNovosDados();
+
     }
     //Devolve o jogador selecionado
 
@@ -49,7 +65,7 @@ public class FmController
 
     public String getJogo(int selection){
 
-        return this.model.getJogos().get(selection-1).toString();
+        return this.model.getJogos().get(selection - 1).toString();
     }
 
     // Devolve os nomes dos jogadores para serem apresentados na view
@@ -138,7 +154,6 @@ public class FmController
 
         return this.model.getGuardaRedes().stream().map(g -> g.getNome()).collect(Collectors.toList());
 
-
     }
 
     //Devolve Nomes dos Defesas
@@ -182,7 +197,6 @@ public class FmController
         if(posicao.compareTo("Lateral") == 0) jogs = this.model.getLaterais();
         if(posicao.compareTo("Medio") == 0) jogs = this.model.getMedios();
         if(posicao.compareTo("Avancado") == 0) jogs = this.model.getAvancados();
-
 
 
         for(String s : sels){
@@ -258,7 +272,7 @@ public class FmController
     public boolean verificaSelecaoJogadores(String selection, int quantidade, int tam){
 
         String[] nums = selection.split(",");
-        if(nums.length < quantidade) return false;
+        if(nums.length != quantidade) return false;
         for(String s : nums){
             try {
                 validaComando(s);

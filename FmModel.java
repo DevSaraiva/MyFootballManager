@@ -27,9 +27,9 @@ public class FmModel implements  Serializable {
 
     }
 
-    public void loadJogadores() throws IOException, ClassNotFoundException {
+    public void loadJogadores(String pasta) throws IOException, ClassNotFoundException {
 
-            File toRead = new File("Files/Jogadores/jogadores.txt");
+            File toRead = new File(pasta + "/jogadores.txt");
             FileInputStream fis = new FileInputStream(toRead);
             ObjectInputStream ois = new ObjectInputStream(fis);
 
@@ -41,9 +41,9 @@ public class FmModel implements  Serializable {
 
     }
 
-    public void loadEquipas() throws IOException, ClassNotFoundException{
+    public void loadEquipas(String pasta) throws IOException, ClassNotFoundException{
 
-        File toRead = new File("Files/Equipas/equipas.txt");
+        File toRead = new File(pasta + "/equipas.txt");
         FileInputStream fis = new FileInputStream(toRead);
         ObjectInputStream ois = new ObjectInputStream(fis);
 
@@ -54,9 +54,9 @@ public class FmModel implements  Serializable {
         fis.close();
     }
 
-    public void loadJogos() throws IOException, ClassNotFoundException{
+    public void loadJogos(String pasta) throws IOException, ClassNotFoundException{
 
-        File toRead = new File("Files/Jogos/jogos.txt");
+        File toRead = new File(pasta + "/jogos.txt");
         FileInputStream fis = new FileInputStream(toRead);
         ObjectInputStream ois = new ObjectInputStream(fis);
 
@@ -68,17 +68,17 @@ public class FmModel implements  Serializable {
     }
 
 
-    public void loadData() throws IOException, ClassNotFoundException {
+    public void loadData(String pasta) throws IOException, ClassNotFoundException {
 
-        loadJogadores();
-        loadEquipas();
-        this.jogos = new ArrayList<>();
+        loadJogadores(pasta);
+        loadEquipas(pasta);
+        loadJogos(pasta);
     }
     
-    public void saveJogadores() throws java.io.IOException {
+    public void saveJogadores(String pasta) throws java.io.IOException {
 
-
-            File file=new File("Files/Jogadores/jogadores.txt");
+            File file = new File(pasta + "/jogadores.txt");
+            if (!file.exists()) file.createNewFile();
             FileOutputStream fos=new FileOutputStream(file);
             ObjectOutputStream oos=new ObjectOutputStream(fos);
             oos.writeObject(this.jogadores);
@@ -89,9 +89,10 @@ public class FmModel implements  Serializable {
         
     }
     
-    public void saveEquipas() throws java.io.IOException {
+    public void saveEquipas(String pasta) throws java.io.IOException {
 
-        File file=new File("Files/Equipas/equipas.txt");
+        File file = new File(pasta + "/equipas.txt");
+        if (!file.exists()) file.createNewFile();
         FileOutputStream fos = new FileOutputStream(file);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(this.equipas);
@@ -101,9 +102,11 @@ public class FmModel implements  Serializable {
         
     }
     
-    public void saveJogos() throws java.io.IOException {
+    public void saveJogos(String pasta) throws java.io.IOException {
 
-        File file=new File("Files/Jogos/jogos.txt");
+
+        File file=new File(pasta + "/jogos.txt");
+        if (!file.exists()) file.createNewFile();
         FileOutputStream fos=new FileOutputStream(file);
         ObjectOutputStream oos=new ObjectOutputStream(fos);
         oos.writeObject(this.jogos);
@@ -113,11 +116,15 @@ public class FmModel implements  Serializable {
         
     }
 
-    public  void saveData() throws java.io.IOException{
+    public  void saveData(String pasta) throws java.io.IOException{
 
-        saveJogos();
-        saveEquipas();
-        saveJogadores();
+        File file = new File(pasta + "/");
+        if (!file.exists()) file.mkdir();
+
+
+        saveJogos(pasta);
+        saveEquipas(pasta);
+        saveJogadores(pasta);
 
     }
     
