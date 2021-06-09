@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -172,7 +173,7 @@ public class FmController
     }
 
 
-    public void adicionaJogadores(String selection, String NomeDaEquipa, String posicao) throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteEquipaException {
+    public void adicionaJogadores(String selection, String NomeDaEquipa, String posicao) throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteException {
 
         String[] sels = selection.split(",");
         List<Jogador> jogs = new ArrayList<>();
@@ -199,7 +200,7 @@ public class FmController
         return this.model.existeEquipa(nome);
     }
 
-    public void transfereEquipa (String equipaDestino, String nome) throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteEquipaException {
+    public void transfereEquipa (String equipaDestino, String nome) throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteException {
         this.model.transfereEquipa(equipaDestino,nome);
     }
 
@@ -254,7 +255,7 @@ public class FmController
 
     //Função que verifica se seleção de jogdores é válida
 
-    public boolean verificaSelecaoJogadores(String selection, int quantidade){
+    public boolean verificaSelecaoJogadores(String selection, int quantidade, int tam){
 
         String[] nums = selection.split(",");
         if(nums.length < quantidade) return false;
@@ -267,6 +268,7 @@ public class FmController
             int iguais = 0;
             for(String s2 : nums){
                 if(s.compareTo(s2) == 0) iguais++;
+                if(Integer.parseInt(s2)>tam) return false;
             }
             if(iguais > 1 ) return  false;
         }
@@ -277,7 +279,7 @@ public class FmController
     //Função que adiciona a seleção a uma Lista de inteiros (titulares)
 
 
-    public List<Integer> adicionaTitulares(String selection, List<Integer> titulares, String equipa ,String posicao, int quantidade) {
+    public List<Integer> adicionaTitulares(String selection, List<Integer> titulares, String equipa ,String posicao, int quantidade, int tam) {
         List<Integer> save = titulares.stream().collect(Collectors.toList());
         List<Jogador> jogadores = new ArrayList<>();
         Equipa e = this.model.getEquipas().get(equipa);
@@ -289,7 +291,7 @@ public class FmController
         if (posicao.compareTo("Avancados") == 0) jogadores = e.getAvancado();
 
 
-        if(!verificaSelecaoJogadores(selection,quantidade)) return save;
+        if(!verificaSelecaoJogadores(selection,quantidade,tam)) return save;
 
         String[] splited = selection.split(",");
         for(String s : splited){
@@ -327,35 +329,21 @@ public class FmController
                         return false;
                 }
                 else {
-                    if ((equipa.get1Jogador((int)sub.getKey()) instanceof Lateral))
-                        return false;
+                    if ((equipa.get1Jogador((int)sub.getKey()) instanceof Lateral)) return false;
                 }
-
-
-
-
             }
 
         } else r = false;
         return r;
     }
 
+    public String criaCalculaResultadoJogo(String ec, String ef, LocalDate d, List<Integer> jc, Map<Integer , Integer> sc, List<Integer> jf, Map<Integer, Integer> sf, String taticaCasa, String taticaFora){
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        Equipa equipaCasa = this.model.getEquipas().get(ec);
+        Equipa equipaFora = this.model.getEquipas().get(ef);
+        Jogo jogo = this.model.criaAddJogo(equipaCasa, equipaFora, d,  jc,  sc,  jf,sf,taticaCasa, taticaFora);
+        jogo.calcucaResultado();
+        return jogo.toString();
+    }
 
 }

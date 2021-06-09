@@ -1,6 +1,7 @@
 import jdk.jshell.execution.LoaderDelegate;
 
 import java.security.PublicKey;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.io.FileInputStream;
@@ -208,17 +209,17 @@ public class FmModel implements  Serializable {
         this.setEquipas(equipas);
     }
 
-    public class JogadorInexistenteEquipaException extends Exception {
-        public JogadorInexistenteEquipaException(){
+    public class JogadorInexistenteException extends Exception {
+        public JogadorInexistenteException(){
             super();
         }
 
-        public JogadorInexistenteEquipaException(String s){
+        public JogadorInexistenteException(String s){
             super(s);
         }
     }
 
-    public void transfereEquipa(String d, String nome) throws JogadorInexistenteEquipaException , Jogo.EquipaNaoExisteException {
+    public void transfereEquipa(String d, String nome) throws JogadorInexistenteException , Jogo.EquipaNaoExisteException {
 
 
         if (this.jogadores.containsKey(nome)){
@@ -240,7 +241,7 @@ public class FmModel implements  Serializable {
             }
             else throw new Jogo.EquipaNaoExisteException();
         }
-        else throw new JogadorInexistenteEquipaException();
+        else throw new JogadorInexistenteException(nome);
 
     }
 
@@ -321,4 +322,12 @@ public class FmModel implements  Serializable {
         return this.equipas.containsKey(nome);
 
     }
+
+
+    public Jogo criaAddJogo(Equipa ec, Equipa ef, LocalDate d, List<Integer> jc, Map<Integer, Integer> sc, List<Integer> jf, Map<Integer, Integer> sf, String taticaCasa, String taticaFora){
+        Jogo jogo = new Jogo(ec,ef,0,0,d,jc,sc,jf,sf,taticaCasa,taticaFora);
+        this.jogos.add(jogo);
+        return jogo;
+    }
+
 }

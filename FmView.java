@@ -1,5 +1,6 @@
 import java.awt.font.TextHitInfo;
 import java.io.IOException;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -86,10 +87,10 @@ public class FmView {
 
         try {
             this.controller.transfereEquipa(equipaDestino,nomeJogador);
-        } catch (FmModel.JogadorInexistenteEquipaException e) {
-            e.printStackTrace();
+        } catch (FmModel.JogadorInexistenteException e) {
+            System.out.println("O Jogador '" + e.getMessage() + "' não existe.");
         } catch (Jogo.EquipaNaoExisteException e){
-            e.printStackTrace();
+            System.out.println("A Equipa '" + e.getMessage() + "' não existe.");
         }
     }
 
@@ -247,6 +248,7 @@ public class FmView {
 
     public void criarEquipa(){
         this.ins.nextLine();
+        int tam = 0;
         //Cria equipa sem jogadores
         List<String> opcs;
         String selection = "";
@@ -269,17 +271,18 @@ public class FmView {
         System.out.println("\nSelecione no minimo 2 Guarda-Redes  x,y\n");
         opcs = this.controller.getGuardaRedes();
         printOpcoes(opcs);
+        tam = opcs.size();
         selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,2)){
+        while(!this.controller.verificaSelecaoJogadores(selection,2,tam)){
             System.out.println("Seleção inválida");
             selection =  ins.nextLine();
         }
         try {
             this.controller.adicionaJogadores(selection,nomeEquipa,"Guarda-Redes");
         } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa não existe\n");
-        } catch (FmModel.JogadorInexistenteEquipaException e) {
-            System.out.println("O jogador não existe\n");
+            System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
+        } catch (FmModel.JogadorInexistenteException e) {
+            System.out.println("O jogador '" + e.getMessage() +"' não existe\n");
         }
 
         //Defesas
@@ -287,17 +290,18 @@ public class FmView {
         System.out.println("\nSelecione no minimo 3 Defesas  x,y\n");
         opcs = this.controller.getDefesas();
         printOpcoes(opcs);
+        tam = opcs.size();
         selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,3)){
+        while(!this.controller.verificaSelecaoJogadores(selection,3,tam)){
             System.out.println("Seleção inválida");
             selection =  ins.nextLine();
         }
         try {
             this.controller.adicionaJogadores(selection,nomeEquipa,"Defesa");
         } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa não existe\n");
-        } catch (FmModel.JogadorInexistenteEquipaException e) {
-            System.out.println("O jogador não existe\n");
+            System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
+        } catch (FmModel.JogadorInexistenteException e) {
+            System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
         }
 
         //Laterais
@@ -305,17 +309,18 @@ public class FmView {
         System.out.println("\nSelecione no minimo 3 Laterais  x,y\n");
         opcs = this.controller.getLaterais();
         printOpcoes(opcs);
+        tam = opcs.size();
         selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,3)){
+        while(!this.controller.verificaSelecaoJogadores(selection,3,tam)){
             System.out.println("Seleção inválida");
             selection =  ins.nextLine();
         }
         try {
             this.controller.adicionaJogadores(selection,nomeEquipa,"Lateral");
         } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa não existe\n");
-        } catch (FmModel.JogadorInexistenteEquipaException e) {
-            System.out.println("O jogador não existe\n");
+            System.out.println("A equipa '" + e.getMessage() + "' não existe\n");
+        } catch (FmModel.JogadorInexistenteException e) {
+            System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
         }
 
         //Medios
@@ -323,17 +328,18 @@ public class FmView {
         System.out.println("\nSelecione no minimo 5 Medios  x,y\n");
         opcs = this.controller.getMedios();
         printOpcoes(opcs);
+        tam = opcs.size();
         selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,5)){
+        while(!this.controller.verificaSelecaoJogadores(selection,5,tam)){
             System.out.println("Seleção inválida");
             selection =  ins.nextLine();
         }
         try {
             this.controller.adicionaJogadores(selection,nomeEquipa,"Medio");
         } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa não existe\n");
-        } catch (FmModel.JogadorInexistenteEquipaException e) {
-            System.out.println("O jogador não existe\n");
+            System.out.println("A equipa '" + e.getMessage() + "' não existe\n");
+        } catch (FmModel.JogadorInexistenteException e) {
+            System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
         }
 
         //Avancados
@@ -341,17 +347,18 @@ public class FmView {
         System.out.println("\nSelecione no minimo 4 Avançados  x,y\n");
         opcs = this.controller.getAvancados();
         printOpcoes(opcs);
+        tam = opcs.size();
         selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,4)){
+        while(!this.controller.verificaSelecaoJogadores(selection,4,tam)){
             System.out.println("Seleção inválida");
             selection =  ins.nextLine();
         }
         try {
             this.controller.adicionaJogadores(selection,nomeEquipa,"Avancado");
         } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa não existe\n");
-        } catch (FmModel.JogadorInexistenteEquipaException e) {
-            System.out.println("O jogador não existe\n");
+            System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
+        } catch (FmModel.JogadorInexistenteException e) {
+            System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
         }
 
 
@@ -380,7 +387,12 @@ public class FmView {
                     }
                 }
 
-                res = LocalDate.of(ints.get(0),ints.get(1),ints.get(2));
+                try {
+                    res = LocalDate.of(ints.get(0),ints.get(1),ints.get(2));
+                }catch (DateTimeException e){
+                    System.out.println("Data Inválida");
+                    parseDate(data);
+                }
 
             }
 
@@ -395,14 +407,15 @@ public class FmView {
         int size = 0;
         System.out.println("Selecione " + Integer.toString(quantidade) + " " + posEspecifica + " x");
         printOpcoes(opcs);
+        int tam = opcs.size();
         selection = this.ins.nextLine();
         size = titulares.size();
-        titulares = this.controller.adicionaTitulares(selection, titulares, e, posicao, quantidade);
+        titulares = this.controller.adicionaTitulares(selection, titulares, e, posicao, quantidade,tam);
 
         while (size == titulares.size()) {
             System.out.println("Seleção de jogadores Inválida");
             selection = this.ins.nextLine();
-            titulares = this.controller.adicionaTitulares(selection, titulares, e, posicao, quantidade);
+            titulares = this.controller.adicionaTitulares(selection, titulares, e, posicao, quantidade,tam);
         }
 
         return titulares;
@@ -423,64 +436,145 @@ public class FmView {
 
             // Guarda Redes
 
-            titulares = cria11InicialAux("Guarda-Redes","Guarda-Redes",redes,titulares,1,e);
+            try {
+                titulares = cria11InicialAux("Guarda-Redes","Guarda-Redes",redes,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Guarda-Redes","Guarda-Redes",redes,titulares,1,e);
+            }
 
             //Lateral Esquerdo
 
-            titulares = cria11InicialAux("Lateral Esquerdo","Laterais",laterais,titulares,1,e);
+            try {
+                titulares = cria11InicialAux("Lateral Esquerdo","Laterais",laterais,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Lateral Esquerdo","Laterais",laterais,titulares,1,e);
+            }
+
 
             //Defesas
 
-            titulares = cria11InicialAux("Defesas Centrais","Defesas",defesas,titulares,2,e);
+            try {
+                titulares = cria11InicialAux("Defesas Centrais","Defesas",defesas,titulares,2,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Defesas Centrais","Defesas",defesas,titulares,2,e);
+            }
+
 
             // Lateral Direito
 
-            titulares = cria11InicialAux("Lateral Direito","Laterais",laterais,titulares,1,e);
+            try {
+                titulares = cria11InicialAux("Lateral Direito","Laterais",laterais,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Lateral Direito","Laterais",laterais,titulares,1,e);
+            }
+
 
             //Medios
 
-            titulares = cria11InicialAux("Medios","Medios",medios,titulares,4,e);
+            try {
+                titulares = cria11InicialAux("Medios","Medios",medios,titulares,4,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Medios","Medios",medios,titulares,4,e);
+            }
+
 
 
             //Avançados
 
-            titulares = cria11InicialAux("Avançados","Avancados",avancados,titulares,2,e);
+            try {
+                titulares = cria11InicialAux("Avançados","Avancados",avancados,titulares,2,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Avançados","Avancados",avancados,titulares,2,e);
+            }
+
+
 
 
         } else {
 
             // Guarda Redes
 
-            titulares = cria11InicialAux("Guarda-Redes","Guarda-Redes",redes,titulares,1,e);
+            try {
+                titulares = cria11InicialAux("Guarda-Redes","Guarda-Redes",redes,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Guarda-Redes","Guarda-Redes",redes,titulares,1,e);
+            }
+
 
             //Lateral Esquerdo
 
-            titulares = cria11InicialAux("Lateral Esquerdo","Laterais",laterais,titulares,1,e);
+            try {
+                titulares = cria11InicialAux("Lateral Esquerdo","Laterais",laterais,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Lateral Esquerdo","Laterais",laterais,titulares,1,e);
+            }
+
+
 
             //Defesas
 
-            titulares = cria11InicialAux("Defesas Centrais","Defesas",defesas,titulares,2,e);
+            try {
+                titulares = cria11InicialAux("Defesas Centrais","Defesas",defesas,titulares,2,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Defesas Centrais","Defesas",defesas,titulares,2,e);
+            }
+
 
             // Lateral Direito
 
-            titulares = cria11InicialAux("Lateral Direito","Laterais",laterais,titulares,1,e);
+            try {
+                titulares = cria11InicialAux("Lateral Direito","Laterais",laterais,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Lateral Direito","Laterais",laterais,titulares,1,e);
+            }
+
 
             // Medios
-
-            titulares = cria11InicialAux("Medios Centro","Medios",medios,titulares,3,e);
+            try {
+                titulares = cria11InicialAux("Medios Centro","Medios",medios,titulares,3,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Medios Centro","Medios",medios,titulares,3,e);
+            }
 
             //Avancado Esquerdo
 
-            titulares = cria11InicialAux("Avancado Esquerdo","Laterais",laterais,titulares,1,e);
+            try {
+                titulares = cria11InicialAux("Avancado Esquerdo","Laterais",laterais,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Avancado Esquerdo","Laterais",laterais,titulares,1,e);
+            }
 
 
             //Avancado
 
-            titulares = cria11InicialAux("Avancado","Avancados",avancados,titulares,1,e);
+            try {
+                titulares = cria11InicialAux("Avancado","Avancados",avancados,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Avancado","Avancados",avancados,titulares,1,e);
+            }
 
             //Avancado Direito
 
-            titulares = cria11InicialAux("Avancado Direito","Laterais",laterais,titulares,1,e);
+            try {
+                titulares = cria11InicialAux("Avancado Direito","Laterais",laterais,titulares,1,e);
+            }catch (IndexOutOfBoundsException exception){
+                System.out.println("Seleção invalida");
+                titulares = cria11InicialAux("Avancado Direito","Laterais",laterais,titulares,1,e);
+            }
+
 
         }
 
@@ -497,9 +591,8 @@ public class FmView {
         input = this.ins.nextLine();
         String[] splited = input.split(",");
         if(splited.length < 3){
-            System.out.println("Numero inválido de substituições");
-            return leSubstituicoes(equipa,titulares);
         }else{
+            if(splited.length == 0) return new HashMap<>();
             for(String s : splited){
                 String[] doisJogadores = s.split("-");
                 if(doisJogadores.length != 2){
@@ -511,7 +604,7 @@ public class FmView {
                     }
                     catch (NumberFormatException e){
 
-                        System.out.println("As substituições devem ser formadas pelos numeros dos jogadores");
+                        System.out.println("As substituições devem ser formadas pelos números dos jogadores");
                         return leSubstituicoes(equipa,titulares);
                     }
 
@@ -541,8 +634,8 @@ public class FmView {
         List<Integer> casa11 = new ArrayList<>();
         List<Integer> fora11 = new ArrayList<>();
         int selection = -1;
-        Map<Integer,Integer>subsCasa;
-        Map<Integer,Integer> subsFora;
+        Map<Integer,Integer>subsCasa = new HashMap<>();
+        Map<Integer,Integer> subsFora = new HashMap<>();
         System.out.println("Insira a equipa da casa");
         equipa1 = this.ins.nextLine();
 
@@ -598,7 +691,10 @@ public class FmView {
 
             System.out.println("\nInsira as 3 substituições da equipa visitante (S-E,S-E,S-E) \n");
             subsCasa = leSubstituicoes(equipa2, fora11);
-        }
+
+            String jogo = this.controller.criaCalculaResultadoJogo(equipa1,equipa2,parsedData,casa11,subsCasa,fora11,subsFora,taticaCasa,taticaFora);
+            System.out.println(jogo);
+            }
 
 
     }
@@ -613,7 +709,9 @@ public class FmView {
         try {
             this.controller.loadDataController(selection);
         } catch (LinhaIncorretaException e) {
-            System.out.println("Ficheiro corrompido");
+
+            System.out.println("Linha Incorreta. Não tem nenhuma equipa para adicionar Jogador");
+
         } catch (IOException e) {
             System.out.println("Erro ao abrir o ficheiro");
         } catch (ClassNotFoundException e) {

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.Random;
 
 public class Jogo implements Serializable {
     private int tempo;
@@ -22,10 +23,9 @@ public class Jogo implements Serializable {
     private List<Integer> jogadoresFora;
     Map<Integer, Integer> substituicoesCasa = new HashMap<>();
     Map<Integer, Integer> substituicoesFora = new HashMap<>();
-    
-    
 
-    public Jogo(){
+
+    public Jogo() {
         this.tempo = 0;
         this.equipaVisitada = new Equipa();
         this.equipaVisitante = new Equipa();
@@ -40,8 +40,8 @@ public class Jogo implements Serializable {
         this.substituicoesFora = new HashMap<>();
 
     }
-    
-    public Jogo (Equipa ec, Equipa ef, int gc, int gf, LocalDate d,  List<Integer> jc, Map<Integer, Integer> sc,  List<Integer> jf, Map<Integer, Integer> sf, String taticaCasa, String taticaFora){
+
+    public Jogo(Equipa ec, Equipa ef, int gc, int gf, LocalDate d, List<Integer> jc, Map<Integer, Integer> sc, List<Integer> jf, Map<Integer, Integer> sf, String taticaCasa, String taticaFora) {
         this.tempo = 0;
         this.pausa = true;
         this.equipaVisitada = ec;
@@ -58,8 +58,7 @@ public class Jogo implements Serializable {
     }
 
 
-
-    public Jogo (Jogo j){
+    public Jogo(Jogo j) {
         this.tempo = j.getTempo();
         this.pausa = j.getPausa();
         this.equipaVisitada = j.getEquipaVisitada();
@@ -77,7 +76,7 @@ public class Jogo implements Serializable {
 
     // gets e sets
 
-   public int getTempo() {
+    public int getTempo() {
         return this.tempo;
     }
 
@@ -101,8 +100,8 @@ public class Jogo implements Serializable {
         return this.golosFora;
     }
 
-    public LocalDate getData(){
-       return  this.data;
+    public LocalDate getData() {
+        return this.data;
     }
 
     public List<Integer> getJogadoresCasa() {
@@ -121,11 +120,11 @@ public class Jogo implements Serializable {
         return this.substituicoesCasa;
     }
 
-    public String getTaticaCasa(){
+    public String getTaticaCasa() {
         return this.taticaCasa;
     }
 
-    public String getTaticaFora(){
+    public String getTaticaFora() {
         return this.taticaCasa;
     }
 
@@ -177,12 +176,10 @@ public class Jogo implements Serializable {
                 this.pausa == jogo.getPausa() && this.golosCasa == jogo.getGolosCasa() && this.golosFora == jogo.getGolosFora();
     }
 
-    private int tamMaiorString(List<Jogador> l){
+    private int tamMaiorString(List<Jogador> l) {
         int largestString = l.get(0).getNome().length();
-        for(int i = 0; i < l.size(); i++)
-        {
-            if(l.get(i).getNome().length() > largestString)
-            {
+        for (int i = 0; i < l.size(); i++) {
+            if (l.get(i).getNome().length() > largestString) {
                 largestString = l.get(i).getNome().length();
             }
         }
@@ -195,18 +192,27 @@ public class Jogo implements Serializable {
         int mC = tamMaiorString(JogsCasa);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Data: "); sb.append(this.data.toString()); sb.append(" tempo: "); sb.append(this.tempo);sb.append("\n");
+        sb.append("Data: ");
+        sb.append(this.data.toString());
+        sb.append(" tempo: ");
+        sb.append(this.tempo);
+        sb.append("\n");
         sb.append(this.getEquipaVisitada().getNomeDaEquipa());
-        for(int k = this.getEquipaVisitada().getNomeDaEquipa().length(); k < (mC + 7); k++)
+        for (int k = this.getEquipaVisitada().getNomeDaEquipa().length(); k < (mC + 7); k++)
             sb.append(" ");
         sb.append(this.golosCasa);
-        sb.append(" vs ");sb.append(this.golosFora);sb.append(" ");sb.append(this.getEquipaVisitante().getNomeDaEquipa());sb.append("\n");
+        sb.append(" vs ");
+        sb.append(this.golosFora);
+        sb.append(" ");
+        sb.append(this.getEquipaVisitante().getNomeDaEquipa());
+        sb.append("\n");
         sb.append("11 inicial:");
-        for(int k = 11 ; k < (mC + 14); k++)
+        for (int k = 11; k < (mC + 14); k++)
             sb.append(" ");
         sb.append("11 iinicial:  \n");
-        Jogador jC;Jogador jF;
-        for (int i = 0; i<11; i++){
+        Jogador jC;
+        Jogador jF;
+        for (int i = 0; i < 11; i++) {
             jC = JogsCasa.get(i);
             jF = JogsFora.get(i);
             if (jC instanceof GuardaRedes) sb.append("GR->");
@@ -214,140 +220,235 @@ public class Jogo implements Serializable {
             if (jC instanceof Lateral) sb.append("L ->");
             if (jC instanceof Medio) sb.append("M ->");
             if (jC instanceof Avancado) sb.append("A ->");
-            sb.append(jC.getHabilidade());sb.append(" ");sb.append(jC.getNome());
-            for (int j = jC.getNome().length(); j < mC;j++) sb.append(" ");
+            sb.append(jC.getHabilidade());
+            sb.append(" ");
+            sb.append(jC.getNome());
+            for (int j = jC.getNome().length(); j < mC; j++) sb.append(" ");
             sb.append("\t\t");
             if (jF instanceof GuardaRedes) sb.append("GR->");
             if (jF instanceof Defesa) sb.append("D ->");
             if (jF instanceof Lateral) sb.append("L ->");
             if (jF instanceof Medio) sb.append("M ->");
             if (jF instanceof Avancado) sb.append("A ->");
-            sb.append(jF.getHabilidade());sb.append(" ");sb.append(jF.getNome());
+            sb.append(jF.getHabilidade());
+            sb.append(" ");
+            sb.append(jF.getNome());
             sb.append("\n");
-
         }
+        double c = this.equipaVisitada.calculaHabilidadeEquipa(jogadoresCasa, substituicoesCasa);
+        sb.append("Habilidade Casa: ");
+        sb.append(String.format("%.2f", c));
+        sb.append("\n");
+        double f = this.equipaVisitante.calculaHabilidadeEquipa(jogadoresFora, substituicoesFora);
+        sb.append("Habilidade Fora: ");
+        sb.append(String.format("%.2f", f));
+        sb.append("\n");
+        calcucaResultado();
         return sb.toString();
     }
 
-    public Jogo clone(){
+    public Jogo clone() {
         return new Jogo(this);
     }
 
     public static class EquipaNaoExisteException extends Exception {
-        public EquipaNaoExisteException(){
+        public EquipaNaoExisteException() {
             super();
         }
 
-        public EquipaNaoExisteException(String s){
+        public EquipaNaoExisteException(String s) {
             super(s);
         }
     }
 
     //Devolve a tatica usada por um um 11 de jogadores
 
-    public static String verificaTatica(List<Integer> nums, Equipa e){
+    public static String verificaTatica(List<Integer> nums, Equipa e) {
         int medio = 0;
         List<Jogador> plantel = e.getPlantel();
-        for(int num : nums){
-            for(Jogador jog : plantel){
-                if(num == jog.getNumeroJogador() && jog instanceof Medio) medio++;
+        for (int num : nums) {
+            for (Jogador jog : plantel) {
+                if (num == jog.getNumeroJogador() && jog instanceof Medio) medio++;
             }
         }
 
-        if(medio == 4) return "4-4-2";
+        if (medio == 4) return "4-4-2";
         else return "4-3-3";
     }
 
-    public static Jogo parse(String input,Map<String, Equipa> equipas) throws EquipaNaoExisteException{
+    public static Jogo parse(String input, Map<String, Equipa> equipas) throws EquipaNaoExisteException {
         String[] campos = input.split(",");
         String[] data = campos[4].split("-");
         List<Integer> jc = new ArrayList<>();
         List<Integer> jf = new ArrayList<>();
         Map<Integer, Integer> subsC = new HashMap<>();
         Map<Integer, Integer> subsF = new HashMap<>();
-        for (int i = 5; i < 16; i++){
+        for (int i = 5; i < 16; i++) {
             jc.add(Integer.parseInt(campos[i]));
         }
-        for (int i = 16; i < 19; i++){
+        for (int i = 16; i < 19; i++) {
             String[] sub = campos[i].split("->");
             subsC.put(Integer.parseInt(sub[0]), Integer.parseInt(sub[1]));
         }
-        for (int i = 19; i < 30; i++){
+        for (int i = 19; i < 30; i++) {
             jf.add(Integer.parseInt(campos[i]));
         }
-        for (int i = 30; i < 33; i++){
+        for (int i = 30; i < 33; i++) {
             String[] sub = campos[i].split("->");
             subsF.put(Integer.parseInt(sub[0]), Integer.parseInt(sub[1]));
         }
-        if (equipas.containsKey(campos[0]) && equipas.containsKey(campos[1])){
+        if (equipas.containsKey(campos[0]) && equipas.containsKey(campos[1])) {
 
-            LocalDate d =  LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]));
+            LocalDate d = LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]));
 
             return new Jogo(equipas.get(campos[0]), equipas.get(campos[1]), Integer.parseInt(campos[2]), Integer.parseInt(campos[3]),
-                    d,jc, subsC, jf, subsF,verificaTatica(jc,equipas.get(campos[0])),verificaTatica(jf,equipas.get(campos[1])));
-        }
-        else throw new EquipaNaoExisteException();
+                    d, jc, subsC, jf, subsF, verificaTatica(jc, equipas.get(campos[0])), verificaTatica(jf, equipas.get(campos[1])));
+        } else throw new EquipaNaoExisteException(campos[0] + " ou " + campos[1]);
 
     }
 
     public class SubstituicaoInvalidaException extends Exception {
-        public SubstituicaoInvalidaException(){
+        public SubstituicaoInvalidaException() {
             super();
         }
 
-        public SubstituicaoInvalidaException(String s){
+        public SubstituicaoInvalidaException(String s) {
             super(s);
         }
     }
 
 
-    public boolean validaSubstituicaoCasa (int nEntra, int nSai) {
+    public boolean validaSubstituicoesCasa (){
         boolean r = true;
-        if (this.substituicoesCasa.size() < 3){
+        List<Integer> jogsEmCampo = this.jogadoresCasa;
+        if (this.substituicoesCasa.size() <= 3){
+            for (Map.Entry e : this.substituicoesCasa.entrySet()){
+                r = r & validaSubstituicaoCasa((int) e.getKey(),(int) e.getValue(),jogsEmCampo);
+                if (r)
+                    jogsEmCampo.set(jogsEmCampo.indexOf(e.getKey()),(int) e.getValue());
+                    /*for ( int j : jogsEmCampo){
+                        if (j == (int) e.getKey())
+                            j = (int) e.getValue();
+                    }*/
+            }
+            return r;
+        }else return false;
+    }
+
+
+    public boolean validaSubstituicaoCasa(int nSai, int nEntra,List<Integer> jogsEmCampo) {
+        boolean r = true;
             // jogador que vai sair tem que estar no 11
-            if (!this.jogadoresCasa.contains(nSai)) return false;
+            if (!jogsEmCampo.contains(nSai)) return false;
             // jogador que vai entrar tem que pertencer a equipa
             if (!this.getEquipaVisitada().containsNum(nEntra)) return false;
+            // jogdor que vai entrar nao pode estar em campo
+            if (jogsEmCampo.contains(nEntra)) return false;
             // se o jogador que vai entrar ja tiver saido FALSE (substituicao MAP <sai , entra>)
             if (this.substituicoesCasa.containsKey(nEntra)) return false;
-        }
-        else r = false;
+
+            if (this.equipaVisitada.get1Jogador(nSai) instanceof Lateral){
+                if (!(this.equipaVisitada.get1Jogador(nEntra) instanceof Lateral))
+                    return false;
+            }
+            else {
+                if ((this.equipaVisitada.get1Jogador(nEntra) instanceof Lateral))
+                    return false;
+            }
         return r;
     }
 
-    public void efectuaSubstituicaoCasa (int nEntra, int nSai) throws SubstituicaoInvalidaException{
-        if (validaSubstituicaoCasa(nEntra,nSai)){
-            for (int j : this.getJogadoresCasa()){
+    /*public void efectuaSubstituicaoCasa(int nEntra, int nSai) throws SubstituicaoInvalidaException {
+        if (validaSubstituicaoCasa(nEntra, nSai)) {
+            for (int j : this.getJogadoresCasa()) {
                 if (j == nSai)
                     j = nSai;
             }
-        }
-        else throw new SubstituicaoInvalidaException();
+        } else throw new SubstituicaoInvalidaException();
 
-    }
+    }*/ // FIXME mal depois apagar
 
-    public boolean validaSubstituicaoFora (int nEntra, int nSai) {
+    public boolean validaSubstituicoesFora (){
         boolean r = true;
-        if (this.substituicoesFora.size() < 3){
-            // jogador que vai sair tem que estar no 11
-            if (!this.jogadoresFora.contains(nSai)) return false;
-            // jogador que vai entrar tem que pertencer a equipa
-            if (!this.getEquipaVisitante().containsNum(nEntra)) return false;
-            // se o jogador que vai entrar ja tiver saido FALSE (substituicao MAP <sai , entra>)
-            if (this.substituicoesFora.containsKey(nEntra)) return false;
+        List<Integer> jogsEmCampo = this.jogadoresFora;
+        if (this.substituicoesFora.size() <= 3){
+            for (Map.Entry e : this.substituicoesFora.entrySet()){
+                r = r & validaSubstituicaoFora((int) e.getKey(),(int) e.getValue(),jogsEmCampo);
+                if (r)
+                    jogsEmCampo.set(jogsEmCampo.indexOf(e.getKey()),(int) e.getValue());
+
+            }
+            return r;
+        }else return false;
+    }
+
+    public boolean validaSubstituicaoFora(int nSai, int nEntra,List<Integer> jogsEmCampo) {
+        boolean r = true;
+        // jogador que vai sair tem que estar no 11
+        if (!jogsEmCampo.contains(nSai)) return false;
+        // jogador que vai entrar tem que pertencer a equipa
+        if (!this.getEquipaVisitante().containsNum(nEntra)) return false;
+        // jogdor que vai entrar nao pode estar em campo
+        if (jogsEmCampo.contains(nEntra)) return false;
+        // se o jogador que vai entrar ja tiver saido FALSE (substituicao MAP <sai , entra>)
+        if (this.substituicoesFora.containsKey(nEntra)) return false;
+
+        if (this.equipaVisitante.get1Jogador(nSai) instanceof Lateral){
+            if (!(this.equipaVisitante.get1Jogador(nEntra) instanceof Lateral))
+                return false;
         }
-        else r = false;
+        else {
+            if ((this.equipaVisitante.get1Jogador(nEntra) instanceof Lateral))
+                return false;
+        }
         return r;
     }
 
-    public void efectuaSubstituicaoFora (int nEntra, int nSai) throws SubstituicaoInvalidaException{
-        if (validaSubstituicaoFora(nEntra,nSai)){
-            for (int j : this.getJogadoresCasa()){
+   /* public void efectuaSubstituicaoFora(int nEntra, int nSai) throws SubstituicaoInvalidaException {
+        if (validaSubstituicaoFora(nEntra, nSai)) {
+            for (int j : this.getJogadoresCasa()) {
                 if (j == nSai)
                     j = nSai;
             }
+        } else throw new SubstituicaoInvalidaException();
+    }*/ // FIXME mal depois apagar
+
+    public void calcucaResultado() {
+        Random gerador = new Random();
+        int resCasa = (int) ((this.equipaVisitada.calculaHabilidadeEquipa(this.jogadoresCasa, this.substituicoesCasa) / 100) * gerador.nextInt(11));
+        int resFora = (int) ((this.equipaVisitante.calculaHabilidadeEquipa(this.jogadoresFora, this.substituicoesFora) / 100) * gerador.nextInt(11));
+        this.setGolosCasa(resCasa);
+        this.setGolosFora(resFora);
+    }
+
+
+    public String avançaTempoJogo(int tempo, String equipaAtacar,List<Integer> jogsEmCampoCasa,List<Integer> jogsEmCampoFora) {
+        int habilidadeAtacar, habilidadeDefender;
+        StringBuilder res = new StringBuilder();
+        setTempo(this.tempo + tempo);
+        res.append(String.format("%.2d:00 ->", this.tempo));
+        if (equipaAtacar.compareTo("casa") == 0) {
+            habilidadeAtacar = equipaVisitada.calculaHabilidadeAtacar(jogsEmCampoCasa);
+            habilidadeDefender = equipaVisitante.calculaHabilidadeDefender(jogsEmCampoFora);
+            res.append("Equipa da Casa ");
+        } else {
+            habilidadeAtacar = equipaVisitante.calculaHabilidadeAtacar(jogsEmCampoFora);
+            habilidadeDefender = equipaVisitada.calculaHabilidadeDefender(jogsEmCampoCasa);
+            res.append("Equipa de Fora ");
         }
-        else throw new SubstituicaoInvalidaException();
+        Random gerador = new Random();
+        int x = gerador.nextInt(100);
+        if (x < (50 + (habilidadeAtacar - habilidadeDefender))) {
+            // caso em que marca golo
+            res.append("marcou!");
+            if (equipaAtacar.compareTo("casa") == 0)
+                this.golosCasa++;
+            else
+                this.golosFora++;
+        } else // caso em que perde a posse de bola
+            res.append("perdeu a posse de bola.");
+
+        return res.toString();
     }
 
 
