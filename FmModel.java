@@ -71,7 +71,7 @@ public class FmModel implements  Serializable {
 
         loadJogadores();
         loadEquipas();
-        loadJogos();
+        this.jogos = new ArrayList<>();
     }
     
     public void saveJogadores() throws java.io.IOException {
@@ -318,7 +318,6 @@ public class FmModel implements  Serializable {
     }
 
     public  boolean existeEquipa(String nome){
-        System.out.println(nome);
         return this.equipas.containsKey(nome);
 
     }

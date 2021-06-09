@@ -106,7 +106,7 @@ public class Equipa implements Serializable
         return r;
     }
 
-    // supondo que aa equipa tem obrigatoriamente este num
+    // supondo que aaequipa tem obrigatoriamente este num
     public Jogador get1Jogador (int num){
         Jogador aux = null;
         for (Jogador j : this.Plantel){
@@ -124,7 +124,39 @@ public class Equipa implements Serializable
         return aux;
     }
 
-     // FIXME yah a insere equipa yah :
+    public List<Jogador> getGuardaRedes(){
+        return this.Plantel.stream().filter(v -> v instanceof GuardaRedes).
+                map(v -> (Jogador) v.clone()).
+                collect(Collectors.toList());
+
+    }
+
+    public List<Jogador> getDefesas(){
+        return this.Plantel.stream().filter(v -> v instanceof Defesa).
+                map(v -> (Jogador) v.clone()).
+                collect(Collectors.toList());
+    }
+
+    public List<Jogador> getMedios(){
+        return this.Plantel.stream().filter(v -> v instanceof Medio).
+                map(v -> (Jogador) v.clone()).
+                collect(Collectors.toList());
+    }
+
+    public List<Jogador> getLaterais(){
+        return this.Plantel.stream().filter(v -> v instanceof Lateral).
+                map(v -> (Jogador) v.clone()).
+                collect(Collectors.toList());
+    }
+
+
+    public List<Jogador> getAvancado(){
+        return this.Plantel.stream().filter(v -> v instanceof Avancado).
+                map(v -> (Jogador) v.clone()).
+                collect(Collectors.toList());
+    }
+
+
 
 }
 

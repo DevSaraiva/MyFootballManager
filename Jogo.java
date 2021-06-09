@@ -300,6 +300,7 @@ public class Jogo implements Serializable {
         }
     }
 
+
     public boolean validaSubstituicaoCasa (int nEntra, int nSai) {
         boolean r = true;
         if (this.substituicoesCasa.size() < 3){
