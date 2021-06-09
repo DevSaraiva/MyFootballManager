@@ -41,7 +41,7 @@ public class Jogo implements Serializable {
 
     }
 
-    public Jogo(Equipa ec, Equipa ef, int gc, int gf, LocalDate d, List<Integer> jc, Map<Integer, Integer> sc, List<Integer> jf, Map<Integer, Integer> sf, String taticaCasa, String taticaFora) {
+    public Jogo(Equipa ec, Equipa ef, int gc, int gf, LocalDate d, List<Integer> jc, Map<Integer, Integer> sc, List<Integer> jf, Map<Integer, Integer> sf, String taticaCasa, String taticaFora, int tempo) {
         this.tempo = 0;
         this.pausa = true;
         this.equipaVisitada = ec;
@@ -55,6 +55,7 @@ public class Jogo implements Serializable {
         this.substituicoesFora = new HashMap<>(sf);
         this.taticaFora = taticaFora;
         this.taticaCasa = taticaCasa;
+        this.tempo = tempo;
     }
 
 
@@ -188,7 +189,13 @@ public class Jogo implements Serializable {
 
     public String toString() {
         List<Jogador> JogsCasa = this.equipaVisitada.get11Jogs(this.jogadoresCasa);
+        for (int j : this.substituicoesCasa.values())
+            JogsCasa.add(this.equipaVisitada.get1Jogador(j));
+
         List<Jogador> JogsFora = this.equipaVisitante.get11Jogs(this.jogadoresFora);
+        for (int k : this.substituicoesFora.values())
+            JogsFora.add(this.equipaVisitante.get1Jogador(k));
+
         int mC = tamMaiorString(JogsCasa);
 
         StringBuilder sb = new StringBuilder();
@@ -196,7 +203,7 @@ public class Jogo implements Serializable {
         sb.append(this.data.toString());
         sb.append(" tempo: ");
         sb.append(this.tempo);
-        sb.append("\n");
+        sb.append("'\n");
         sb.append(this.getEquipaVisitada().getNomeDaEquipa());
         for (int k = this.getEquipaVisitada().getNomeDaEquipa().length(); k < (mC + 7); k++)
             sb.append(" ");
@@ -209,7 +216,7 @@ public class Jogo implements Serializable {
         sb.append("11 inicial:");
         for (int k = 11; k < (mC + 14); k++)
             sb.append(" ");
-        sb.append("11 iinicial:  \n");
+        sb.append("11 inicial:  \n");
         Jogador jC;
         Jogador jF;
         for (int i = 0; i < 11; i++) {
@@ -235,15 +242,54 @@ public class Jogo implements Serializable {
             sb.append(jF.getNome());
             sb.append("\n");
         }
-        double c = this.equipaVisitada.calculaHabilidadeEquipa(jogadoresCasa, substituicoesCasa);
-        sb.append("Habilidade Casa: ");
-        sb.append(String.format("%.2f", c));
-        sb.append("\n");
-        double f = this.equipaVisitante.calculaHabilidadeEquipa(jogadoresFora, substituicoesFora);
-        sb.append("Habilidade Fora: ");
-        sb.append(String.format("%.2f", f));
-        sb.append("\n");
-        calcucaResultado();
+        sb.append("Jogadores que entraram: \n");
+        int subsC = this.substituicoesCasa.size();
+        int subsF = this.substituicoesFora.size();
+        int i = 0;
+        //sb.append("Length ");sb.append(JogsCasa.size());sb.append(" ");sb.append(JogsFora.size());sb.append("\n");
+        while ( subsC > 0){
+            jC = JogsCasa.get(11+i);
+            if (jC instanceof GuardaRedes) sb.append("GR->");
+            if (jC instanceof Defesa) sb.append("D ->");
+            if (jC instanceof Lateral) sb.append("L ->");
+            if (jC instanceof Medio) sb.append("M ->");
+            if (jC instanceof Avancado) sb.append("A ->");
+            sb.append(jC.getHabilidade());
+            sb.append(" ");
+            sb.append(jC.getNome());
+            for (int j = jC.getNome().length(); j < mC; j++) sb.append(" ");
+            sb.append("\t\t");
+            subsC--;
+            if (subsF > 0){
+                jF = JogsFora.get(11+i);
+                if (jF instanceof GuardaRedes) sb.append("GR->");
+                if (jF instanceof Defesa) sb.append("D ->");
+                if (jF instanceof Lateral) sb.append("L ->");
+                if (jF instanceof Medio) sb.append("M ->");
+                if (jF instanceof Avancado) sb.append("A ->");
+                sb.append(jF.getHabilidade());
+                sb.append(" ");
+                sb.append(jF.getNome());
+                subsF--;
+            }
+            sb.append("\n");
+            i++;
+        }
+        while (subsF > 0){
+            for (int j = 0; j < mC; j++) sb.append(" ");
+            sb.append("\t\t");
+            jF = JogsFora.get(11+i);
+            if (jF instanceof GuardaRedes) sb.append("GR->");
+            if (jF instanceof Defesa) sb.append("D ->");
+            if (jF instanceof Lateral) sb.append("L ->");
+            if (jF instanceof Medio) sb.append("M ->");
+            if (jF instanceof Avancado) sb.append("A ->");
+            sb.append(jF.getHabilidade());
+            sb.append(" ");
+            sb.append(jF.getNome());
+            subsF--;i++;
+            sb.append("\n");
+        }
         return sb.toString();
     }
 
@@ -302,7 +348,7 @@ public class Jogo implements Serializable {
             LocalDate d = LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]));
 
             return new Jogo(equipas.get(campos[0]), equipas.get(campos[1]), Integer.parseInt(campos[2]), Integer.parseInt(campos[3]),
-                    d, jc, subsC, jf, subsF, verificaTatica(jc, equipas.get(campos[0])), verificaTatica(jf, equipas.get(campos[1])));
+                    d, jc, subsC, jf, subsF, verificaTatica(jc, equipas.get(campos[0])), verificaTatica(jf, equipas.get(campos[1])),90);
         } else throw new EquipaNaoExisteException(campos[0] + " ou " + campos[1]);
 
     }
@@ -415,15 +461,76 @@ public class Jogo implements Serializable {
         } else throw new SubstituicaoInvalidaException();
     }*/ // FIXME mal depois apagar
 
-    public void calcucaResultado() {
+    public void calculaResultado() {
+        this.setTempo(90);
         Random gerador = new Random();
-        int resCasa = (int) ((this.equipaVisitada.calculaHabilidadeEquipa(this.jogadoresCasa, this.substituicoesCasa) / 100) * gerador.nextInt(11));
-        int resFora = (int) ((this.equipaVisitante.calculaHabilidadeEquipa(this.jogadoresFora, this.substituicoesFora) / 100) * gerador.nextInt(11));
-        this.setGolosCasa(resCasa);
-        this.setGolosFora(resFora);
-        System.out.println(resCasa);
+        double hc = this.equipaVisitada.calculaHabilidadeEquipa(this.jogadoresCasa, this.substituicoesCasa);
+        double hcd = (double) this.equipaVisitada.calculaHabilidadeDefender(this.jogadoresCasa)/(double) 100;
+        double hca = (double) this.equipaVisitada.calculaHabilidadeAtacar(this.jogadoresCasa)/(double) 100;
+        double hf = this.equipaVisitante.calculaHabilidadeEquipa(this.jogadoresFora, this.substituicoesFora);
+        double hfd = (double) this.equipaVisitante.calculaHabilidadeDefender(this.jogadoresFora)/(double) 100;
+        double hfa = (double) this.equipaVisitante.calculaHabilidadeAtacar(this.jogadoresFora)/(double) 100;
+        int golosCasa;
+        int x = gerador.nextInt(100);
+        if (x < 2){
+            golosCasa = 10;
+        }else if (2 < x && x < 5){
+            golosCasa = 9;
+        }else if (5 < x && x < 9){
+            golosCasa = 8;
+        }else if (9 < x && x < 14){
+            golosCasa = 7;
+        }else if (14 < x && x < 20){
+            golosCasa = 6;
+        }else if (20 < x && x < 27){
+            golosCasa = 5;
+        }else if (27 < x && x < 40){
+            golosCasa = 4;
+        }else if (40 < x && x < 55){
+            golosCasa = 3;
+        }else if (55 < x && x < 75){
+            golosCasa = 2;
+        }else if (75 < x && x < 85){
+            golosCasa = 1;
+        }else
+            golosCasa = 0;
+        setGolosCasa((int) ((double) golosCasa * (1+hca-hfd)));
+        int golosFora;
+        int y = gerador.nextInt(100);
+        if (y < 2){
+            golosFora = 10;
+        }else if (2 < y && y < 5){
+            golosFora = 9;
+        }else if (5 < y && y < 9){
+            golosFora = 8;
+        }else if (9 < y && y < 14){
+            golosFora = 7;
+        }else if (14 < y && y < 20){
+            golosFora = 6;
+        }else if (20 < y && y < 27){
+            golosFora = 5;
+        }else if (27 < y && y < 40){
+            golosFora = 4;
+        }else if (40 < y && y < 55){
+            golosFora = 3;
+        }else if (55 < y && y < 75){
+            golosFora = 2;
+        }else if (75 < y && y < 85){
+            golosFora = 1;
+        }else
+            golosFora = 0;
+        setGolosFora((int) ((double) golosFora * (1+hfa-hcd)));
+
+        // debug
+        /*
+        System.out.println(String.format("casa %f %f",hca,hcd));
+        System.out.println(String.format("fora %f %f",hfa,hfd));
+        System.out.println(golosCasa);
+        System.out.println((int) ((double) golosCasa * (1.25+hca-hfd)));
         System.out.println(" vs ");
-        System.out.println(resFora);
+        System.out.println(golosFora);
+        System.out.println((int) ((double) golosFora * (1.25+hfa-hcd)));
+        */
     }
 
 
