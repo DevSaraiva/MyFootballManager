@@ -356,7 +356,7 @@ public class FmController
         Equipa equipaCasa = this.model.getEquipas().get(ec);
         Equipa equipaFora = this.model.getEquipas().get(ef);
         Jogo jogo = this.model.criaAddJogo(equipaCasa, equipaFora, d,  jc,  sc,  jf,sf,taticaCasa, taticaFora);
-        jogo.calcucaResultado();
+        jogo.calculaResultado();
         return jogo.toString();
     }
 
