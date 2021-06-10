@@ -259,7 +259,6 @@ public class FmView {
     //Função que suporta a funcionalidade de criar uma equipa
 
     public void criarEquipa(){
-        this.ins.nextLine();
         int tam = 0;
         //Cria equipa sem jogadores
         List<String> opcs;
@@ -289,7 +288,7 @@ public class FmView {
         printOpcoes(opcs);
         tam = opcs.size();
         selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,2,tam)){
+        while(!this.controller.verificaSelecaoJogadores(selection,2,tam,2)){
             System.out.println("Seleção inválida");
             selection =  ins.nextLine();
         }
@@ -312,7 +311,7 @@ public class FmView {
         printOpcoes(opcs);
         tam = opcs.size();
         selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,3,tam)){
+        while(!this.controller.verificaSelecaoJogadores(selection,3,tam,2)){
             System.out.println("Seleção inválida");
             selection =  ins.nextLine();
         }
@@ -335,7 +334,7 @@ public class FmView {
         printOpcoes(opcs);
         tam = opcs.size();
         selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,5,tam)){
+        while(!this.controller.verificaSelecaoJogadores(selection,5,tam,2)){
             System.out.println("Seleção inválida");
             selection =  ins.nextLine();
         }
@@ -358,7 +357,7 @@ public class FmView {
         printOpcoes(opcs);
         tam = opcs.size();
         selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,5,tam)){
+        while(!this.controller.verificaSelecaoJogadores(selection,5,tam,2)){
             System.out.println("Seleção inválida");
             selection =  ins.nextLine();
         }
@@ -381,7 +380,7 @@ public class FmView {
         printOpcoes(opcs);
         tam = opcs.size();
         selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,4,tam)){
+        while(!this.controller.verificaSelecaoJogadores(selection,4,tam,2)){
             System.out.println("Seleção inválida");
             selection =  ins.nextLine();
         }

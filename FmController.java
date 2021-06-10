@@ -75,7 +75,7 @@ public class FmController
         List<String> nomesJogadores = new ArrayList<>();
 
         for(Jogador j: this.model.getJogadores().values()){
-                nomesJogadores.add(j.getNome());
+                nomesJogadores.add(j.getNome() +"\nHabilidade: "+ j.getHabilidade());
 
         }
 
@@ -152,7 +152,7 @@ public class FmController
 
     public List<String> getGuardaRedes(){
 
-        return this.model.getGuardaRedes().stream().map(g -> g.getNome()).collect(Collectors.toList());
+        return this.model.getGuardaRedes().stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
 
     }
 
@@ -160,7 +160,7 @@ public class FmController
 
     public List<String> getDefesas(){
 
-        return this.model.getDefesas().stream().map(g -> g.getNome()).collect(Collectors.toList());
+        return this.model.getDefesas().stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
 
     }
 
@@ -168,21 +168,21 @@ public class FmController
 
     public List<String> getLaterais(){
 
-        return this.model.getLaterais().stream().map(g -> g.getNome()).collect(Collectors.toList());
+        return this.model.getLaterais().stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
 
     }
 
     //Devolve nome dos medios
     public List<String> getMedios(){
 
-        return this.model.getMedios().stream().map(g -> g.getNome()).collect(Collectors.toList());
+        return this.model.getMedios().stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
 
     }
 
     //Devolve nome dos Avançados
     public List<String> getAvancados(){
 
-        return this.model.getAvancados().stream().map(g -> g.getNome()).collect(Collectors.toList());
+        return this.model.getAvancados().stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
 
 
     }
@@ -223,28 +223,28 @@ public class FmController
 
     public List<String> getRedesEquipa(String e){
 
-        return this.model.getEquipas().get(e).getGuardaRedes().stream().map(j->j.getNome()).collect(Collectors.toList());
+        return this.model.getEquipas().get(e).getGuardaRedes().stream().map(j->j.getNome() +"\nHabilidade: "+j.getHabilidade()).collect(Collectors.toList());
 
     }
 
     public List<String> getDefesasEquipa(String e){
 
-        return this.model.getEquipas().get(e).getDefesas().stream().map(j->j.getNome()).collect(Collectors.toList());
+        return this.model.getEquipas().get(e).getDefesas().stream().map(j->j.getNome()+"\nHabilidade: "+j.getHabilidade()).collect(Collectors.toList());
 
     }
     public List<String> getLateraisEquipa(String e){
 
-        return this.model.getEquipas().get(e).getLaterais().stream().map(j->j.getNome()).collect(Collectors.toList());
+        return this.model.getEquipas().get(e).getLaterais().stream().map(j->j.getNome()+"\nHabilidade: "+j.getHabilidade()).collect(Collectors.toList());
 
     }
     public List<String> getMediosEquipa(String e){
 
-        return this.model.getEquipas().get(e).getMedios().stream().map(j->j.getNome()).collect(Collectors.toList());
+        return this.model.getEquipas().get(e).getMedios().stream().map(j->j.getNome()+"\nHabilidade: "+j.getHabilidade()).collect(Collectors.toList());
 
     }
     public List<String> getAvancadosEquipa(String e){
 
-        return this.model.getEquipas().get(e).getAvancado().stream().map(j->j.getNome()).collect(Collectors.toList());
+        return this.model.getEquipas().get(e).getAvancado().stream().map(j->j.getNome()+"\nHabilidade: "+j.getHabilidade()).collect(Collectors.toList());
 
     }
 
@@ -269,10 +269,11 @@ public class FmController
 
     //Função que verifica se seleção de jogdores é válida
 
-    public boolean verificaSelecaoJogadores(String selection, int quantidade, int tam){
+    public boolean verificaSelecaoJogadores(String selection, int quantidade, int tam, int modo){
 
         String[] nums = selection.split(",");
-        if(nums.length != quantidade) return false;
+        if(modo == 1) if(nums.length != quantidade) return false;
+        if(modo == 2) if(nums.length < quantidade) return false;
         for(String s : nums){
             try {
                 validaComando(s);
@@ -305,7 +306,7 @@ public class FmController
         if (posicao.compareTo("Avancados") == 0) jogadores = e.getAvancado();
 
 
-        if(!verificaSelecaoJogadores(selection,quantidade,tam)) return save;
+        if(!verificaSelecaoJogadores(selection,quantidade,tam,1)) return save;
 
         String[] splited = selection.split(",");
         for(String s : splited){
