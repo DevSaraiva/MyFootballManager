@@ -361,4 +361,11 @@ public class FmController
         return jogo.toString();
     }
 
+    public Jogo criaSimulaJogo(String ec, String ef, LocalDate d, List<Integer> jc, Map<Integer, Integer> sc, List<Integer> jf, Map<Integer, Integer> sf, String taticaCasa, String taticaFora) {
+        Equipa equipaCasa = this.model.getEquipas().get(ec);
+        Equipa equipaFora = this.model.getEquipas().get(ef);
+        Jogo jogo = this.model.criaAddJogo(equipaCasa, equipaFora, d,  jc,  sc,  jf,sf,taticaCasa, taticaFora);
+        return jogo;
+    }
+
 }

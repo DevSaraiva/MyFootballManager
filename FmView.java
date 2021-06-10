@@ -21,9 +21,9 @@ public class FmView {
         System.out.println("\n1 - Consultar jogadores existentes");
         System.out.println("2 - Consultar equipas existentes");
         System.out.println("3 - Consultar jogos");
-        System.out.println(("4 - Criar Jogador"));
-        System.out.println(("5 - Criar equipa"));
-        System.out.println(("6 - Criar jogo"));
+        System.out.println("4 - Criar Jogador");
+        System.out.println("5 - Criar equipa");
+        System.out.println("6 - Realizar jogo");
         System.out.println("7 - Fazer Transferência de Jogador");
         System.out.println("8 - Save");
         System.out.println("9 - Quit");
@@ -723,7 +723,33 @@ public class FmView {
         selection = leNumero(1,2,"seleção");
 
         if(selection == 1){
+            Jogo jogo = this.controller.criaSimulaJogo(equipa1,equipa2,parsedData,casa11,subsCasa,fora11,subsFora,taticaCasa,taticaFora);
+            System.out.println(jogo.toString());
 
+            String equipaAcomeçar1parte = "";
+            String equipaAcomeçar2parte = "";
+
+            Random gerador = new Random();
+            int x = gerador.nextInt(2);
+            if (x == 0) {
+                equipaAcomeçar1parte = "casa";
+                equipaAcomeçar2parte = "fora";
+            }
+            if (x == 1){
+                equipaAcomeçar1parte = "fora";
+                equipaAcomeçar2parte = "casa";
+            }
+            int i = 0;
+            String print = "";
+
+            while (jogo.getTempo() < 90){
+                if (i % 2 == 0) print = jogo.avançaTempoJogo(2,equipaAcomeçar1parte,casa11,fora11);
+                else print = jogo.avançaTempoJogo(2,equipaAcomeçar2parte,casa11,fora11);
+                System.out.println(print);
+                i++;
+            }
+
+            System.out.println(jogo.toString());
         }else{
 
             System.out.println("\nInsira as 3 substituições da equipa da casa (S-E,S-E,S-E) \n");

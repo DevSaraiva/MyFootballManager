@@ -535,7 +535,7 @@ public class Jogo implements Serializable {
         int habilidadeAtacar, habilidadeDefender;
         StringBuilder res = new StringBuilder();
         setTempo(this.tempo + tempo);
-        res.append(String.format("%.2d:00 ->", this.tempo));
+        res.append(this.tempo); res.append("' -> ");
         if (equipaAtacar.compareTo("casa") == 0) {
             habilidadeAtacar = equipaVisitada.calculaHabilidadeAtacar(jogsEmCampoCasa);
             habilidadeDefender = equipaVisitante.calculaHabilidadeDefender(jogsEmCampoFora);
@@ -547,7 +547,7 @@ public class Jogo implements Serializable {
         }
         Random gerador = new Random();
         int x = gerador.nextInt(100);
-        if (x < (50 + (habilidadeAtacar - habilidadeDefender))) {
+        if (x < (25 + (habilidadeAtacar - habilidadeDefender))) {
             // caso em que marca golo
             res.append("marcou!");
             if (equipaAtacar.compareTo("casa") == 0)
