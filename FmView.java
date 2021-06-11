@@ -631,6 +631,7 @@ public class FmView {
 
     public Map<Integer,Integer> leSubstituicoes(String equipa, List<Integer> titulares){
         //Formato (S-E,S-E,S-E)
+        System.out.println("Insira as Substituições");
         Map<Integer,Integer> subs = new HashMap<>();
         String input;
         input = this.ins.nextLine();
@@ -663,6 +664,26 @@ public class FmView {
 
         return subs;
     }
+
+    //Função que mostra as opções de substituição
+
+    public void printOpcsSubstituicao(String equipa, List<Integer> titulares){
+
+        System.out.println("\nTitulares:\n");
+        List<String> onze = this.controller.getTitularesNumeroNomeHabilidade(equipa,titulares);
+        for(String s : onze){
+            System.out.println(s);
+        }
+
+        System.out.println("\nPossiveis Suplentes:\n");
+        List<String> suplentes = this.controller.getSuplentesNumeroNomeHabilidade(equipa,titulares);
+        for(String s : suplentes){
+            System.out.println(s);
+        }
+
+
+    }
+
 
         //Função que suporta a funcionalidade de criar um jogo
 
@@ -769,9 +790,11 @@ public class FmView {
             } else {
 
                 System.out.println("\nInsira as 3 substituições da equipa da casa (S-E,S-E,S-E) \n");
+                printOpcsSubstituicao(equipa1,casa11);
                 subsCasa = leSubstituicoes(equipa1, casa11);
 
                 System.out.println("\nInsira as 3 substituições da equipa visitante (S-E,S-E,S-E) \n");
+                printOpcsSubstituicao(equipa2,fora11);
                 subsCasa = leSubstituicoes(equipa2, fora11);
 
                 String jogo = this.controller.criaCalculaResultadoJogo(equipa1, equipa2, parsedData, casa11, subsCasa, fora11, subsFora, taticaCasa, taticaFora);

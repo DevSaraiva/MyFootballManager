@@ -218,6 +218,35 @@ public class FmController
     }
 
 
+    //Função que  Lista de Jogadores Titulares com habilidade
+
+    public List<String> getTitularesNumeroNomeHabilidade(String equipa, List<Integer> titulares){
+        List<String> jogdadoresTitulares = new ArrayList<>();
+        Equipa e = this.model.getEquipas().get(equipa);
+        for(int i : titulares){
+            Jogador jog = e.get1Jogador(i);
+            String s = jog.getClass().getSimpleName() + "-> Numero: " + Integer.toString(jog.getNumeroJogador()) + " - "+  jog.getNome() +  " - Habilidade: " + Integer.toString(jog.getHabilidade());
+            jogdadoresTitulares.add(s);
+        }
+        return jogdadoresTitulares;
+    }
+
+    //Função que  devolve lista dos suplentes com habilidade
+
+    public List<String> getSuplentesNumeroNomeHabilidade(String equipa, List<Integer> titulares){
+        List<String> suplentes = new ArrayList<>();
+        Equipa e = this.model.getEquipas().get(equipa);
+        List<Jogador> plantel = e.getPlantel();
+        for(Jogador jog : plantel){
+            if(!titulares.contains(jog.getNumeroJogador())){
+                String s = jog.getClass().getSimpleName() + "-> Numero: " + Integer.toString(jog.getNumeroJogador()) + " - "+  jog.getNome() +  " - Habilidade: " + Integer.toString(jog.getHabilidade());
+                suplentes.add(s);
+            }
+        }
+
+        return suplentes;
+    }
+
 
     //Devolve Nomes GuardaRedes
 
