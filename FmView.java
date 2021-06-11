@@ -47,13 +47,14 @@ public class FmView {
 
         int selection = -1;
         List<String> jogadores = this.controller.getJogadores();
+        List<String> nomes = this.controller.getJogadoresNome();
         if(jogadores.size() == 0){
             System.out.println("Não existem jogadores criados");
             return;
         }
         printOpcoes(jogadores);
         selection = leNumero(1,jogadores.size(),"");
-        String s = this.controller.getJogador(jogadores.get(selection - 1));
+        String s = this.controller.getJogador(nomes.get(selection - 1));
         System.out.println(s);
 
     }
@@ -634,10 +635,11 @@ public class FmView {
         Map<Integer,Integer> subs = new HashMap<>();
         String input;
         input = this.ins.nextLine();
+        if(input.length() == 0) return new HashMap<>();
         String[] splited = input.split(",");
-        if(splited.length < 3){
+        if(!(splited.length <= 3)){
+            System.out.println("Substituições a mais");
         }else{
-            if(splited.length == 0) return new HashMap<>();
             for(String s : splited){
                 String[] doisJogadores = s.split("-");
                 if(doisJogadores.length != 2){
@@ -653,7 +655,10 @@ public class FmView {
                         return leSubstituicoes(equipa,titulares);
                     }
 
-                    if(!this.controller.validaSubs(equipa, titulares, subs)) return leSubstituicoes(equipa,titulares);
+                    if(!this.controller.validaSubs(equipa, titulares, subs)) {
+                        System.out.println("Substituição impossivel");
+                        return leSubstituicoes(equipa,titulares);
+                    }
 
                 }
             }
