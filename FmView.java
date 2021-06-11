@@ -639,6 +639,7 @@ public class FmView {
         String[] splited = input.split(",");
         if(!(splited.length <= 3)){
             System.out.println("Substituições a mais");
+            return leSubstituicoes(equipa, titulares);
         }else{
             for(String s : splited){
                 String[] doisJogadores = s.split("-");
@@ -691,19 +692,18 @@ public class FmView {
 
     public List<Integer> leSubstituicao (String equipa, List<Integer> jogadoresEmCampo) {
         System.out.println("Insira a substituição que pretende fazer no formato (S-E)");
-        List<Integer> jogsDepoisSub = new ArrayList<>();
         String input;
         input = this.ins.nextLine();
         String[] doisJogadores = input.split("-");
+        int nSai = -1,nEntra = -1;
         if (doisJogadores.length != 2) {
             System.out.println("Formato da substiuição errado");
             return leSubstituicao(equipa, jogadoresEmCampo);
         } else {
-            int nSai,nEntra;
             try {
                 nSai = Integer.parseInt(doisJogadores[0]);
                 nEntra = Integer.parseInt(doisJogadores[1]);
-                jogsDepoisSub = this.controller.efectuaSub(equipa,jogadoresEmCampo,nSai,nEntra);
+                jogadoresEmCampo = this.controller.efectuaSub(equipa,jogadoresEmCampo,nSai,nEntra);
             } catch (NumberFormatException e) {
                 System.out.println("As substituições devem ser formadas pelos números dos jogadores");
                 return leSubstituicao(equipa, jogadoresEmCampo);
@@ -713,7 +713,7 @@ public class FmView {
                 System.out.println("A " + e.getMessage() + "já efectuou todas as substituições disponíveis");
             }
         }
-        return jogsDepoisSub;
+        return jogadoresEmCampo;
     }
 
 
@@ -847,13 +847,10 @@ public class FmView {
                 printOpcsSubstituicao(equipa1,casa11);
                 subsCasa = leSubstituicoes(equipa1, casa11);
 
-                System.out.println(subsCasa);
-
                 System.out.println("\nInsira as 3 substituições da equipa visitante (S-E,S-E,S-E) \n");
                 printOpcsSubstituicao(equipa2,fora11);
                 subsFora = leSubstituicoes(equipa2, fora11);
-
-                System.out.println(subsFora);
+                
                 String jogo = this.controller.criaCalculaResultadoJogo(equipa1, equipa2, parsedData, casa11, subsCasa, fora11, subsFora, taticaCasa, taticaFora);
                 System.out.println(jogo);
             }
@@ -862,10 +859,14 @@ public class FmView {
     }
 
 
-    public void saveData(){
+    public void saveData() {
         System.out.println("Insira o nome da pasta onde deseja efetuar a gravação");
         String pasta = this.ins.nextLine();
-        this.controller.save(pasta);
+        try {
+            this.controller.save(pasta);
+        } catch (IOException e) {
+            System.out.println("Erro na gravação de ficheiro.");
+        }
     }
 
     public void run() {
