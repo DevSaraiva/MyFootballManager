@@ -56,6 +56,7 @@ public class FmController
 
     }
 
+
     //Devolve a equipa selecionada
     public String getEquipa(String s){
 
@@ -70,7 +71,7 @@ public class FmController
         return this.model.getJogos().get(selection - 1).toString();
     }
 
-    // Devolve os nomes dos jogadores para serem apresentados na view
+    // Devolve os nomes dos jogadores e habilidade para serem apresentados na view
 
     public List<String> getJogadores(){
 
@@ -78,6 +79,20 @@ public class FmController
 
         for(Jogador j: this.model.getJogadores().values()){
                 nomesJogadores.add(j.getNome() +"\nHabilidade: "+ j.getHabilidade());
+
+        }
+
+        return  nomesJogadores;
+    }
+
+    // Devolve os nomes dos jogadores para serem apresentados na view
+
+    public List<String> getJogadoresNome(){
+
+        List<String> nomesJogadores = new ArrayList<>();
+
+        for(Jogador j: this.model.getJogadores().values()){
+            nomesJogadores.add(j.getNome());
 
         }
 
@@ -365,6 +380,7 @@ public class FmController
             if (c >= '0' && c <= '9');
             else throw new ComandoInvalidoException(s);
         }
+        if(s.length() == 0) throw new ComandoInvalidoException(s);
         return Integer.parseInt(s);
     }
 
@@ -432,23 +448,25 @@ public class FmController
 
 
 
-
     //Função que verifica se as substituições são validadas
 
-    public boolean validaSubs(String e, List<Integer> titulares, Map<Integer,Integer> subs){
+    public boolean validaSubs(String e, List<Integer> titulares, Map<Integer,Integer> subs) {
 
         Equipa equipa = this.model.getEquipas().get(e);
         boolean r = true;
-        if (subs.size() < 3){
+        if (subs.size() < 3) {
 
-            for(Map.Entry sub : subs.entrySet()) {
+            for (Map.Entry sub : subs.entrySet()) {
 
                 // jogador que vai sair tem que estar no 11
                 if (!titulares.contains(sub.getKey())) return false;
                 // jogador que vai entrar tem que pertencer a equipa
-                if (!equipa.getPlantel().contains(sub.getValue())) return false;
+
+                if (!equipa.getPlantel().stream().map(j->j.getNumeroJogador()).collect(Collectors.toList()).contains(sub.getValue())) return false;
+
                 //jogador a entrar nao pode estar no 11
                 if(titulares.contains(sub.getValue())) return false;
+
                 // se o jogador que vai entrar ja tiver saido
                 if (subs.keySet().contains(sub.getValue())) return false;
 
@@ -462,7 +480,8 @@ public class FmController
                 }
             }
 
-        } else r = false;
+                } else r = false;
+
         return r;
     }
 

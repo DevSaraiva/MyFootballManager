@@ -47,13 +47,14 @@ public class FmView {
 
         int selection = -1;
         List<String> jogadores = this.controller.getJogadores();
+        List<String> nomes = this.controller.getJogadoresNome();
         if(jogadores.size() == 0){
             System.out.println("Não existem jogadores criados");
             return;
         }
         printOpcoes(jogadores);
         selection = leNumero(1,jogadores.size(),"");
-        String s = this.controller.getJogador(jogadores.get(selection - 1));
+        String s = this.controller.getJogador(nomes.get(selection - 1));
         System.out.println(s);
 
     }
@@ -634,12 +635,12 @@ public class FmView {
         Map<Integer,Integer> subs = new HashMap<>();
         String input;
         input = this.ins.nextLine();
+        if(input.length() == 0) return new HashMap<>();
         String[] splited = input.split(",");
-        if(splited.length > 3){
+        if(!(splited.length <= 3)){
+            System.out.println("Substituições a mais");
         }else{
-            if(splited.length == 0) return new HashMap<>();
-            else {
-                for(String s : splited){
+            for(String s : splited){
                 String[] doisJogadores = s.split("-");
                 if(doisJogadores.length != 2){
                     System.out.println("Formato da substiuição errado");
@@ -654,15 +655,14 @@ public class FmView {
                         return leSubstituicoes(equipa,titulares);
                     }
 
-                    if(!this.controller.validaSubs(equipa, titulares, subs)) return leSubstituicoes(equipa,titulares);
+                    if(!this.controller.validaSubs(equipa, titulares, subs)) {
+                        System.out.println("Substituição impossivel");
+                        return leSubstituicoes(equipa,titulares);
+                    }
 
-                }
                 }
             }
-
         }
-
-
         return subs;
     }
 
@@ -851,7 +851,7 @@ public class FmView {
 
                 System.out.println("\nInsira as 3 substituições da equipa visitante (S-E,S-E,S-E) \n");
                 printOpcsSubstituicao(equipa2,fora11);
-                subsCasa = leSubstituicoes(equipa2, fora11);
+                subsFora = leSubstituicoes(equipa2, fora11);
 
                 System.out.println(subsFora);
                 String jogo = this.controller.criaCalculaResultadoJogo(equipa1, equipa2, parsedData, casa11, subsCasa, fora11, subsFora, taticaCasa, taticaFora);
