@@ -698,76 +698,84 @@ public class FmView {
             equipa2 = this.ins.nextLine();
         }
 
-        //11 inicial da equipa da casa
+        System.out.println("Pretende criar o 11 inicial manualmente(1) ou criar o melhor (2)");
+        int num = leNumero(1,2,"Seleção");
+        if(num == 2) {
+            casa11 = this.controller.criaMelhor11(equipa1,"4-4-2");
+            fora11 = this.controller.criaMelhor11(equipa2,"4-4-2");
+        }else {
 
-        System.out.println("Insira a tática da equipa da casa 1 -> 4-4-2 ou 2 -> 4-3-3");
-        selection = leNumero(1,2,"Input");
+            //11 inicial da equipa da casa
 
-        if(selection == 1) taticaCasa = "4-4-2";
-        else taticaCasa = "4-3-3";
+            System.out.println("Insira a tática da equipa da casa 1 -> 4-4-2 ou 2 -> 4-3-3");
+            selection = leNumero(1, 2, "Input");
 
-        System.out.println("\nEscolha o 11 inicial\n");
-        casa11 = cria11inicial(taticaCasa,equipa1);
+            if (selection == 1) taticaCasa = "4-4-2";
+            else taticaCasa = "4-3-3";
 
-        //11 inicial da equipa visitante
+            System.out.println("\nEscolha o 11 inicial\n");
+            casa11 = cria11inicial(taticaCasa, equipa1);
 
-        System.out.println("Insira a tática da equipa visitante 1 -> 4-4-2 ou 2 -> 4-3-3");
-        selection = leNumero(1,2,"Input");
-        if(selection == 1) taticaFora = "4-4-2";
-        else taticaFora = "4-3-3";
+            //11 inicial da equipa visitante
 
-        System.out.println("\nEscolha o 11 inicial\n");
-        fora11 = cria11inicial(taticaFora,equipa2);
+            System.out.println("Insira a tática da equipa visitante 1 -> 4-4-2 ou 2 -> 4-3-3");
+            selection = leNumero(1, 2, "Input");
+            if (selection == 1) taticaFora = "4-4-2";
+            else taticaFora = "4-3-3";
 
-        // Data do encontro
+            System.out.println("\nEscolha o 11 inicial\n");
+            fora11 = cria11inicial(taticaFora, equipa2);
+        }
 
-        System.out.println("\nInsira a data do encontro AA-MM-DD\n");
-        data = this.ins.nextLine();
-        parsedData = this.parseDate(data);
-        System.out.println(parsedData.toString());
+            // Data do encontro
+
+            System.out.println("\nInsira a data do encontro AA-MM-DD\n");
+            data = this.ins.nextLine();
+            parsedData = this.parseDate(data);
+            System.out.println(parsedData.toString());
 
 
-        System.out.println("\nDeseja SIMULAR ENCONTRO(1) ou apenas ver o RESULTADO(2) ?\n");
-        selection = leNumero(1,2,"seleção");
+            System.out.println("\nDeseja SIMULAR ENCONTRO(1) ou apenas ver o RESULTADO(2) ?\n");
+            selection = leNumero(1, 2, "seleção");
 
-        if(selection == 1){
-            Jogo jogo = this.controller.criaSimulaJogo(equipa1,equipa2,parsedData,casa11,subsCasa,fora11,subsFora,taticaCasa,taticaFora);
-            System.out.println(jogo.toString());
+            if (selection == 1) {
+                Jogo jogo = this.controller.criaSimulaJogo(equipa1, equipa2, parsedData, casa11, subsCasa, fora11, subsFora, taticaCasa, taticaFora);
+                System.out.println(jogo.toString());
 
-            String equipaAcomeçar1parte = "";
-            String equipaAcomeçar2parte = "";
+                String equipaAcomeçar1parte = "";
+                String equipaAcomeçar2parte = "";
 
-            Random gerador = new Random();
-            int x = gerador.nextInt(2);
-            if (x == 0) {
-                equipaAcomeçar1parte = "casa";
-                equipaAcomeçar2parte = "fora";
-            }
-            if (x == 1){
-                equipaAcomeçar1parte = "fora";
-                equipaAcomeçar2parte = "casa";
-            }
-            int i = 0;
-            String print = "";
+                Random gerador = new Random();
+                int x = gerador.nextInt(2);
+                if (x == 0) {
+                    equipaAcomeçar1parte = "casa";
+                    equipaAcomeçar2parte = "fora";
+                }
+                if (x == 1) {
+                    equipaAcomeçar1parte = "fora";
+                    equipaAcomeçar2parte = "casa";
+                }
+                int i = 0;
+                String print = "";
 
-            while (jogo.getTempo() < 90){
-                if (i % 2 == 0) print = jogo.avançaTempoJogo(2,equipaAcomeçar1parte,casa11,fora11);
-                else print = jogo.avançaTempoJogo(2,equipaAcomeçar2parte,casa11,fora11);
-                System.out.println(print);
-                i++;
-            }
+                while (jogo.getTempo() < 90) {
+                    if (i % 2 == 0) print = jogo.avançaTempoJogo(2, equipaAcomeçar1parte, casa11, fora11);
+                    else print = jogo.avançaTempoJogo(2, equipaAcomeçar2parte, casa11, fora11);
+                    System.out.println(print);
+                    i++;
+                }
 
-            System.out.println(jogo.toString());
-        }else{
+                System.out.println(jogo.toString());
+            } else {
 
-            System.out.println("\nInsira as 3 substituições da equipa da casa (S-E,S-E,S-E) \n");
-            subsCasa = leSubstituicoes(equipa1, casa11);
+                System.out.println("\nInsira as 3 substituições da equipa da casa (S-E,S-E,S-E) \n");
+                subsCasa = leSubstituicoes(equipa1, casa11);
 
-            System.out.println("\nInsira as 3 substituições da equipa visitante (S-E,S-E,S-E) \n");
-            subsCasa = leSubstituicoes(equipa2, fora11);
+                System.out.println("\nInsira as 3 substituições da equipa visitante (S-E,S-E,S-E) \n");
+                subsCasa = leSubstituicoes(equipa2, fora11);
 
-            String jogo = this.controller.criaCalculaResultadoJogo(equipa1,equipa2,parsedData,casa11,subsCasa,fora11,subsFora,taticaCasa,taticaFora);
-            System.out.println(jogo);
+                String jogo = this.controller.criaCalculaResultadoJogo(equipa1, equipa2, parsedData, casa11, subsCasa, fora11, subsFora, taticaCasa, taticaFora);
+                System.out.println(jogo);
             }
 
 

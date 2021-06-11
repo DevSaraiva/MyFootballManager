@@ -171,7 +171,6 @@ public class FmController
 
     }
 
-
     //Função que cria equipa com melhores jogadores
 
     public void criaMelhorEquipa(String NomeDaEquipa, String Treinador) throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteException {
@@ -183,6 +182,42 @@ public class FmController
         tranfereNjogadoresE(3,"Avancados",NomeDaEquipa);
 
     }
+
+    //Função que adiciona n jogadores aos titulares
+
+    public List<Integer> adicionaNtitulares(List<Jogador> jogadores, List<Integer> titulares, int n){
+            for (Jogador j: jogadores){
+                if(n == 0) break;
+                titulares.add(j.getNumeroJogador());
+                n--;
+            }
+        return titulares;
+    }
+
+    //Função que cria Melhor 11
+
+    public List<Integer> criaMelhor11(String nomeDaEquipa, String tatica){
+        Equipa e = this.model.getEquipas().get(nomeDaEquipa);
+        List<Integer> onzeIncial = new ArrayList<>();
+        if(tatica == "4-4-2"){
+            adicionaNtitulares(this.ordenaJogadores(e.getGuardaRedes()),onzeIncial,1);
+            adicionaNtitulares(this.ordenaJogadores(e.getDefesas()),onzeIncial,2);
+            adicionaNtitulares(this.ordenaJogadores(e.getLaterais()),onzeIncial,2);
+            adicionaNtitulares(this.ordenaJogadores(e.getMedios()),onzeIncial,4);
+            adicionaNtitulares(this.ordenaJogadores(e.getAvancado()),onzeIncial,2);
+        }else{
+            adicionaNtitulares(this.ordenaJogadores(e.getGuardaRedes()),onzeIncial,1);
+            adicionaNtitulares(this.ordenaJogadores(e.getDefesas()),onzeIncial,2);
+            adicionaNtitulares(this.ordenaJogadores(e.getLaterais()),onzeIncial,4);
+            adicionaNtitulares(this.ordenaJogadores(e.getMedios()),onzeIncial,1);
+            adicionaNtitulares(this.ordenaJogadores(e.getAvancado()),onzeIncial,1);
+        }
+
+
+        return onzeIncial;
+    }
+
+
 
     //Devolve Nomes GuardaRedes
 
