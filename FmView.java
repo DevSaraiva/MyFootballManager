@@ -635,10 +635,11 @@ public class FmView {
         String input;
         input = this.ins.nextLine();
         String[] splited = input.split(",");
-        if(splited.length < 3){
+        if(splited.length > 3){
         }else{
             if(splited.length == 0) return new HashMap<>();
-            for(String s : splited){
+            else {
+                for(String s : splited){
                 String[] doisJogadores = s.split("-");
                 if(doisJogadores.length != 2){
                     System.out.println("Formato da substiuição errado");
@@ -655,6 +656,7 @@ public class FmView {
 
                     if(!this.controller.validaSubs(equipa, titulares, subs)) return leSubstituicoes(equipa,titulares);
 
+                }
                 }
             }
 
@@ -793,19 +795,19 @@ public class FmView {
             String print = this.controller.criaSimulaJogo(equipa1,equipa2,parsedData,casa11,subsCasa,fora11,subsFora,taticaCasa,taticaFora);
             System.out.println(print);
 
-            String equipaAcomeçar1parte = "casa";
-            String equipaAcomeçar2parte = "fora";
+            String equipaAcomeçar1parte = "";
+            String equipaAcomeçar2parte = "";
 
-            /*Random gerador = new Random();
-            int x = gerador.nextInt(2);
-            if (x == 0) {
+            Random gerador = new Random();
+            int g = gerador.nextInt(2);
+            if (g == 0) {
                 equipaAcomeçar1parte = "casa";
                 equipaAcomeçar2parte = "fora";
             }
-            if (x == 1){
+            else{
                 equipaAcomeçar1parte = "fora";
                 equipaAcomeçar2parte = "casa";
-            }*/
+            }
 
             print = this.controller.avancaTempoSubs(casa11,fora11,equipaAcomeçar1parte,equipaAcomeçar2parte,15);
             System.out.println(print);
@@ -823,13 +825,15 @@ public class FmView {
                     System.out.println("Introduza a equipa em que pretende fazer a substituições 1 - equipa Casa ou 2 - equipa Fora");
                     equipa = leNumero(1,2,"Seleção de Equipa");
                     if (equipa == 1) {
+                        printOpcsSubstituicao(equipa1,casa11);
                         casa11 = leSubstituicao("casa",casa11);
                     }
                     else {
+                        printOpcsSubstituicao(equipa2,fora11);
                         fora11 = leSubstituicao("fora",fora11);
                     }
 
-                    System.out.println("Introduza 1 se quer pausar o jogo para substituições ou 2 caso contrário");
+                    System.out.println("Introduza 1 se pretende fazer mais Substituições ou 2 caso queira prosseguir o jogo");
                     x = leNumero(1,2,"Opção");
                 }
                 print = this.controller.avancaTempoSubs(casa11,fora11,equipaAcomeçar1parte,equipaAcomeçar2parte,15);
@@ -843,10 +847,13 @@ public class FmView {
                 printOpcsSubstituicao(equipa1,casa11);
                 subsCasa = leSubstituicoes(equipa1, casa11);
 
+                System.out.println(subsCasa);
+
                 System.out.println("\nInsira as 3 substituições da equipa visitante (S-E,S-E,S-E) \n");
                 printOpcsSubstituicao(equipa2,fora11);
                 subsCasa = leSubstituicoes(equipa2, fora11);
 
+                System.out.println(subsFora);
                 String jogo = this.controller.criaCalculaResultadoJogo(equipa1, equipa2, parsedData, casa11, subsCasa, fora11, subsFora, taticaCasa, taticaFora);
                 System.out.println(jogo);
             }

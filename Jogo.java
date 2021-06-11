@@ -470,6 +470,7 @@ public class Jogo implements Serializable {
                         j = nEntra;
                 }
                 this.substituicoesCasa.put(nSai,nEntra);
+                return jogsEmCampo;
             }
             else throw new SubstituicaoInvalidaException();
         }
@@ -478,12 +479,12 @@ public class Jogo implements Serializable {
             if (validaSubstituicaoFora(nSai, nEntra,jogsEmCampo)) {
                 for (int j : this.getJogadoresCasa()) {
                     if (j == nSai)
-                        j = nSai;
+                        j = nEntra;
                 }
                 this.substituicoesFora.put(nSai,nEntra);
+                return jogsEmCampo;
             } else throw new SubstituicaoInvalidaException();
         }
-        return jogsEmCampo;
     }
 
 

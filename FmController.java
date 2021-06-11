@@ -489,8 +489,7 @@ public class FmController
     }
 
     public List<Integer> efectuaSub(String equipa,List<Integer> jogadoresEmCampo,int nSai,int nEntra) throws Jogo.SubstituicaoIndisponivelException, Jogo.SubstituicaoInvalidaException {
-        List<Integer> res;
-        res = this.model.efectuaSub(equipa,jogadoresEmCampo,nSai,nEntra);
+        List<Integer> res = this.model.efectuaSub(equipa,jogadoresEmCampo,nSai,nEntra);
         return res;
     }
 
