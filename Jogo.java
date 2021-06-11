@@ -193,7 +193,6 @@ public class Jogo implements Serializable {
         List<Jogador> JogsCasa = this.equipaVisitada.get11Jogs(this.jogadoresCasa);
         for (int j : this.substituicoesCasa.values())
             JogsCasa.add(this.equipaVisitada.get1Jogador(j));
-        System.out.println(JogsCasa);
         List<Jogador> JogsFora = this.equipaVisitante.get11Jogs(this.jogadoresFora);
         for (int k : this.substituicoesFora.values())
             JogsFora.add(this.equipaVisitante.get1Jogador(k));

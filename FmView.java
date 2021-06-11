@@ -850,7 +850,7 @@ public class FmView {
 
                 System.out.println("\nInsira as 3 substituições da equipa visitante (S-E,S-E,S-E) \n");
                 printOpcsSubstituicao(equipa2,fora11);
-                subsCasa = leSubstituicoes(equipa2, fora11);
+                subsFora = leSubstituicoes(equipa2, fora11);
 
                 String jogo = this.controller.criaCalculaResultadoJogo(equipa1, equipa2, parsedData, casa11, subsCasa, fora11, subsFora, taticaCasa, taticaFora);
                 System.out.println(jogo);
