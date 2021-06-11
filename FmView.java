@@ -1,4 +1,3 @@
-import java.awt.desktop.SystemSleepEvent;
 import java.awt.font.TextHitInfo;
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -276,123 +275,134 @@ public class FmView {
         this.controller.criaEquipa(nomeEquipa,treinador,plantel);
 
         //Lê o plantel
-        System.out.println("\nSelecione o Plantel\n");
+        System.out.println("\nSelecione (1) para  escolher manualmente o plantel (2) para criar a melhor equipa possivel\n");
+        int num = this.leNumero(1,2,"Seleção");
+        if(num == 2) {
+            try {
+                this.controller.criaMelhorEquipa(nomeEquipa,treinador);
+            } catch (Jogo.EquipaNaoExisteException e) {
+                System.out.println("Erro a criar equipa");
+            } catch (FmModel.JogadorInexistenteException e) {
+                System.out.println("Erro nos dados dos jogadores");
+            }
+        }else {
+            System.out.println("\nSelecione o Plantel\n");
 
-        //Guarda-Redes
+            //Guarda-Redes
 
-        System.out.println("\nSelecione no minimo 2 Guarda-Redes  x,y\n");
-        opcs = this.controller.getGuardaRedes();
-        if(opcs.size() == 0){
-            System.out.println("Não existem Guarda-Redes suficientes no sistema");
-            return;
-        }
-        printOpcoes(opcs);
-        tam = opcs.size();
-        selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,2,tam,2)){
-            System.out.println("Seleção inválida");
-            selection =  ins.nextLine();
-        }
-        try {
-            this.controller.adicionaJogadores(selection,nomeEquipa,"Guarda-Redes");
-        } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
-        } catch (FmModel.JogadorInexistenteException e) {
-            System.out.println("O jogador '" + e.getMessage() +"' não existe\n");
-        }
+            System.out.println("\nSelecione no minimo 2 Guarda-Redes  x,y\n");
+            opcs = this.controller.getGuardaRedes();
+            if (opcs.size() == 0) {
+                System.out.println("Não existem Guarda-Redes suficientes no sistema");
+                return;
+            }
+            printOpcoes(opcs);
+            tam = opcs.size();
+            selection = ins.nextLine();
+            while (!this.controller.verificaSelecaoJogadores(selection, 2, tam, 2)) {
+                System.out.println("Seleção inválida");
+                selection = ins.nextLine();
+            }
+            try {
+                this.controller.adicionaJogadores(selection, nomeEquipa, "Guarda-Redes");
+            } catch (Jogo.EquipaNaoExisteException e) {
+                System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
+            } catch (FmModel.JogadorInexistenteException e) {
+                System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
+            }
 
-        //Defesas
+            //Defesas
 
-        System.out.println("\nSelecione no minimo 3 Defesas  x,y\n");
-        opcs = this.controller.getDefesas();
-        if(opcs.size() == 0){
-            System.out.println("Não existem Defesas suficientes no sistema");
-            return;
-        }
-        printOpcoes(opcs);
-        tam = opcs.size();
-        selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,3,tam,2)){
-            System.out.println("Seleção inválida");
-            selection =  ins.nextLine();
-        }
-        try {
-            this.controller.adicionaJogadores(selection,nomeEquipa,"Defesa");
-        } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
-        } catch (FmModel.JogadorInexistenteException e) {
-            System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
-        }
+            System.out.println("\nSelecione no minimo 3 Defesas  x,y\n");
+            opcs = this.controller.getDefesas();
+            if (opcs.size() == 0) {
+                System.out.println("Não existem Defesas suficientes no sistema");
+                return;
+            }
+            printOpcoes(opcs);
+            tam = opcs.size();
+            selection = ins.nextLine();
+            while (!this.controller.verificaSelecaoJogadores(selection, 3, tam, 2)) {
+                System.out.println("Seleção inválida");
+                selection = ins.nextLine();
+            }
+            try {
+                this.controller.adicionaJogadores(selection, nomeEquipa, "Defesa");
+            } catch (Jogo.EquipaNaoExisteException e) {
+                System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
+            } catch (FmModel.JogadorInexistenteException e) {
+                System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
+            }
 
-        //Laterais
+            //Laterais
 
-        System.out.println("\nSelecione no minimo 5 Laterais  x,y\n");
-        opcs = this.controller.getLaterais();
-        if(opcs.size() == 0){
-            System.out.println("Não existem Laterais suficientes no sistema");
-            return;
-        }
-        printOpcoes(opcs);
-        tam = opcs.size();
-        selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,5,tam,2)){
-            System.out.println("Seleção inválida");
-            selection =  ins.nextLine();
-        }
-        try {
-            this.controller.adicionaJogadores(selection,nomeEquipa,"Lateral");
-        } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa '" + e.getMessage() + "' não existe\n");
-        } catch (FmModel.JogadorInexistenteException e) {
-            System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
-        }
+            System.out.println("\nSelecione no minimo 5 Laterais  x,y\n");
+            opcs = this.controller.getLaterais();
+            if (opcs.size() == 0) {
+                System.out.println("Não existem Laterais suficientes no sistema");
+                return;
+            }
+            printOpcoes(opcs);
+            tam = opcs.size();
+            selection = ins.nextLine();
+            while (!this.controller.verificaSelecaoJogadores(selection, 5, tam, 2)) {
+                System.out.println("Seleção inválida");
+                selection = ins.nextLine();
+            }
+            try {
+                this.controller.adicionaJogadores(selection, nomeEquipa, "Lateral");
+            } catch (Jogo.EquipaNaoExisteException e) {
+                System.out.println("A equipa '" + e.getMessage() + "' não existe\n");
+            } catch (FmModel.JogadorInexistenteException e) {
+                System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
+            }
 
-        //Medios
+            //Medios
 
-        System.out.println("\nSelecione no minimo 5 Medios  x,y\n");
-        opcs = this.controller.getMedios();
-        if(opcs.size() == 0){
-            System.out.println("Não existem Medios suficientes no sistema");
-            return;
-        }
-        printOpcoes(opcs);
-        tam = opcs.size();
-        selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,5,tam,2)){
-            System.out.println("Seleção inválida");
-            selection =  ins.nextLine();
-        }
-        try {
-            this.controller.adicionaJogadores(selection,nomeEquipa,"Medio");
-        } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa '" + e.getMessage() + "' não existe\n");
-        } catch (FmModel.JogadorInexistenteException e) {
-            System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
-        }
+            System.out.println("\nSelecione no minimo 5 Medios  x,y\n");
+            opcs = this.controller.getMedios();
+            if (opcs.size() == 0) {
+                System.out.println("Não existem Medios suficientes no sistema");
+                return;
+            }
+            printOpcoes(opcs);
+            tam = opcs.size();
+            selection = ins.nextLine();
+            while (!this.controller.verificaSelecaoJogadores(selection, 5, tam, 2)) {
+                System.out.println("Seleção inválida");
+                selection = ins.nextLine();
+            }
+            try {
+                this.controller.adicionaJogadores(selection, nomeEquipa, "Medio");
+            } catch (Jogo.EquipaNaoExisteException e) {
+                System.out.println("A equipa '" + e.getMessage() + "' não existe\n");
+            } catch (FmModel.JogadorInexistenteException e) {
+                System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
+            }
 
-        //Avancados
+            //Avancados
 
-        System.out.println("\nSelecione no minimo 4 Avançados  x,y\n");
-        opcs = this.controller.getAvancados();
-        if(opcs.size() == 0){
-            System.out.println("Não existem Laterais suficientes no sistema");
-            return;
+            System.out.println("\nSelecione no minimo 4 Avançados  x,y\n");
+            opcs = this.controller.getAvancados();
+            if (opcs.size() == 0) {
+                System.out.println("Não existem Laterais suficientes no sistema");
+                return;
+            }
+            printOpcoes(opcs);
+            tam = opcs.size();
+            selection = ins.nextLine();
+            while (!this.controller.verificaSelecaoJogadores(selection, 4, tam, 2)) {
+                System.out.println("Seleção inválida");
+                selection = ins.nextLine();
+            }
+            try {
+                this.controller.adicionaJogadores(selection, nomeEquipa, "Avancado");
+            } catch (Jogo.EquipaNaoExisteException e) {
+                System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
+            } catch (FmModel.JogadorInexistenteException e) {
+                System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
+            }
         }
-        printOpcoes(opcs);
-        tam = opcs.size();
-        selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,4,tam,2)){
-            System.out.println("Seleção inválida");
-            selection =  ins.nextLine();
-        }
-        try {
-            this.controller.adicionaJogadores(selection,nomeEquipa,"Avancado");
-        } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
-        } catch (FmModel.JogadorInexistenteException e) {
-            System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
-        }
-
 
 
     }
@@ -653,53 +663,38 @@ public class FmView {
         return subs;
     }
 
-    public class SubstituicaoIndisponivelException extends Exception {
-        public SubstituicaoIndisponivelException(){
-            super();
-        }
 
-        public SubstituicaoIndisponivelException(String s){
-            super(s);
-        }
-    }
 
-    public Map<Integer,Integer> leSubstituicao (String equipa, List<Integer> jogadoresEmCampo, Map<Integer,Integer> subs) throws SubstituicaoIndisponivelException{
-        Map<Integer,Integer> copia = new HashMap<>();
-        if (subs.size() == 3) throw new SubstituicaoIndisponivelException();
-        else {
-            System.out.println("Insira a substituição que pretende fazer no formato (S-E)");
-            String input;
-            input = this.ins.nextLine();
-            String[] doisJogadores = input.split("-");
-            if (doisJogadores.length != 2) {
-                System.out.println("Formato da substiuição errado");
-                return leSubstituicao(equipa, jogadoresEmCampo, subs);
-            } else {
-                int nSai,nEntra;
-                copia = subs.entrySet().stream().collect(Collectors.toMap(e->e.getKey(),e->e.getValue()));
-                try {
-                    nSai = Integer.parseInt(doisJogadores[0]);
-                    nEntra = Integer.parseInt(doisJogadores[1]);
-                    copia.put(nSai,nEntra);
-                } catch (NumberFormatException e) {
-
-                    System.out.println("As substituições devem ser formadas pelos números dos jogadores");
-                    return leSubstituicao(equipa, jogadoresEmCampo, subs);
-                }
-
-                if (!this.controller.validaSubs(equipa, jogadoresEmCampo, subs)){
-                    System.out.println("Substituição Inválida");
-                    return leSubstituicao(equipa, jogadoresEmCampo, subs);
-                }
+    public List<Integer> leSubstituicao (String equipa, List<Integer> jogadoresEmCampo) {
+        System.out.println("Insira a substituição que pretende fazer no formato (S-E)");
+        List<Integer> jogsDepoisSub = new ArrayList<>();
+        String input;
+        input = this.ins.nextLine();
+        String[] doisJogadores = input.split("-");
+        if (doisJogadores.length != 2) {
+            System.out.println("Formato da substiuição errado");
+            return leSubstituicao(equipa, jogadoresEmCampo);
+        } else {
+            int nSai,nEntra;
+            try {
+                nSai = Integer.parseInt(doisJogadores[0]);
+                nEntra = Integer.parseInt(doisJogadores[1]);
+                jogsDepoisSub = this.controller.efectuaSub(equipa,jogadoresEmCampo,nSai,nEntra);
+            } catch (NumberFormatException e) {
+                System.out.println("As substituições devem ser formadas pelos números dos jogadores");
+                return leSubstituicao(equipa, jogadoresEmCampo);
+            } catch (Jogo.SubstituicaoInvalidaException e) {
+                System.out.println("A substituição que tentou fazer não é válida!");
+            } catch (Jogo.SubstituicaoIndisponivelException e) {
+                System.out.println("A " + e.getMessage() + "já efectuou todas as substituições disponíveis");
             }
         }
-        return copia;
+        return jogsDepoisSub;
     }
 
 
 
     //Função que suporta a funcionalidade de criar um jogo
-
     public void realizarJogo(){
         String equipa1 = "";
         String equipa2 = "";
@@ -718,7 +713,6 @@ public class FmView {
             return;
         }
 
-
         System.out.println("Insira a equipa da casa");
         equipa1 = this.ins.nextLine();
 
@@ -733,37 +727,44 @@ public class FmView {
             equipa2 = this.ins.nextLine();
         }
 
-        //11 inicial da equipa da casa
+        System.out.println("Pretende criar o 11 inicial manualmente(1) ou criar o melhor (2)");
+        int num = leNumero(1,2,"Seleção");
+        if(num == 2) {
+            casa11 = this.controller.criaMelhor11(equipa1,"4-4-2");
+            fora11 = this.controller.criaMelhor11(equipa2,"4-4-2");
+        }else {
 
-        System.out.println("Insira a tática da equipa da casa 1 -> 4-4-2 ou 2 -> 4-3-3");
-        selection = leNumero(1,2,"Input");
+            //11 inicial da equipa da casa
 
-        if(selection == 1) taticaCasa = "4-4-2";
-        else taticaCasa = "4-3-3";
+            System.out.println("Insira a tática da equipa da casa 1 -> 4-4-2 ou 2 -> 4-3-3");
+            selection = leNumero(1, 2, "Input");
 
-        System.out.println("\nEscolha o 11 inicial\n");
-        casa11 = cria11inicial(taticaCasa,equipa1);
+            if (selection == 1) taticaCasa = "4-4-2";
+            else taticaCasa = "4-3-3";
 
-        //11 inicial da equipa visitante
+            System.out.println("\nEscolha o 11 inicial\n");
+            casa11 = cria11inicial(taticaCasa, equipa1);
 
-        System.out.println("Insira a tática da equipa visitante 1 -> 4-4-2 ou 2 -> 4-3-3");
-        selection = leNumero(1,2,"Input");
-        if(selection == 1) taticaFora = "4-4-2";
-        else taticaFora = "4-3-3";
+            //11 inicial da equipa visitante
 
-        System.out.println("\nEscolha o 11 inicial\n");
-        fora11 = cria11inicial(taticaFora,equipa2);
+            System.out.println("Insira a tática da equipa visitante 1 -> 4-4-2 ou 2 -> 4-3-3");
+            selection = leNumero(1, 2, "Input");
+            if (selection == 1) taticaFora = "4-4-2";
+            else taticaFora = "4-3-3";
 
-        // Data do encontro
+            System.out.println("\nEscolha o 11 inicial\n");
+            fora11 = cria11inicial(taticaFora, equipa2);
+        }
 
-        System.out.println("\nInsira a data do encontro AA-MM-DD\n");
-        data = this.ins.nextLine();
-        parsedData = this.parseDate(data);
-        System.out.println(parsedData.toString());
+            // Data do encontro
 
+            System.out.println("\nInsira a data do encontro AA-MM-DD\n");
+            data = this.ins.nextLine();
+            parsedData = this.parseDate(data);
+            System.out.println(parsedData.toString());
 
         System.out.println("\nDeseja SIMULAR ENCONTRO(1) ou apenas ver o RESULTADO(2) ?\n");
-        selection = leNumero(1,2,"seleção");
+        selection = leNumero(1, 2, "seleção");
 
         if(selection == 1){
             // cria jogo
@@ -783,11 +784,8 @@ public class FmView {
                 equipaAcomeçar1parte = "fora";
                 equipaAcomeçar2parte = "casa";
             }*/
-            Map<Integer,Integer> subsC = new HashMap<>();
-            int nSubC = 0, nSubF = 0;
-            Map<Integer,Integer> subsF = new HashMap<>();
 
-            print = this.controller.avancaTempoSubs(casa11,fora11,equipaAcomeçar1parte,equipaAcomeçar2parte,15,subsC,subsF);
+            print = this.controller.avancaTempoSubs(casa11,fora11,equipaAcomeçar1parte,equipaAcomeçar2parte,15);
             System.out.println(print);
 
             int min = 15;
@@ -803,55 +801,30 @@ public class FmView {
                     System.out.println("Introduza a equipa em que pretende fazer a substituições 1 - equipa Casa ou 2 - equipa Fora");
                     equipa = leNumero(1,2,"Seleção de Equipa");
                     if (equipa == 1) {
-                        try {
-                            subsC = leSubstituicao("casa",casa11,subsC);
-                            /*System.out.println(subsC);
-                            System.out.println(casa11);
-                            int Sai = subsC.
-                            int Entra = subsC.get(Sai);
-                            for ( int j : casa11){
-                                if (j == Sai)
-                                    j = Entra;
-                            }
-                            nSubC++;*/
-                        } catch (SubstituicaoIndisponivelException e) {
-                            System.out.println("Já efetuou todas as substituiçõess possíveis na equipa da casa");
-                        }
+                        casa11 = leSubstituicao("casa",casa11);
                     }
                     else {
-                        try {
-                            subsF = leSubstituicao("fora",fora11,subsF);
-                            /*int Sai = subsF.keySet().stream().collect(Collectors.toList()).get(nSubC);
-                            int Entra = subsF.get(sai);
-                            for ( int j : fora11){
-                                if (j == Sai)
-                                    j = Entra;
-                            }
-                            nSubF++;*/
-                        } catch (SubstituicaoIndisponivelException e) {
-                            System.out.println("Já efetuou todas as substituiçõess possíveis na equipa da casa");
-                        }
+                        fora11 = leSubstituicao("fora",fora11);
                     }
 
                     System.out.println("Introduza 1 se quer pausar o jogo para substituições ou 2 caso contrário");
                     x = leNumero(1,2,"Opção");
                 }
-                print = this.controller.avancaTempoSubs(casa11,fora11,equipaAcomeçar1parte,equipaAcomeçar2parte,15,subsC,subsF);
+                print = this.controller.avancaTempoSubs(casa11,fora11,equipaAcomeçar1parte,equipaAcomeçar2parte,15);
                 System.out.println(print);
                 min += 15;
             }
 
 
         }else{
+                System.out.println("\nInsira as 3 substituições da equipa da casa (S-E,S-E,S-E) \n");
+                subsCasa = leSubstituicoes(equipa1, casa11);
 
-            System.out.println("\nInsira as 3 substituições da equipa da casa (S-E,S-E,S-E) \n");
-            subsCasa = leSubstituicoes(equipa1, casa11);
+                System.out.println("\nInsira as 3 substituições da equipa visitante (S-E,S-E,S-E) \n");
+                subsCasa = leSubstituicoes(equipa2, fora11);
 
-            System.out.println("\nInsira as 3 substituições da equipa visitante (S-E,S-E,S-E) \n");
-            subsCasa = leSubstituicoes(equipa2, fora11);
-
-            String jogo = this.controller.criaCalculaResultadoJogo(equipa1,equipa2,parsedData,casa11,subsCasa,fora11,subsFora,taticaCasa,taticaFora);
-            System.out.println(jogo);
+                String jogo = this.controller.criaCalculaResultadoJogo(equipa1, equipa2, parsedData, casa11, subsCasa, fora11, subsFora, taticaCasa, taticaFora);
+                System.out.println(jogo);
             }
 
 
@@ -865,6 +838,7 @@ public class FmView {
     }
 
     public void run() {
+
         List<String> opcs;
         int selection = -1;
         System.out.println("Insira 1 para carregar os seus dados");

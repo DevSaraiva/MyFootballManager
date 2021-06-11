@@ -248,9 +248,10 @@ public class Jogo implements Serializable {
             sb.append(jF.getNome());
             sb.append("\n");
         }
-        sb.append("Jogadores que entraram: \n");
+
         int subsC = this.substituicoesCasa.size();
         int subsF = this.substituicoesFora.size();
+        if (subsF > 0 || subsC > 0) sb.append("Jogadores que entraram: \n");
         int i = 0;
         while ( subsC > 0){
             jC = JogsCasa.get(11+i);
@@ -374,6 +375,15 @@ public class Jogo implements Serializable {
         }
     }
 
+    public class SubstituicaoIndisponivelException extends Exception {
+        public SubstituicaoIndisponivelException(){
+            super();
+        }
+
+        public SubstituicaoIndisponivelException(String s){
+            super(s);
+        }
+    }
 
     public boolean validaSubstituicoesCasa (){
         boolean r = true;
@@ -415,15 +425,6 @@ public class Jogo implements Serializable {
         return r;
     }
 
-    /*public void efectuaSubstituicaoCasa(int nEntra, int nSai) throws SubstituicaoInvalidaException {
-        if (validaSubstituicaoCasa(nEntra, nSai)) {
-            for (int j : this.getJogadoresCasa()) {
-                if (j == nSai)
-                    j = nSai;
-            }
-        } else throw new SubstituicaoInvalidaException();
-
-    }*/ // FIXME mal depois apagar
 
     public boolean validaSubstituicoesFora (){
         boolean r = true;
@@ -433,7 +434,6 @@ public class Jogo implements Serializable {
                 r = r & validaSubstituicaoFora((int) e.getKey(),(int) e.getValue(),jogsEmCampo);
                 if (r)
                     jogsEmCampo.set(jogsEmCampo.indexOf(e.getKey()),(int) e.getValue());
-
             }
             return r;
         }else return false;
@@ -461,14 +461,31 @@ public class Jogo implements Serializable {
         return r;
     }
 
-   /* public void efectuaSubstituicaoFora(int nEntra, int nSai) throws SubstituicaoInvalidaException {
-        if (validaSubstituicaoFora(nEntra, nSai)) {
-            for (int j : this.getJogadoresCasa()) {
-                if (j == nSai)
-                    j = nSai;
+    public List<Integer> efectuaSubstituicao(String equipa,int nSai, int nEntra,List<Integer> jogsEmCampo) throws SubstituicaoInvalidaException,SubstituicaoIndisponivelException {
+        if (equipa.equals("casa")){
+            if (this.substituicoesCasa.size() >= 3) throw new SubstituicaoIndisponivelException("Equipa Visitada");
+            if (validaSubstituicaoCasa(nSai, nEntra,jogsEmCampo)) {
+                for (int j : jogsEmCampo) {
+                    if (j == nSai)
+                        j = nEntra;
+                }
+                this.substituicoesCasa.put(nSai,nEntra);
             }
-        } else throw new SubstituicaoInvalidaException();
-    }*/ // FIXME mal depois apagar
+            else throw new SubstituicaoInvalidaException();
+        }
+        else {
+            if (this.substituicoesFora.size() >= 3) throw new SubstituicaoIndisponivelException("Equipa Visitante");
+            if (validaSubstituicaoFora(nSai, nEntra,jogsEmCampo)) {
+                for (int j : this.getJogadoresCasa()) {
+                    if (j == nSai)
+                        j = nSai;
+                }
+                this.substituicoesFora.put(nSai,nEntra);
+            } else throw new SubstituicaoInvalidaException();
+        }
+        return jogsEmCampo;
+    }
+
 
     public void calculaResultado() {
         this.setTempo(90);

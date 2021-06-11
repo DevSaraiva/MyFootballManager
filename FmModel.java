@@ -194,9 +194,10 @@ public class FmModel implements  Serializable {
                             
     }
 
-    public void criaEquipa(String NomeDaEquipa, String Treinador, List<Jogador> Plantel){
+    public Equipa criaEquipa(String NomeDaEquipa, String Treinador, List<Jogador> Plantel){
         Equipa e = new Equipa(NomeDaEquipa, Treinador, Plantel);
         this.equipas.put(NomeDaEquipa,e);
+        return e;
     }
 
     //Após a leitura dos logs em texto é necessário colocar no histórico de cada jogador a equipa onde se encontra no momento
@@ -337,11 +338,8 @@ public class FmModel implements  Serializable {
         return jogo;
     }
 
-    public String avancaTempoSubs(List<Integer> jC, List<Integer> jF,String equipaComeca1,String equipaComeca2,int tempo,Map<Integer,Integer> subsCasa,Map<Integer,Integer> subsFora){
+    public String avancaTempoSubs(List<Integer> jC, List<Integer> jF,String equipaComeca1,String equipaComeca2,int tempo){
         Jogo jogo = this.jogos.get(this.jogos.size()-1);
-
-        jogo.setSubstituicoesCasa(subsCasa);
-        jogo.setSubstitucoesFora(subsFora);
 
         int i = 0;
         StringBuilder sb = new StringBuilder();
@@ -355,9 +353,14 @@ public class FmModel implements  Serializable {
             i += 5;
         }
         if (jogo.getTempo() == 90) sb.append(jogo.toString());
-
-
         return sb.toString();
+    }
+
+    public List<Integer> efectuaSub (String equipa,List<Integer> jogadoresEmCampo,int nSai,int nEntra) throws Jogo.SubstituicaoIndisponivelException, Jogo.SubstituicaoInvalidaException {
+        Jogo jogo = this.jogos.get(this.jogos.size()-1);
+        List<Integer> jogs = jogo.efectuaSubstituicao(equipa,nSai,nEntra,jogadoresEmCampo);
+        return jogs;
+
     }
 
 }
