@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -148,11 +149,46 @@ public class FmController
         this.model.criaEquipa(NomeDaEquipa,Treinador,Plantel);
     }
 
+    //Função que transfere n melhores jogadores de x posição para equipa e
+
+    public void tranfereNjogadoresE(int n, String x, String e) throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteException {
+
+        List<Jogador> jogs = new ArrayList<>();
+        if(x.compareTo("Avancados") == 0)jogs = this.model.getAvancados();
+        if(x.compareTo("Medios") == 0)jogs = this.model.getMedios();
+        if(x.compareTo("Laterais") == 0)jogs = this.model.getLaterais();
+        if(x.compareTo("Defesas") == 0) jogs = this.model.getDefesas();
+        if(x.compareTo("Guarda-Redes") == 0) jogs = this.model.getGuardaRedes();
+
+        List<String> joggsS = this.ordenaJogadores(jogs).stream().map(j->j.getNome()).collect(Collectors.toList());
+
+        for(String jog : joggsS){
+            System.out.println(jog);
+            if(n == 0) break;
+            this.transfereEquipa(e,jog);
+            n--;
+        }
+
+    }
+
+
+    //Função que cria equipa com melhores jogadores
+
+    public void criaMelhorEquipa(String NomeDaEquipa, String Treinador) throws Jogo.EquipaNaoExisteException, FmModel.JogadorInexistenteException {
+        Equipa e = this.model.criaEquipa(NomeDaEquipa,Treinador, new ArrayList<>());
+        tranfereNjogadoresE(2,"Guarda-Redes",NomeDaEquipa);
+        tranfereNjogadoresE(3,"Defesas",NomeDaEquipa);
+        tranfereNjogadoresE(5,"Medios",NomeDaEquipa);
+        tranfereNjogadoresE(5,"Laterais",NomeDaEquipa);
+        tranfereNjogadoresE(3,"Avancados",NomeDaEquipa);
+
+    }
+
     //Devolve Nomes GuardaRedes
 
     public List<String> getGuardaRedes(){
 
-        return this.model.getGuardaRedes().stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
+        return this.ordenaJogadores(this.model.getGuardaRedes()).stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
 
     }
 
@@ -160,7 +196,7 @@ public class FmController
 
     public List<String> getDefesas(){
 
-        return this.model.getDefesas().stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
+        return this.ordenaJogadores(this.model.getDefesas()).stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
 
     }
 
@@ -168,21 +204,21 @@ public class FmController
 
     public List<String> getLaterais(){
 
-        return this.model.getLaterais().stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
+        return this.ordenaJogadores(this.model.getLaterais()).stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
 
     }
 
     //Devolve nome dos medios
     public List<String> getMedios(){
 
-        return this.model.getMedios().stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
+        return this.ordenaJogadores(this.model.getMedios()).stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
 
     }
 
     //Devolve nome dos Avançados
     public List<String> getAvancados(){
 
-        return this.model.getAvancados().stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
+        return this.ordenaJogadores(this.model.getAvancados()).stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
 
 
     }
@@ -192,11 +228,11 @@ public class FmController
 
         String[] sels = selection.split(",");
         List<Jogador> jogs = new ArrayList<>();
-        if(posicao.compareTo("Guarda-Redes") == 0) jogs = this.model.getGuardaRedes();
-        if(posicao.compareTo("Defesa") == 0) jogs = this.model.getDefesas();
-        if(posicao.compareTo("Lateral") == 0) jogs = this.model.getLaterais();
-        if(posicao.compareTo("Medio") == 0) jogs = this.model.getMedios();
-        if(posicao.compareTo("Avancado") == 0) jogs = this.model.getAvancados();
+        if(posicao.compareTo("Guarda-Redes") == 0) jogs = this.ordenaJogadores(this.model.getGuardaRedes());
+        if(posicao.compareTo("Defesa") == 0) jogs = this.ordenaJogadores(this.model.getDefesas());
+        if(posicao.compareTo("Lateral") == 0) jogs = this.ordenaJogadores(this.model.getLaterais());
+        if(posicao.compareTo("Medio") == 0) jogs = this.ordenaJogadores(this.model.getMedios());
+        if(posicao.compareTo("Avancado") == 0) jogs = this.ordenaJogadores(this.model.getAvancados());
 
 
         for(String s : sels){
@@ -223,28 +259,28 @@ public class FmController
 
     public List<String> getRedesEquipa(String e){
 
-        return this.model.getEquipas().get(e).getGuardaRedes().stream().map(j->j.getNome() +"\nHabilidade: "+j.getHabilidade()).collect(Collectors.toList());
+        return this.ordenaJogadores(this.model.getEquipas().get(e).getGuardaRedes()).stream().map(j->j.getNome() +"\nHabilidade: "+j.getHabilidade()).collect(Collectors.toList());
 
     }
 
     public List<String> getDefesasEquipa(String e){
 
-        return this.model.getEquipas().get(e).getDefesas().stream().map(j->j.getNome()+"\nHabilidade: "+j.getHabilidade()).collect(Collectors.toList());
+        return this.ordenaJogadores(this.model.getEquipas().get(e).getDefesas()).stream().map(j->j.getNome() +"\nHabilidade: "+j.getHabilidade()).collect(Collectors.toList());
 
     }
     public List<String> getLateraisEquipa(String e){
 
-        return this.model.getEquipas().get(e).getLaterais().stream().map(j->j.getNome()+"\nHabilidade: "+j.getHabilidade()).collect(Collectors.toList());
+        return this.ordenaJogadores(this.model.getEquipas().get(e).getLaterais()).stream().map(j->j.getNome() +"\nHabilidade: "+j.getHabilidade()).collect(Collectors.toList());
 
     }
     public List<String> getMediosEquipa(String e){
 
-        return this.model.getEquipas().get(e).getMedios().stream().map(j->j.getNome()+"\nHabilidade: "+j.getHabilidade()).collect(Collectors.toList());
+        return this.ordenaJogadores(this.model.getEquipas().get(e).getMedios()).stream().map(j->j.getNome() +"\nHabilidade: "+j.getHabilidade()).collect(Collectors.toList());
 
     }
     public List<String> getAvancadosEquipa(String e){
 
-        return this.model.getEquipas().get(e).getAvancado().stream().map(j->j.getNome()+"\nHabilidade: "+j.getHabilidade()).collect(Collectors.toList());
+        return this.ordenaJogadores(this.model.getEquipas().get(e).getAvancado()).stream().map(j->j.getNome() +"\nHabilidade: "+j.getHabilidade()).collect(Collectors.toList());
 
     }
 
@@ -299,11 +335,11 @@ public class FmController
         List<Jogador> jogadores = new ArrayList<>();
         Equipa e = this.model.getEquipas().get(equipa);
 
-        if (posicao.compareTo("Guarda-Redes") == 0) jogadores = e.getGuardaRedes();
-        if (posicao.compareTo("Defesas") == 0) jogadores = e.getDefesas();
-        if (posicao.compareTo("Medios") == 0) jogadores = e.getMedios();
-        if (posicao.compareTo("Laterais") == 0) jogadores = e.getLaterais();
-        if (posicao.compareTo("Avancados") == 0) jogadores = e.getAvancado();
+        if (posicao.compareTo("Guarda-Redes") == 0) jogadores = this.ordenaJogadores(e.getGuardaRedes());
+        if (posicao.compareTo("Defesas") == 0) jogadores = this.ordenaJogadores(e.getDefesas());
+        if (posicao.compareTo("Medios") == 0) jogadores = this.ordenaJogadores(e.getMedios());
+        if (posicao.compareTo("Laterais") == 0) jogadores = this.ordenaJogadores(e.getLaterais());
+        if (posicao.compareTo("Avancados") == 0) jogadores = this.ordenaJogadores(e.getAvancado());
 
 
         if(!verificaSelecaoJogadores(selection,quantidade,tam,1)) return save;
@@ -318,6 +354,19 @@ public class FmController
 
         return titulares;
     }
+
+    //Ordena lista de jodadores por habilidade
+
+    public List<Jogador> ordenaJogadores(List<Jogador>  jogs){
+        Collections.sort(jogs, (d1, d2) -> {
+            return d2.getHabilidade() - d1.getHabilidade();
+        });
+        return jogs;
+    }
+
+
+
+
 
     //Função que verifica se as substituições são validadas
 

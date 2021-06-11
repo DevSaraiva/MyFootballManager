@@ -1,3 +1,4 @@
+import java.awt.event.KeyEvent;
 import java.awt.font.TextHitInfo;
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -275,123 +276,134 @@ public class FmView {
         this.controller.criaEquipa(nomeEquipa,treinador,plantel);
 
         //Lê o plantel
-        System.out.println("\nSelecione o Plantel\n");
+        System.out.println("\nSelecione (1) para  escolher manualmente o plantel (2) para criar a melhor equipa possivel\n");
+        int num = this.leNumero(1,2,"Seleção");
+        if(num == 2) {
+            try {
+                this.controller.criaMelhorEquipa(nomeEquipa,treinador);
+            } catch (Jogo.EquipaNaoExisteException e) {
+                System.out.println("Erro a criar equipa");
+            } catch (FmModel.JogadorInexistenteException e) {
+                System.out.println("Erro nos dados dos jogadores");
+            }
+        }else {
+            System.out.println("\nSelecione o Plantel\n");
 
-        //Guarda-Redes
+            //Guarda-Redes
 
-        System.out.println("\nSelecione no minimo 2 Guarda-Redes  x,y\n");
-        opcs = this.controller.getGuardaRedes();
-        if(opcs.size() == 0){
-            System.out.println("Não existem Guarda-Redes suficientes no sistema");
-            return;
-        }
-        printOpcoes(opcs);
-        tam = opcs.size();
-        selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,2,tam,2)){
-            System.out.println("Seleção inválida");
-            selection =  ins.nextLine();
-        }
-        try {
-            this.controller.adicionaJogadores(selection,nomeEquipa,"Guarda-Redes");
-        } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
-        } catch (FmModel.JogadorInexistenteException e) {
-            System.out.println("O jogador '" + e.getMessage() +"' não existe\n");
-        }
+            System.out.println("\nSelecione no minimo 2 Guarda-Redes  x,y\n");
+            opcs = this.controller.getGuardaRedes();
+            if (opcs.size() == 0) {
+                System.out.println("Não existem Guarda-Redes suficientes no sistema");
+                return;
+            }
+            printOpcoes(opcs);
+            tam = opcs.size();
+            selection = ins.nextLine();
+            while (!this.controller.verificaSelecaoJogadores(selection, 2, tam, 2)) {
+                System.out.println("Seleção inválida");
+                selection = ins.nextLine();
+            }
+            try {
+                this.controller.adicionaJogadores(selection, nomeEquipa, "Guarda-Redes");
+            } catch (Jogo.EquipaNaoExisteException e) {
+                System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
+            } catch (FmModel.JogadorInexistenteException e) {
+                System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
+            }
 
-        //Defesas
+            //Defesas
 
-        System.out.println("\nSelecione no minimo 3 Defesas  x,y\n");
-        opcs = this.controller.getDefesas();
-        if(opcs.size() == 0){
-            System.out.println("Não existem Defesas suficientes no sistema");
-            return;
-        }
-        printOpcoes(opcs);
-        tam = opcs.size();
-        selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,3,tam,2)){
-            System.out.println("Seleção inválida");
-            selection =  ins.nextLine();
-        }
-        try {
-            this.controller.adicionaJogadores(selection,nomeEquipa,"Defesa");
-        } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
-        } catch (FmModel.JogadorInexistenteException e) {
-            System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
-        }
+            System.out.println("\nSelecione no minimo 3 Defesas  x,y\n");
+            opcs = this.controller.getDefesas();
+            if (opcs.size() == 0) {
+                System.out.println("Não existem Defesas suficientes no sistema");
+                return;
+            }
+            printOpcoes(opcs);
+            tam = opcs.size();
+            selection = ins.nextLine();
+            while (!this.controller.verificaSelecaoJogadores(selection, 3, tam, 2)) {
+                System.out.println("Seleção inválida");
+                selection = ins.nextLine();
+            }
+            try {
+                this.controller.adicionaJogadores(selection, nomeEquipa, "Defesa");
+            } catch (Jogo.EquipaNaoExisteException e) {
+                System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
+            } catch (FmModel.JogadorInexistenteException e) {
+                System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
+            }
 
-        //Laterais
+            //Laterais
 
-        System.out.println("\nSelecione no minimo 5 Laterais  x,y\n");
-        opcs = this.controller.getLaterais();
-        if(opcs.size() == 0){
-            System.out.println("Não existem Laterais suficientes no sistema");
-            return;
-        }
-        printOpcoes(opcs);
-        tam = opcs.size();
-        selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,5,tam,2)){
-            System.out.println("Seleção inválida");
-            selection =  ins.nextLine();
-        }
-        try {
-            this.controller.adicionaJogadores(selection,nomeEquipa,"Lateral");
-        } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa '" + e.getMessage() + "' não existe\n");
-        } catch (FmModel.JogadorInexistenteException e) {
-            System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
-        }
+            System.out.println("\nSelecione no minimo 5 Laterais  x,y\n");
+            opcs = this.controller.getLaterais();
+            if (opcs.size() == 0) {
+                System.out.println("Não existem Laterais suficientes no sistema");
+                return;
+            }
+            printOpcoes(opcs);
+            tam = opcs.size();
+            selection = ins.nextLine();
+            while (!this.controller.verificaSelecaoJogadores(selection, 5, tam, 2)) {
+                System.out.println("Seleção inválida");
+                selection = ins.nextLine();
+            }
+            try {
+                this.controller.adicionaJogadores(selection, nomeEquipa, "Lateral");
+            } catch (Jogo.EquipaNaoExisteException e) {
+                System.out.println("A equipa '" + e.getMessage() + "' não existe\n");
+            } catch (FmModel.JogadorInexistenteException e) {
+                System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
+            }
 
-        //Medios
+            //Medios
 
-        System.out.println("\nSelecione no minimo 5 Medios  x,y\n");
-        opcs = this.controller.getMedios();
-        if(opcs.size() == 0){
-            System.out.println("Não existem Medios suficientes no sistema");
-            return;
-        }
-        printOpcoes(opcs);
-        tam = opcs.size();
-        selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,5,tam,2)){
-            System.out.println("Seleção inválida");
-            selection =  ins.nextLine();
-        }
-        try {
-            this.controller.adicionaJogadores(selection,nomeEquipa,"Medio");
-        } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa '" + e.getMessage() + "' não existe\n");
-        } catch (FmModel.JogadorInexistenteException e) {
-            System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
-        }
+            System.out.println("\nSelecione no minimo 5 Medios  x,y\n");
+            opcs = this.controller.getMedios();
+            if (opcs.size() == 0) {
+                System.out.println("Não existem Medios suficientes no sistema");
+                return;
+            }
+            printOpcoes(opcs);
+            tam = opcs.size();
+            selection = ins.nextLine();
+            while (!this.controller.verificaSelecaoJogadores(selection, 5, tam, 2)) {
+                System.out.println("Seleção inválida");
+                selection = ins.nextLine();
+            }
+            try {
+                this.controller.adicionaJogadores(selection, nomeEquipa, "Medio");
+            } catch (Jogo.EquipaNaoExisteException e) {
+                System.out.println("A equipa '" + e.getMessage() + "' não existe\n");
+            } catch (FmModel.JogadorInexistenteException e) {
+                System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
+            }
 
-        //Avancados
+            //Avancados
 
-        System.out.println("\nSelecione no minimo 4 Avançados  x,y\n");
-        opcs = this.controller.getAvancados();
-        if(opcs.size() == 0){
-            System.out.println("Não existem Laterais suficientes no sistema");
-            return;
+            System.out.println("\nSelecione no minimo 4 Avançados  x,y\n");
+            opcs = this.controller.getAvancados();
+            if (opcs.size() == 0) {
+                System.out.println("Não existem Laterais suficientes no sistema");
+                return;
+            }
+            printOpcoes(opcs);
+            tam = opcs.size();
+            selection = ins.nextLine();
+            while (!this.controller.verificaSelecaoJogadores(selection, 4, tam, 2)) {
+                System.out.println("Seleção inválida");
+                selection = ins.nextLine();
+            }
+            try {
+                this.controller.adicionaJogadores(selection, nomeEquipa, "Avancado");
+            } catch (Jogo.EquipaNaoExisteException e) {
+                System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
+            } catch (FmModel.JogadorInexistenteException e) {
+                System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
+            }
         }
-        printOpcoes(opcs);
-        tam = opcs.size();
-        selection =  ins.nextLine();
-        while(!this.controller.verificaSelecaoJogadores(selection,4,tam,2)){
-            System.out.println("Seleção inválida");
-            selection =  ins.nextLine();
-        }
-        try {
-            this.controller.adicionaJogadores(selection,nomeEquipa,"Avancado");
-        } catch (Jogo.EquipaNaoExisteException e) {
-            System.out.println("A equipa '" + e.getMessage() + "'não existe\n");
-        } catch (FmModel.JogadorInexistenteException e) {
-            System.out.println("O jogador '" + e.getMessage() + "' não existe\n");
-        }
-
 
 
     }
@@ -652,10 +664,7 @@ public class FmView {
         return subs;
     }
 
-
-
-
-    //Função que suporta a funcionalidade de criar um jogo
+        //Função que suporta a funcionalidade de criar um jogo
 
     public void realizarJogo(){
         String equipa1 = "";
@@ -674,7 +683,6 @@ public class FmView {
             System.out.println("Não existem equipas suficientes");
             return;
         }
-
 
         System.out.println("Insira a equipa da casa");
         equipa1 = this.ins.nextLine();
@@ -772,6 +780,7 @@ public class FmView {
     }
 
     public void run() {
+
         List<String> opcs;
         int selection = -1;
         System.out.println("Insira 1 para carregar os seus dados");
