@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -474,11 +475,23 @@ public class FmController
         return jogo.toString();
     }
 
-    public Jogo criaSimulaJogo(String ec, String ef, LocalDate d, List<Integer> jc, Map<Integer, Integer> sc, List<Integer> jf, Map<Integer, Integer> sf, String taticaCasa, String taticaFora) {
+    public String criaSimulaJogo(String ec, String ef, LocalDate d, List<Integer> jc, Map<Integer, Integer> sc, List<Integer> jf, Map<Integer, Integer> sf, String taticaCasa, String taticaFora) {
         Equipa equipaCasa = this.model.getEquipas().get(ec);
         Equipa equipaFora = this.model.getEquipas().get(ef);
         Jogo jogo = this.model.criaAddJogo(equipaCasa, equipaFora, d,  jc,  sc,  jf,sf,taticaCasa, taticaFora);
-        return jogo;
+        return jogo.toString();
+    }
+
+    public String avancaTempoSubs(List<Integer> jC, List<Integer> jF,String equipaComeca1,String equipaComeca2,int tempo){
+        String print = "";
+        print = this.model.avancaTempoSubs(jC,jF,equipaComeca1,equipaComeca2,tempo);
+        return print;
+    }
+
+    public List<Integer> efectuaSub(String equipa,List<Integer> jogadoresEmCampo,int nSai,int nEntra) throws Jogo.SubstituicaoIndisponivelException, Jogo.SubstituicaoInvalidaException {
+        List<Integer> res;
+        res = this.model.efectuaSub(equipa,jogadoresEmCampo,nSai,nEntra);
+        return res;
     }
 
 }

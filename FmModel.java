@@ -338,4 +338,29 @@ public class FmModel implements  Serializable {
         return jogo;
     }
 
+    public String avancaTempoSubs(List<Integer> jC, List<Integer> jF,String equipaComeca1,String equipaComeca2,int tempo){
+        Jogo jogo = this.jogos.get(this.jogos.size()-1);
+
+        int i = 0;
+        StringBuilder sb = new StringBuilder();
+        String print = "";
+
+        while (i < tempo){
+            if (jogo.getTempo() % 2 == 0) print = jogo.avançaTempoJogo(5,equipaComeca1,jC,jF);
+            else print = jogo.avançaTempoJogo(5,equipaComeca2,jC,jF);
+            sb.append(print);
+            sb.append("\n");
+            i += 5;
+        }
+        if (jogo.getTempo() == 90) sb.append(jogo.toString());
+        return sb.toString();
+    }
+
+    public List<Integer> efectuaSub (String equipa,List<Integer> jogadoresEmCampo,int nSai,int nEntra) throws Jogo.SubstituicaoIndisponivelException, Jogo.SubstituicaoInvalidaException {
+        Jogo jogo = this.jogos.get(this.jogos.size()-1);
+        List<Integer> jogs = jogo.efectuaSubstituicao(equipa,nSai,nEntra,jogadoresEmCampo);
+        return jogs;
+
+    }
+
 }

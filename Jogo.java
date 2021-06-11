@@ -205,7 +205,7 @@ public class Jogo implements Serializable {
         sb.append(this.tempo);
         sb.append("'\n");
         sb.append(this.getEquipaVisitada().getNomeDaEquipa());
-        for (int k = this.getEquipaVisitada().getNomeDaEquipa().length(); k < (mC + 7); k++)
+        for (int k = this.getEquipaVisitada().getNomeDaEquipa().length(); k < (mC + 11); k++)
             sb.append(" ");
         sb.append(this.golosCasa);
         sb.append(" vs ");
@@ -214,7 +214,7 @@ public class Jogo implements Serializable {
         sb.append(this.getEquipaVisitante().getNomeDaEquipa());
         sb.append("\n");
         sb.append("11 inicial:");
-        for (int k = 11; k < (mC + 14); k++)
+        for (int k = 11; k < (mC + 17); k++)
             sb.append(" ");
         sb.append("11 inicial:  \n");
         Jogador jC;
@@ -227,7 +227,10 @@ public class Jogo implements Serializable {
             if (jC instanceof Lateral) sb.append("L ->");
             if (jC instanceof Medio) sb.append("M ->");
             if (jC instanceof Avancado) sb.append("A ->");
+            sb.append("(");
             sb.append(jC.getHabilidade());
+            sb.append(") ");
+            sb.append(jC.getNumeroJogador());
             sb.append(" ");
             sb.append(jC.getNome());
             for (int j = jC.getNome().length(); j < mC; j++) sb.append(" ");
@@ -237,14 +240,18 @@ public class Jogo implements Serializable {
             if (jF instanceof Lateral) sb.append("L ->");
             if (jF instanceof Medio) sb.append("M ->");
             if (jF instanceof Avancado) sb.append("A ->");
+            sb.append("(");
             sb.append(jF.getHabilidade());
+            sb.append(") ");
+            sb.append(jF.getNumeroJogador());
             sb.append(" ");
             sb.append(jF.getNome());
             sb.append("\n");
         }
-        sb.append("Jogadores que entraram: \n");
+
         int subsC = this.substituicoesCasa.size();
         int subsF = this.substituicoesFora.size();
+        if (subsF > 0 || subsC > 0) sb.append("Jogadores que entraram: \n");
         int i = 0;
         while ( subsC > 0){
             jC = JogsCasa.get(11+i);
@@ -253,7 +260,10 @@ public class Jogo implements Serializable {
             if (jC instanceof Lateral) sb.append("L ->");
             if (jC instanceof Medio) sb.append("M ->");
             if (jC instanceof Avancado) sb.append("A ->");
+            sb.append("(");
             sb.append(jC.getHabilidade());
+            sb.append(") ");
+            sb.append(jC.getNumeroJogador());
             sb.append(" ");
             sb.append(jC.getNome());
             for (int j = jC.getNome().length(); j < mC; j++) sb.append(" ");
@@ -266,7 +276,10 @@ public class Jogo implements Serializable {
                 if (jF instanceof Lateral) sb.append("L ->");
                 if (jF instanceof Medio) sb.append("M ->");
                 if (jF instanceof Avancado) sb.append("A ->");
+                sb.append("(");
                 sb.append(jF.getHabilidade());
+                sb.append(") ");
+                sb.append(jF.getNumeroJogador());
                 sb.append(" ");
                 sb.append(jF.getNome());
                 subsF--;
@@ -362,6 +375,15 @@ public class Jogo implements Serializable {
         }
     }
 
+    public class SubstituicaoIndisponivelException extends Exception {
+        public SubstituicaoIndisponivelException(){
+            super();
+        }
+
+        public SubstituicaoIndisponivelException(String s){
+            super(s);
+        }
+    }
 
     public boolean validaSubstituicoesCasa (){
         boolean r = true;
@@ -403,15 +425,6 @@ public class Jogo implements Serializable {
         return r;
     }
 
-    /*public void efectuaSubstituicaoCasa(int nEntra, int nSai) throws SubstituicaoInvalidaException {
-        if (validaSubstituicaoCasa(nEntra, nSai)) {
-            for (int j : this.getJogadoresCasa()) {
-                if (j == nSai)
-                    j = nSai;
-            }
-        } else throw new SubstituicaoInvalidaException();
-
-    }*/ // FIXME mal depois apagar
 
     public boolean validaSubstituicoesFora (){
         boolean r = true;
@@ -421,7 +434,6 @@ public class Jogo implements Serializable {
                 r = r & validaSubstituicaoFora((int) e.getKey(),(int) e.getValue(),jogsEmCampo);
                 if (r)
                     jogsEmCampo.set(jogsEmCampo.indexOf(e.getKey()),(int) e.getValue());
-
             }
             return r;
         }else return false;
@@ -449,24 +461,46 @@ public class Jogo implements Serializable {
         return r;
     }
 
-   /* public void efectuaSubstituicaoFora(int nEntra, int nSai) throws SubstituicaoInvalidaException {
-        if (validaSubstituicaoFora(nEntra, nSai)) {
-            for (int j : this.getJogadoresCasa()) {
-                if (j == nSai)
-                    j = nSai;
+    public List<Integer> efectuaSubstituicao(String equipa,int nSai, int nEntra,List<Integer> jogsEmCampo) throws SubstituicaoInvalidaException,SubstituicaoIndisponivelException {
+        if (equipa.equals("casa")){
+            if (this.substituicoesCasa.size() >= 3) throw new SubstituicaoIndisponivelException("Equipa Visitada");
+            if (validaSubstituicaoCasa(nSai, nEntra,jogsEmCampo)) {
+                for (int j : jogsEmCampo) {
+                    if (j == nSai)
+                        j = nEntra;
+                }
+                this.substituicoesCasa.put(nSai,nEntra);
             }
-        } else throw new SubstituicaoInvalidaException();
-    }*/ // FIXME mal depois apagar
+            else throw new SubstituicaoInvalidaException();
+        }
+        else {
+            if (this.substituicoesFora.size() >= 3) throw new SubstituicaoIndisponivelException("Equipa Visitante");
+            if (validaSubstituicaoFora(nSai, nEntra,jogsEmCampo)) {
+                for (int j : this.getJogadoresCasa()) {
+                    if (j == nSai)
+                        j = nSai;
+                }
+                this.substituicoesFora.put(nSai,nEntra);
+            } else throw new SubstituicaoInvalidaException();
+        }
+        return jogsEmCampo;
+    }
+
 
     public void calculaResultado() {
         this.setTempo(90);
         Random gerador = new Random();
-        double hc = this.equipaVisitada.calculaHabilidadeEquipa(this.jogadoresCasa, this.substituicoesCasa);
-        double hcd = (double) this.equipaVisitada.calculaHabilidadeDefender(this.jogadoresCasa)/(double) 100;
-        double hca = (double) this.equipaVisitada.calculaHabilidadeAtacar(this.jogadoresCasa)/(double) 100;
-        double hf = this.equipaVisitante.calculaHabilidadeEquipa(this.jogadoresFora, this.substituicoesFora);
-        double hfd = (double) this.equipaVisitante.calculaHabilidadeDefender(this.jogadoresFora)/(double) 100;
-        double hfa = (double) this.equipaVisitante.calculaHabilidadeAtacar(this.jogadoresFora)/(double) 100;
+        //double hc = this.equipaVisitada.calculaHabilidadeEquipa(this.jogadoresCasa, this.substituicoesCasa);
+        List<Integer> numsUtilizadosCasa = new ArrayList<>();
+        numsUtilizadosCasa.addAll(this.jogadoresCasa);numsUtilizadosCasa.addAll(this.substituicoesCasa.values());
+        double hcd = (double) this.equipaVisitada.calculaHabilidadeDefender(numsUtilizadosCasa)/(double) 100;
+        double hca = (double) this.equipaVisitada.calculaHabilidadeAtacar(numsUtilizadosCasa)/(double) 100;
+
+        //double hf = this.equipaVisitante.calculaHabilidadeEquipa(this.jogadoresFora, this.substituicoesFora);
+        List<Integer> numsUtilizadosFora = new ArrayList<>();
+        numsUtilizadosCasa.addAll(this.jogadoresFora);numsUtilizadosCasa.addAll(this.substituicoesFora.values());
+        double hfd = (double) this.equipaVisitante.calculaHabilidadeDefender(numsUtilizadosFora)/(double) 100;
+        double hfa = (double) this.equipaVisitante.calculaHabilidadeAtacar(numsUtilizadosCasa)/(double) 100;
         int golosCasa;
         int x = gerador.nextInt(100);
         if (x < 2){
@@ -547,13 +581,17 @@ public class Jogo implements Serializable {
         }
         Random gerador = new Random();
         int x = gerador.nextInt(100);
-        if (x < (25 + (habilidadeAtacar - habilidadeDefender))) {
+        if (x < (20 + (habilidadeAtacar - habilidadeDefender))) {
             // caso em que marca golo
-            res.append("marcou!");
+            res.append("marcou! (");
             if (equipaAtacar.compareTo("casa") == 0)
                 this.golosCasa++;
             else
                 this.golosFora++;
+            res.append(this.golosCasa);
+            res.append(" vs ");
+            res.append(this.golosFora);
+            res.append(")");
         } else // caso em que perde a posse de bola
             res.append("perdeu a posse de bola.");
 

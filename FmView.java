@@ -1,4 +1,3 @@
-import java.awt.event.KeyEvent;
 import java.awt.font.TextHitInfo;
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -665,6 +664,7 @@ public class FmView {
         return subs;
     }
 
+
     //Função que mostra as opções de substituição
 
     public void printOpcsSubstituicao(String equipa, List<Integer> titulares){
@@ -687,6 +687,36 @@ public class FmView {
 
         //Função que suporta a funcionalidade de criar um jogo
 
+    public List<Integer> leSubstituicao (String equipa, List<Integer> jogadoresEmCampo) {
+        System.out.println("Insira a substituição que pretende fazer no formato (S-E)");
+        List<Integer> jogsDepoisSub = new ArrayList<>();
+        String input;
+        input = this.ins.nextLine();
+        String[] doisJogadores = input.split("-");
+        if (doisJogadores.length != 2) {
+            System.out.println("Formato da substiuição errado");
+            return leSubstituicao(equipa, jogadoresEmCampo);
+        } else {
+            int nSai,nEntra;
+            try {
+                nSai = Integer.parseInt(doisJogadores[0]);
+                nEntra = Integer.parseInt(doisJogadores[1]);
+                jogsDepoisSub = this.controller.efectuaSub(equipa,jogadoresEmCampo,nSai,nEntra);
+            } catch (NumberFormatException e) {
+                System.out.println("As substituições devem ser formadas pelos números dos jogadores");
+                return leSubstituicao(equipa, jogadoresEmCampo);
+            } catch (Jogo.SubstituicaoInvalidaException e) {
+                System.out.println("A substituição que tentou fazer não é válida!");
+            } catch (Jogo.SubstituicaoIndisponivelException e) {
+                System.out.println("A " + e.getMessage() + "já efectuou todas as substituições disponíveis");
+            }
+        }
+        return jogsDepoisSub;
+    }
+
+
+
+    //Função que suporta a funcionalidade de criar um jogo
     public void realizarJogo(){
         String equipa1 = "";
         String equipa2 = "";
@@ -755,40 +785,60 @@ public class FmView {
             parsedData = this.parseDate(data);
             System.out.println(parsedData.toString());
 
+        System.out.println("\nDeseja SIMULAR ENCONTRO(1) ou apenas ver o RESULTADO(2) ?\n");
+        selection = leNumero(1, 2, "seleção");
 
-            System.out.println("\nDeseja SIMULAR ENCONTRO(1) ou apenas ver o RESULTADO(2) ?\n");
-            selection = leNumero(1, 2, "seleção");
+        if(selection == 1){
+            // cria jogo
+            String print = this.controller.criaSimulaJogo(equipa1,equipa2,parsedData,casa11,subsCasa,fora11,subsFora,taticaCasa,taticaFora);
+            System.out.println(print);
 
-            if (selection == 1) {
-                Jogo jogo = this.controller.criaSimulaJogo(equipa1, equipa2, parsedData, casa11, subsCasa, fora11, subsFora, taticaCasa, taticaFora);
-                System.out.println(jogo.toString());
+            String equipaAcomeçar1parte = "casa";
+            String equipaAcomeçar2parte = "fora";
 
-                String equipaAcomeçar1parte = "";
-                String equipaAcomeçar2parte = "";
+            /*Random gerador = new Random();
+            int x = gerador.nextInt(2);
+            if (x == 0) {
+                equipaAcomeçar1parte = "casa";
+                equipaAcomeçar2parte = "fora";
+            }
+            if (x == 1){
+                equipaAcomeçar1parte = "fora";
+                equipaAcomeçar2parte = "casa";
+            }*/
 
-                Random gerador = new Random();
-                int x = gerador.nextInt(2);
-                if (x == 0) {
-                    equipaAcomeçar1parte = "casa";
-                    equipaAcomeçar2parte = "fora";
+            print = this.controller.avancaTempoSubs(casa11,fora11,equipaAcomeçar1parte,equipaAcomeçar2parte,15);
+            System.out.println(print);
+
+            int min = 15;
+            int entra = -1;
+            int sai = -1;
+            int equipa = -1;
+
+
+            while (min < 90){
+                System.out.println("Introduza 1 se quer pausar o jogo para substituições ou 2 caso contrário");
+                int x = leNumero(1,2,"Opção");
+                while (x == 1){
+                    System.out.println("Introduza a equipa em que pretende fazer a substituições 1 - equipa Casa ou 2 - equipa Fora");
+                    equipa = leNumero(1,2,"Seleção de Equipa");
+                    if (equipa == 1) {
+                        casa11 = leSubstituicao("casa",casa11);
+                    }
+                    else {
+                        fora11 = leSubstituicao("fora",fora11);
+                    }
+
+                    System.out.println("Introduza 1 se quer pausar o jogo para substituições ou 2 caso contrário");
+                    x = leNumero(1,2,"Opção");
                 }
-                if (x == 1) {
-                    equipaAcomeçar1parte = "fora";
-                    equipaAcomeçar2parte = "casa";
-                }
-                int i = 0;
-                String print = "";
+                print = this.controller.avancaTempoSubs(casa11,fora11,equipaAcomeçar1parte,equipaAcomeçar2parte,15);
+                System.out.println(print);
+                min += 15;
+            }
 
-                while (jogo.getTempo() < 90) {
-                    if (i % 2 == 0) print = jogo.avançaTempoJogo(2, equipaAcomeçar1parte, casa11, fora11);
-                    else print = jogo.avançaTempoJogo(2, equipaAcomeçar2parte, casa11, fora11);
-                    System.out.println(print);
-                    i++;
-                }
 
-                System.out.println(jogo.toString());
-            } else {
-
+        }else{
                 System.out.println("\nInsira as 3 substituições da equipa da casa (S-E,S-E,S-E) \n");
                 printOpcsSubstituicao(equipa1,casa11);
                 subsCasa = leSubstituicoes(equipa1, casa11);
@@ -803,6 +853,7 @@ public class FmView {
 
 
     }
+
 
     public void saveData(){
         System.out.println("Insira o nome da pasta onde deseja efetuar a gravação");
