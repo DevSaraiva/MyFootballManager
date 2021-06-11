@@ -189,7 +189,7 @@ public class Equipa implements Serializable
             if (j instanceof Avancado)
                 somaT += 1.25 * j.getHabilidade();
         }
-        return (int) somaT/11;
+        return (int) somaT/jogs.size();
     }
 
     public int calculaHabilidadeDefender(List<Integer> jogs){

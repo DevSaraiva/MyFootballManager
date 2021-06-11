@@ -1,3 +1,4 @@
+import java.awt.desktop.SystemSleepEvent;
 import java.awt.font.TextHitInfo;
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -652,6 +653,48 @@ public class FmView {
         return subs;
     }
 
+    public class SubstituicaoIndisponivelException extends Exception {
+        public SubstituicaoIndisponivelException(){
+            super();
+        }
+
+        public SubstituicaoIndisponivelException(String s){
+            super(s);
+        }
+    }
+
+    public Map<Integer,Integer> leSubstituicao (String equipa, List<Integer> jogadoresEmCampo, Map<Integer,Integer> subs) throws SubstituicaoIndisponivelException{
+        Map<Integer,Integer> copia = new HashMap<>();
+        if (subs.size() == 3) throw new SubstituicaoIndisponivelException();
+        else {
+            System.out.println("Insira a substituição que pretende fazer no formato (S-E)");
+            String input;
+            input = this.ins.nextLine();
+            String[] doisJogadores = input.split("-");
+            if (doisJogadores.length != 2) {
+                System.out.println("Formato da substiuição errado");
+                return leSubstituicao(equipa, jogadoresEmCampo, subs);
+            } else {
+                int nSai,nEntra;
+                copia = subs.entrySet().stream().collect(Collectors.toMap(e->e.getKey(),e->e.getValue()));
+                try {
+                    nSai = Integer.parseInt(doisJogadores[0]);
+                    nEntra = Integer.parseInt(doisJogadores[1]);
+                    copia.put(nSai,nEntra);
+                } catch (NumberFormatException e) {
+
+                    System.out.println("As substituições devem ser formadas pelos números dos jogadores");
+                    return leSubstituicao(equipa, jogadoresEmCampo, subs);
+                }
+
+                if (!this.controller.validaSubs(equipa, jogadoresEmCampo, subs)){
+                    System.out.println("Substituição Inválida");
+                    return leSubstituicao(equipa, jogadoresEmCampo, subs);
+                }
+            }
+        }
+        return copia;
+    }
 
 
 
@@ -723,13 +766,14 @@ public class FmView {
         selection = leNumero(1,2,"seleção");
 
         if(selection == 1){
-            Jogo jogo = this.controller.criaSimulaJogo(equipa1,equipa2,parsedData,casa11,subsCasa,fora11,subsFora,taticaCasa,taticaFora);
-            System.out.println(jogo.toString());
+            // cria jogo
+            String print = this.controller.criaSimulaJogo(equipa1,equipa2,parsedData,casa11,subsCasa,fora11,subsFora,taticaCasa,taticaFora);
+            System.out.println(print);
 
-            String equipaAcomeçar1parte = "";
-            String equipaAcomeçar2parte = "";
+            String equipaAcomeçar1parte = "casa";
+            String equipaAcomeçar2parte = "fora";
 
-            Random gerador = new Random();
+            /*Random gerador = new Random();
             int x = gerador.nextInt(2);
             if (x == 0) {
                 equipaAcomeçar1parte = "casa";
@@ -738,18 +782,66 @@ public class FmView {
             if (x == 1){
                 equipaAcomeçar1parte = "fora";
                 equipaAcomeçar2parte = "casa";
-            }
-            int i = 0;
-            String print = "";
+            }*/
+            Map<Integer,Integer> subsC = new HashMap<>();
+            int nSubC = 0, nSubF = 0;
+            Map<Integer,Integer> subsF = new HashMap<>();
 
-            while (jogo.getTempo() < 90){
-                if (i % 2 == 0) print = jogo.avançaTempoJogo(2,equipaAcomeçar1parte,casa11,fora11);
-                else print = jogo.avançaTempoJogo(2,equipaAcomeçar2parte,casa11,fora11);
+            print = this.controller.avancaTempoSubs(casa11,fora11,equipaAcomeçar1parte,equipaAcomeçar2parte,15,subsC,subsF);
+            System.out.println(print);
+
+            int min = 15;
+            int entra = -1;
+            int sai = -1;
+            int equipa = -1;
+
+
+            while (min < 90){
+                System.out.println("Introduza 1 se quer pausar o jogo para substituições ou 2 caso contrário");
+                int x = leNumero(1,2,"Opção");
+                while (x == 1){
+                    System.out.println("Introduza a equipa em que pretende fazer a substituições 1 - equipa Casa ou 2 - equipa Fora");
+                    equipa = leNumero(1,2,"Seleção de Equipa");
+                    if (equipa == 1) {
+                        try {
+                            subsC = leSubstituicao("casa",casa11,subsC);
+                            /*System.out.println(subsC);
+                            System.out.println(casa11);
+                            int Sai = subsC.
+                            int Entra = subsC.get(Sai);
+                            for ( int j : casa11){
+                                if (j == Sai)
+                                    j = Entra;
+                            }
+                            nSubC++;*/
+                        } catch (SubstituicaoIndisponivelException e) {
+                            System.out.println("Já efetuou todas as substituiçõess possíveis na equipa da casa");
+                        }
+                    }
+                    else {
+                        try {
+                            subsF = leSubstituicao("fora",fora11,subsF);
+                            /*int Sai = subsF.keySet().stream().collect(Collectors.toList()).get(nSubC);
+                            int Entra = subsF.get(sai);
+                            for ( int j : fora11){
+                                if (j == Sai)
+                                    j = Entra;
+                            }
+                            nSubF++;*/
+                        } catch (SubstituicaoIndisponivelException e) {
+                            System.out.println("Já efetuou todas as substituiçõess possíveis na equipa da casa");
+                        }
+                    }
+
+                    System.out.println("Introduza 1 se quer pausar o jogo para substituições ou 2 caso contrário");
+                    x = leNumero(1,2,"Opção");
+                }
+                print = this.controller.avancaTempoSubs(casa11,fora11,equipaAcomeçar1parte,equipaAcomeçar2parte,15,subsC,subsF);
                 System.out.println(print);
-                i++;
+                min += 15;
             }
 
-            System.out.println(jogo.toString());
+
         }else{
 
             System.out.println("\nInsira as 3 substituições da equipa da casa (S-E,S-E,S-E) \n");
@@ -764,6 +856,7 @@ public class FmView {
 
 
     }
+
 
     public void saveData(){
         System.out.println("Insira o nome da pasta onde deseja efetuar a gravação");

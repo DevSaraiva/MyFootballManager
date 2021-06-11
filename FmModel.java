@@ -337,4 +337,27 @@ public class FmModel implements  Serializable {
         return jogo;
     }
 
+    public String avancaTempoSubs(List<Integer> jC, List<Integer> jF,String equipaComeca1,String equipaComeca2,int tempo,Map<Integer,Integer> subsCasa,Map<Integer,Integer> subsFora){
+        Jogo jogo = this.jogos.get(this.jogos.size()-1);
+
+        jogo.setSubstituicoesCasa(subsCasa);
+        jogo.setSubstitucoesFora(subsFora);
+
+        int i = 0;
+        StringBuilder sb = new StringBuilder();
+        String print = "";
+
+        while (i < tempo){
+            if (jogo.getTempo() % 2 == 0) print = jogo.avançaTempoJogo(5,equipaComeca1,jC,jF);
+            else print = jogo.avançaTempoJogo(5,equipaComeca2,jC,jF);
+            sb.append(print);
+            sb.append("\n");
+            i += 5;
+        }
+        if (jogo.getTempo() == 90) sb.append(jogo.toString());
+
+
+        return sb.toString();
+    }
+
 }
