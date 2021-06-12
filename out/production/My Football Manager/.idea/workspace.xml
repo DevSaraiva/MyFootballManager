@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="41e89f3d-4e84-4174-8341-0cc35beb5bdb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../Prática/fichas/Ficha1 e Ficha2/Ficha1 e Ficha2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Prática/fichas/Ficha1 e Ficha2/out/production/Ficha1 e Ficha2/Ficha1 e Ficha2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Prática/fichas/Ficha4/Ficha4.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Prática/fichas/casainteligente/casainteligente.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Avancado.java" beforeDir="false" afterPath="$PROJECT_DIR$/Avancado.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Defesa.java" beforeDir="false" afterPath="$PROJECT_DIR$/Defesa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Equipa.java" beforeDir="false" afterPath="$PROJECT_DIR$/Equipa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FmModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/FmModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FmModel.ctxt" beforeDir="false" afterPath="$PROJECT_DIR$/FmModel.ctxt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FmModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/FmModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GuardaRedes.java" beforeDir="false" afterPath="$PROJECT_DIR$/GuardaRedes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Jogador.java" beforeDir="false" afterPath="$PROJECT_DIR$/Jogador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Medio.java" beforeDir="false" afterPath="$PROJECT_DIR$/Medio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/guardaRedes.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/guardaRedes.ctxt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/guardaRedes.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jogador.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jogador.ctxt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jogador.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jogo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jogo.ctxt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/My Football Manager/Avancado.ctxt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/My Football Manager/Avancado.ctxt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/My Football Manager/Defesa.ctxt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/My Football Manager/Defesa.ctxt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/My Football Manager/FmModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/My Football Manager/FmModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/My Football Manager/GuardaRedes.ctxt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/My Football Manager/GuardaRedes.ctxt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/My Football Manager/Jogador.ctxt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/My Football Manager/Jogador.ctxt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/My Football Manager/Lateral.ctxt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/My Football Manager/Lateral.ctxt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/My Football Manager/Medio.ctxt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/My Football Manager/Medio.ctxt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/My Football Manager/package.bluej" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/My Football Manager/package.bluej" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.bluej" beforeDir="false" afterPath="$PROJECT_DIR$/package.bluej" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1tWwAr0ssM2FsDeH2omcy2ZnFSF" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="js.buildTools.grunt.grunt-cli.package" value="" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="11" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="main" />
+      <module name="My Football Manager" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="js.build_tools.grunt">
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="41e89f3d-4e84-4174-8341-0cc35beb5bdb" name="Default Changelist" comment="" />
+      <created>1622898012778</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1622898012778</updated>
+      <workItem from="1622898013922" duration="2068000" />
+      <workItem from="1622902906059" duration="5484000" />
+      <workItem from="1622908402921" duration="210000" />
+      <workItem from="1622912192733" duration="1270000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
