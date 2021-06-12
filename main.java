@@ -8,18 +8,6 @@ public class main {
         FmController controller = new FmController(model);
         FmView view = new FmView(controller);
         view.run();
-
-       /*  try {
-            Parser.parse(model);
-            model.atualizaHistóricoEquipas();
-        } catch (LinhaIncorretaException e) {
-            e.printStackTrace();
-        }
-        try {
-            model.saveData();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } */
     }
 
 
