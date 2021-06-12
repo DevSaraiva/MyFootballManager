@@ -269,7 +269,6 @@ public class FmController
     public List<String> getGuardaRedes(){
 
         return this.ordenaJogadores(this.model.getGuardaRedes()).stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
-
     }
 
     //Devolve Nomes dos Defesas
@@ -277,7 +276,6 @@ public class FmController
     public List<String> getDefesas(){
 
         return this.ordenaJogadores(this.model.getDefesas()).stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
-
     }
 
     //Devolve Nomes dos Laterais
@@ -285,22 +283,18 @@ public class FmController
     public List<String> getLaterais(){
 
         return this.ordenaJogadores(this.model.getLaterais()).stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
-
     }
 
     //Devolve nome dos medios
     public List<String> getMedios(){
 
         return this.ordenaJogadores(this.model.getMedios()).stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
-
     }
 
     //Devolve nome dos Avançados
     public List<String> getAvancados(){
 
         return this.ordenaJogadores(this.model.getAvancados()).stream().map(g -> g.getNome() +"\nHabilidade: "+g.getHabilidade()).collect(Collectors.toList());
-
-
     }
 
 
@@ -461,7 +455,6 @@ public class FmController
                 // jogador que vai sair tem que estar no 11
                 if (!titulares.contains(sub.getKey())) return false;
                 // jogador que vai entrar tem que pertencer a equipa
-
                 if (!equipa.getPlantel().stream().map(j->j.getNumeroJogador()).collect(Collectors.toList()).contains(sub.getValue())) return false;
 
                 //jogador a entrar nao pode estar no 11
