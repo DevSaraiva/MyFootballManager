@@ -58,14 +58,14 @@ comment34.params=nSai\ nEntra\ jogsEmCampo
 comment34.target=boolean\ validaSubstituicaoCasa(int,\ int,\ java.util.List)
 comment35.params=
 comment35.target=boolean\ validaSubstituicoesFora()
-comment35.text=public\ void\ efectuaSubstituicaoCasa(int\ nEntra,\ int\ nSai)\ throws\ SubstituicaoInvalidaException\ {\n\ \ \ \ \ \ \ \ if\ (validaSubstituicaoCasa(nEntra,\ nSai))\ {\n\ \ \ \ \ \ \ \ \ \ \ \ for\ (int\ j\ \:\ this.getJogadoresCasa())\ {\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ (j\ \=\=\ nSai)\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ j\ \=\ nSai;\n\ \ \ \ \ \ \ \ \ \ \ \ }\n\ \ \ \ \ \ \ \ }\ else\ throw\ new\ SubstituicaoInvalidaException();\n\n}
 comment36.params=nSai\ nEntra\ jogsEmCampo
 comment36.target=boolean\ validaSubstituicaoFora(int,\ int,\ java.util.List)
-comment37.params=
-comment37.target=void\ calculaResultado()
-comment37.text=\ public\ void\ efectuaSubstituicaoFora(int\ nEntra,\ int\ nSai)\ throws\ SubstituicaoInvalidaException\ {\n\ \ \ \ \ \ \ \ if\ (validaSubstituicaoFora(nEntra,\ nSai))\ {\n\ \ \ \ \ \ \ \ \ \ \ \ for\ (int\ j\ \:\ this.getJogadoresCasa())\ {\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ (j\ \=\=\ nSai)\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ j\ \=\ nSai;\n\ \ \ \ \ \ \ \ \ \ \ \ }\n\ \ \ \ \ \ \ \ }\ else\ throw\ new\ SubstituicaoInvalidaException();\n}
-comment38.params=tempo\ equipaAtacar\ jogsEmCampoCasa\ jogsEmCampoFora
-comment38.target=java.lang.String\ avan\u00E7aTempoJogo(int,\ java.lang.String,\ java.util.List,\ java.util.List)
+comment37.params=equipa\ nSai\ nEntra\ jogsEmCampo
+comment37.target=java.util.List\ efectuaSubstituicao(java.lang.String,\ int,\ int,\ java.util.List)
+comment38.params=
+comment38.target=void\ calculaResultado()
+comment39.params=tempo\ equipaAtacar\ jogsEmCampoCasa\ jogsEmCampoFora
+comment39.target=java.lang.String\ avan\u00E7aTempoJogo(int,\ java.lang.String,\ java.util.List,\ java.util.List)
 comment4.params=
 comment4.target=int\ getTempo()
 comment5.params=
@@ -78,4 +78,4 @@ comment8.params=
 comment8.target=int\ getGolosCasa()
 comment9.params=
 comment9.target=int\ getGolosFora()
-numComments=39
+numComments=40
