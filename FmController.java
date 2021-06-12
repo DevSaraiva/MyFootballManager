@@ -500,5 +500,34 @@ public class FmController
         List<Integer> res = this.model.efectuaSub(equipa,jogadoresEmCampo,nSai,nEntra);
         return res;
     }
+    
+     public static class JogadoresInsuficientesException extends Exception {
+        public JogadoresInsuficientesException() {
+            super();
+        }
+
+        public JogadoresInsuficientesException(String s) {
+            super(s);
+        }
+    }
+
+
+    public void validaEquipas (String equipa1, String equipa2) throws JogadoresInsuficientesException{
+        Equipa equipaC = this.model.getEquipas().get(equipa1);
+        Equipa equipaF = this.model.getEquipas().get(equipa2);
+
+        if (equipaC.getGuardaRedes().size() < 1) throw new JogadoresInsuficientesException("Equipa Casa não tem Guarda-Redes suficientes");
+        if (equipaC.getDefesas().size() < 2) throw new JogadoresInsuficientesException("Equipa Casa não tem Defesas suficientes");
+        if (equipaC.getMedios().size() < 4) throw new JogadoresInsuficientesException("Equipa Casa não tem Médios suficientes");
+        if (equipaC.getAvancado().size() < 2) throw new JogadoresInsuficientesException("Equipa Casa não tem Avançados suficientes");
+        if (equipaC.getLaterais().size() < 4) throw new JogadoresInsuficientesException("Equipa Casa não tem Laterais suficientes");
+
+        if (equipaF.getGuardaRedes().size() < 1) throw new JogadoresInsuficientesException("Equipa Fora não tem Guarda-Redes suficientes");
+        if (equipaF.getDefesas().size() < 2) throw new JogadoresInsuficientesException("Equipa Fora não tem Defesas suficientes");
+        if (equipaF.getMedios().size() < 4) throw new JogadoresInsuficientesException("Equipa Fora não tem Médios suficientes");
+        if (equipaF.getAvancado().size() < 2) throw new JogadoresInsuficientesException("Equipa Fora não tem Avançados suficientes");
+        if (equipaF.getLaterais().size() < 4) throw new JogadoresInsuficientesException("Equipa Fora não tem Laterais suficientes");
+    }
+
 
 }
