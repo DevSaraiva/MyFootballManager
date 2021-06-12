@@ -24,12 +24,9 @@ public class FmController
 
     }
 
-    public void save(String pasta){
-        try {
+    public void save(String pasta) throws IOException {
             this.model.saveData(pasta);
-        } catch (IOException e) {
-            System.out.println("Erro ao gravar o ficheiro");
-        }
+
     }
 
     //Função que de acordo com o input do utilizador decide a forma como faz o load
@@ -179,7 +176,6 @@ public class FmController
         List<String> joggsS = this.ordenaJogadores(jogs).stream().map(j->j.getNome()).collect(Collectors.toList());
 
         for(String jog : joggsS){
-            System.out.println(jog);
             if(n == 0) break;
             this.transfereEquipa(e,jog);
             n--;
@@ -469,7 +465,7 @@ public class FmController
                         return false;
                 }
                 else {
-                    if ((equipa.get1Jogador((int)sub.getKey()) instanceof Lateral)) return false;
+                    if ((equipa.get1Jogador((int)sub.getValue()) instanceof Lateral)) return false;
                 }
             }
 
@@ -501,8 +497,7 @@ public class FmController
     }
 
     public List<Integer> efectuaSub(String equipa,List<Integer> jogadoresEmCampo,int nSai,int nEntra) throws Jogo.SubstituicaoIndisponivelException, Jogo.SubstituicaoInvalidaException {
-        List<Integer> res;
-        res = this.model.efectuaSub(equipa,jogadoresEmCampo,nSai,nEntra);
+        List<Integer> res = this.model.efectuaSub(equipa,jogadoresEmCampo,nSai,nEntra);
         return res;
     }
 

@@ -179,7 +179,7 @@ public class Equipa implements Serializable
         for (int num : jogs){
             Jogador j = get1Jogador(num);
             if (j instanceof GuardaRedes)
-                somaT += 0.50 * j.getHabilidade();
+                somaT += 0.25 * j.getHabilidade();
             if (j instanceof Defesa)
                 somaT += 0.75 * j.getHabilidade();
             if (j instanceof Lateral)
@@ -205,9 +205,9 @@ public class Equipa implements Serializable
             if (j instanceof Medio)
                 somaT += 0.75 * j.getHabilidade();
             if (j instanceof Avancado)
-                somaT += 0.5 * j.getHabilidade();
+                somaT += 0.25 * j.getHabilidade();
         }
-        return (int) somaT/11;
+        return (int) somaT/jogs.size();
     }
 
 

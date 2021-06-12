@@ -466,103 +466,88 @@ public class Jogo implements Serializable {
         if (equipa.equals("casa")){
             if (this.substituicoesCasa.size() >= 3) throw new SubstituicaoIndisponivelException("Equipa Visitada");
             if (validaSubstituicaoCasa(nSai, nEntra,jogsEmCampo)) {
-                for (int j : jogsEmCampo) {
-                    if (j == nSai)
-                        j = nEntra;
-                }
+                int posicao = jogsEmCampo.indexOf(nSai);
+                jogsEmCampo.set(posicao,nEntra);
                 this.substituicoesCasa.put(nSai,nEntra);
+                return jogsEmCampo;
             }
             else throw new SubstituicaoInvalidaException();
         }
         else {
             if (this.substituicoesFora.size() >= 3) throw new SubstituicaoIndisponivelException("Equipa Visitante");
             if (validaSubstituicaoFora(nSai, nEntra,jogsEmCampo)) {
-                for (int j : this.getJogadoresCasa()) {
-                    if (j == nSai)
-                        j = nSai;
-                }
+                int posicao = jogsEmCampo.indexOf(nSai);
+                jogsEmCampo.set(posicao,nEntra);
                 this.substituicoesFora.put(nSai,nEntra);
+                return jogsEmCampo;
             } else throw new SubstituicaoInvalidaException();
         }
-        return jogsEmCampo;
     }
 
 
     public void calculaResultado() {
         this.setTempo(90);
         Random gerador = new Random();
-        //double hc = this.equipaVisitada.calculaHabilidadeEquipa(this.jogadoresCasa, this.substituicoesCasa);
+
         List<Integer> numsUtilizadosCasa = new ArrayList<>();
         numsUtilizadosCasa.addAll(this.jogadoresCasa);numsUtilizadosCasa.addAll(this.substituicoesCasa.values());
         double hcd = (double) this.equipaVisitada.calculaHabilidadeDefender(numsUtilizadosCasa)/(double) 100;
         double hca = (double) this.equipaVisitada.calculaHabilidadeAtacar(numsUtilizadosCasa)/(double) 100;
 
-        //double hf = this.equipaVisitante.calculaHabilidadeEquipa(this.jogadoresFora, this.substituicoesFora);
         List<Integer> numsUtilizadosFora = new ArrayList<>();
-        numsUtilizadosCasa.addAll(this.jogadoresFora);numsUtilizadosCasa.addAll(this.substituicoesFora.values());
+        numsUtilizadosFora.addAll(this.jogadoresFora);numsUtilizadosFora.addAll(this.substituicoesFora.values());
         double hfd = (double) this.equipaVisitante.calculaHabilidadeDefender(numsUtilizadosFora)/(double) 100;
-        double hfa = (double) this.equipaVisitante.calculaHabilidadeAtacar(numsUtilizadosCasa)/(double) 100;
+        double hfa = (double) this.equipaVisitante.calculaHabilidadeAtacar(numsUtilizadosFora)/(double) 100;
         int golosCasa;
         int x = gerador.nextInt(100);
-        if (x < 2){
+        if (x < 1){
             golosCasa = 10;
-        }else if (2 < x && x < 5){
+        }else if (1 < x && x < 3){
             golosCasa = 9;
-        }else if (5 < x && x < 9){
+        }else if (3 < x && x < 6){
             golosCasa = 8;
-        }else if (9 < x && x < 14){
+        }else if (6 < x && x < 9){
             golosCasa = 7;
-        }else if (14 < x && x < 20){
+        }else if (9 < x && x < 13){
             golosCasa = 6;
-        }else if (20 < x && x < 27){
+        }else if (13 < x && x < 20){
             golosCasa = 5;
-        }else if (27 < x && x < 40){
+        }else if (20 < x && x < 30){
             golosCasa = 4;
-        }else if (40 < x && x < 55){
+        }else if (30 < x && x < 50){
             golosCasa = 3;
-        }else if (55 < x && x < 75){
+        }else if (50 < x && x < 70){
             golosCasa = 2;
-        }else if (75 < x && x < 85){
+        }else if (70 < x && x < 90){
             golosCasa = 1;
         }else
             golosCasa = 0;
         setGolosCasa((int) ((double) golosCasa * (1+hca-hfd)));
         int golosFora;
         int y = gerador.nextInt(100);
-        if (y < 2){
+        if (y < 1){
             golosFora = 10;
-        }else if (2 < y && y < 5){
+        }else if (1 < y && y < 3){
             golosFora = 9;
-        }else if (5 < y && y < 9){
+        }else if (3 < y && y < 6){
             golosFora = 8;
-        }else if (9 < y && y < 14){
+        }else if (6 < y && y < 9){
             golosFora = 7;
-        }else if (14 < y && y < 20){
+        }else if (9 < y && y < 13){
             golosFora = 6;
-        }else if (20 < y && y < 27){
+        }else if (13 < y && y < 20){
             golosFora = 5;
-        }else if (27 < y && y < 40){
+        }else if (20 < y && y < 30){
             golosFora = 4;
-        }else if (40 < y && y < 55){
+        }else if (30 < y && y < 50){
             golosFora = 3;
-        }else if (55 < y && y < 75){
+        }else if (50 < y && y < 70){
             golosFora = 2;
-        }else if (75 < y && y < 85){
+        }else if (70 < y && y < 90){
             golosFora = 1;
         }else
             golosFora = 0;
         setGolosFora((int) ((double) golosFora * (1+hfa-hcd)));
-
-        // debug
-        /*
-        System.out.println(String.format("casa %f %f",hca,hcd));
-        System.out.println(String.format("fora %f %f",hfa,hfd));
-        System.out.println(golosCasa);
-        System.out.println((int) ((double) golosCasa * (1.25+hca-hfd)));
-        System.out.println(" vs ");
-        System.out.println(golosFora);
-        System.out.println((int) ((double) golosFora * (1.25+hfa-hcd)));
-        */
     }
 
 
