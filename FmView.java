@@ -750,6 +750,14 @@ public class FmView {
             System.out.println("Insira uma equipa válida");
             equipa2 = this.ins.nextLine();
         }
+        
+         // as duas equipas tem jogadores suficientes ?
+        try {
+            this.controller.validaEquipas(equipa1,equipa2);
+        } catch (FmController.JogadoresInsuficientesException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
 
         System.out.println("Pretende criar o 11 inicial manualmente(1) ou criar o melhor (2)");
         int num = leNumero(1,2,"Seleção");
